@@ -11,7 +11,11 @@ Visual Guides:
     Height: 9 units
 
   Static UI Canvas (Menus): (Use for menu screens that are not overlays such as the main menu screen)
-    Pos X:
-    Pos Y:
-    Width:
-    Height:
+    Pos X: 8
+    Pos Y: 4.5
+    Width: 2048
+    Height: 1152
+    Scale X: 0.0078125
+    Scale Y: 0.0078125
+    Dynamic Pixels Per Unit: 1
+    Reference Pixels Per Unit: 1

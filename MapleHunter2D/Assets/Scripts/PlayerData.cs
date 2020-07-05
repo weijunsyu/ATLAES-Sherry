@@ -22,4 +22,27 @@ public class PlayerData : MonoBehaviour
             */
         }
     }
+    private void Awake()
+    {
+        KeepPersistentStatus();
+    }
+    private void Start()
+    {
+        //LoadGame();
+        //input all loaded variables
+        
+    }
+    private void KeepPersistentStatus()
+    {
+        int gameStatusCount = FindObjectsOfType<PlayerData>().Length;
+        if (gameStatusCount > 1)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 }

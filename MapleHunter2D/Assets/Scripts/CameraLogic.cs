@@ -1,16 +1,38 @@
 ﻿using UnityEngine;
 
-public class CameraLogic : MonoBehaviour
+public class CameraLogic : MonoBehaviour //this should be able to be on a global object
 {
+
+    private Vector2 resolution;
+    private bool screenResized;
 
     private void Start()
     {   // Adjust the screen size such that no matter what the physical screen size the game size will always be constant
         AdjustCameraAspectRatio(GameConstants.TARGET_SCREEN_WIDTH_BY_RATIO, GameConstants.TARGET_SCREEN_HEIGHT_BY_RATIO);
+        screenResized = true;
+        resolution = new Vector2(Screen.width, Screen.height);
+    }
+    private void Update()
+    {
+        if (screenSizeChanged())
+        {
+            screenResized = false;
+            resolution = new Vector2(Screen.width, Screen.height);
+        }
+        else
+        {
+            if (!screenResized)
+            {
+                AdjustCameraAspectRatio(GameConstants.TARGET_SCREEN_WIDTH_BY_RATIO, GameConstants.TARGET_SCREEN_HEIGHT_BY_RATIO);
+                screenResized = true;
+            }
+        }
     }
 
     //could be moved to something global? and not some object? debatable
     private void AdjustCameraAspectRatio(float targetWidthByRatio, float targetHeightByRatio)
     {
+        ResetCamera();
         float targetAspect = targetWidthByRatio / targetHeightByRatio;
         float windowAspect = (float)Screen.width / (float)Screen.height;
         float scaleDifference = windowAspect / targetAspect;
@@ -28,5 +50,19 @@ public class CameraLogic : MonoBehaviour
         {
             UnityEngine.Camera.main.aspect = windowAspect;
         }
+    }
+    
+    private bool screenSizeChanged()
+    {
+        if (resolution.x != Screen.width || resolution.y != Screen.height)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void ResetCamera()
+    {
+        UnityEngine.Camera.main.orthographicSize = GameConstants.DEFAULT_CAMERA_SIZE;
     }
 }
