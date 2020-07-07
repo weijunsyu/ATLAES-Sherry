@@ -4,10 +4,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SavePlayerData(PlayerData playerData)
+
+    public static void SavePlayerData(PlayerData playerData, int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + GameConstants.SAVEPATH;
+        string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;
         FileStream stream = new FileStream(path, FileMode.Create);
 
         PlayerSaveData data = new PlayerSaveData(playerData);
@@ -16,9 +17,9 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static PlayerSaveData LoadPlayerData()
+    public static PlayerSaveData LoadPlayerData(int saveNumber)
     {
-        string path = Application.persistentDataPath + GameConstants.SAVEPATH;
+        string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();

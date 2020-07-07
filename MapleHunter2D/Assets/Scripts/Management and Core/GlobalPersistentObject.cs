@@ -1,9 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class GlobalPersistentObject : MonoBehaviour
 {
+    // Config Parameters
+    [SerializeField] private AudioMixer mixer = null;
+
+    // State Parameters
+    public PlayerData playerData;
+    //public SceneLoader sceneLoader; //Un-comment if static functions do not work (and remove static from all functions in SceneLoader)
+
+
     private void Awake()
     {
         KeepPersistentStatus();
@@ -12,11 +19,9 @@ public class GlobalPersistentObject : MonoBehaviour
     private void Start()
     {
         //init all persistent objects such as playerData
-        PlayerData playerData = new PlayerData();
+        playerData = new PlayerData();
+        //sceneLoader = new SceneLoader(); //Un-comment if static functions do not work (and remove static from all functions in SceneLoader)
     }
-
-
-
 
     private void KeepPersistentStatus()
     {
