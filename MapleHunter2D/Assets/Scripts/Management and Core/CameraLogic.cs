@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraLogic : MonoBehaviour //this should be able to be on a global object
+public class CameraLogic : MonoBehaviour
 {
 
     private Vector2 resolution;
@@ -29,7 +29,6 @@ public class CameraLogic : MonoBehaviour //this should be able to be on a global
         }
     }
 
-    //could be moved to something global? and not some object? debatable
     private void AdjustCameraAspectRatio(float targetWidthByRatio, float targetHeightByRatio)
     {
         ResetCamera();
