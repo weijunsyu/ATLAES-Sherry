@@ -7,8 +7,8 @@ public class GlobalPersistentObject : MonoBehaviour
     [SerializeField] private AudioMixer mixer = null;
 
     // State Parameters
-    public PlayerData playerData;
-    //public SceneLoader sceneLoader; //Un-comment if static functions do not work (and remove static from all functions in SceneLoader)
+    public PlayerCharacterData playerData = null;
+    public SaveLoadWrapper saveLoadWrapper = new SaveLoadWrapper();
 
 
     private void Awake()
@@ -18,9 +18,9 @@ public class GlobalPersistentObject : MonoBehaviour
 
     private void Start()
     {
-        //init all persistent objects such as playerData
-        playerData = new PlayerData();
-        //sceneLoader = new SceneLoader(); //Un-comment if static functions do not work (and remove static from all functions in SceneLoader)
+        //init all persistent objects
+        //saveLoadWrapper = new SaveLoadWrapper();
+        //playerData = new PlayerCharacterData(); do this on loading of some save game and populate parameters at that time
     }
 
     private void KeepPersistentStatus()
