@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
     private bool facingRight = true;
+    
     public bool Stop()
     {
         return SetVelocity(0, 0);
@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
     {
         return AddVelocity(linearVelocity, 0);
     }
-
     public bool Move(float linearVelocity)
     {
         if (linearVelocity > 0) //move to the right
@@ -32,10 +31,16 @@ public class Movement : MonoBehaviour
         return AddVelocity(linearVelocity, 0);
     }
 
-    public bool Jump()
+    public bool Jump(float linearVelocity)
     {
-        throw new NotImplementedException();
+        return AddVelocity(0, linearVelocity);
     }
+
+    public bool Fly(Vector2 velocity)
+    {
+        return AddVelocity(velocity.x, velocity.y);
+    }
+
     private bool SetVelocity(float xVelocity, float yVelocity)
     {
         Rigidbody2D body = GetComponent<Rigidbody2D>();
@@ -62,6 +67,6 @@ public class Movement : MonoBehaviour
 
     private bool Turn()
     {
-        throw new NotImplementedException();
+        throw new System.NotImplementedException();
     }
 }
