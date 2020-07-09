@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 
 public static class SaveSystem
 {
 
-    public static void SavePlayerData(PlayerData playerData, int saveNumber)
+    public static void SavePlayerData(Dictionary<string, object> saveData, int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        PlayerSaveData data = new PlayerSaveData(playerData);
+        PlayerSaveData data = new PlayerSaveData(saveData);
 
         formatter.Serialize(stream, data);
         stream.Close();

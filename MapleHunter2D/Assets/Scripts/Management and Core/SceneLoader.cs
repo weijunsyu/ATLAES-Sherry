@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader
+public class SceneLoader : MonoBehaviour
 {
     // Return the index number of the current scene
     public static int GetCurrentSceneIndex()
