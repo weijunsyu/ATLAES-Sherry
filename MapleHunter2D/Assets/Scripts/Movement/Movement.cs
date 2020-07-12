@@ -2,48 +2,90 @@
 
 public class Movement : MonoBehaviour
 {
-    private bool facingRight = true;
-    
-    public bool Stop()
+
+    Rigidbody2D body = null;
+    PlayerCharacterData playerCharacterData = null;
+
+    private void Start()
+    {
+        body = GetComponent<Rigidbody2D>();
+        playerCharacterData = GetComponent<PlayerCharacterData>();
+    }
+
+
+    public bool Dash(float velocity, float duration)
+    {
+        if(body != null)
+        {
+            body.AddForce(new Vector2(velocity, 0), ForceMode2D.Impulse);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsAirborne()
+    {
+        Vector2 currentVeclocity = body.velocity;
+        if (currentVeclocity.y != 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool ForceStop()
     {
         return SetVelocity(0, 0);
     }
+    public bool StopHorizontal()
+    {
+        if (playerCharacterData.canStop)
+        {
+            return SetHorizontal(0);
+        }
+        return false;
+    }
+    public bool StopVertical()
+    {
+        if (playerCharacterData.canStop)
+        {
+            return SetVertical(0);
+        }
+        return false;
+    }
     public bool Strafe(float linearVelocity)
     {
-        return AddVelocity(linearVelocity, 0);
+        return SetHorizontal(linearVelocity);
     }
     public bool Move(float linearVelocity)
     {
         if (linearVelocity > 0) //move to the right
         {
-            if (!facingRight) //currently facing left
+            if (!playerCharacterData.facingRight) //currently facing left
             {
                 Turn(); //turn to face right
             }
         }
         else //move to left
         {
-            if (facingRight) //currently facing right
+            if (playerCharacterData.facingRight) //currently facing right
             {
                 Turn(); //turn to face left
             }
         }
-        return AddVelocity(linearVelocity, 0);
+        return SetHorizontal(linearVelocity);
     }
 
     public bool Jump(float linearVelocity)
     {
-        return AddVelocity(0, linearVelocity);
+        if (!this.IsAirborne())
+        {
+            return SetVertical(linearVelocity);
+        }
+        return false;
     }
-
-    public bool Fly(Vector2 velocity)
-    {
-        return AddVelocity(velocity.x, velocity.y);
-    }
-
     private bool SetVelocity(float xVelocity, float yVelocity)
     {
-        Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body != null)
         {
             body.velocity = new Vector2(xVelocity, yVelocity);
@@ -54,7 +96,6 @@ public class Movement : MonoBehaviour
 
     private bool AddVelocity(float xVelocity, float yVelocity)
     {
-        Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body != null)
         {
             Vector2 currentVelocity = body.velocity;
@@ -65,8 +106,37 @@ public class Movement : MonoBehaviour
         return false;
     }
 
+    private bool SetHorizontal(float xVelocity)
+    {
+        if (body != null)
+        {
+            Vector2 currentVelocity = body.velocity;
+            Vector2 newVelocity = new Vector2(xVelocity, currentVelocity.y);
+            body.velocity = newVelocity;
+            return true;
+        }
+        return false;
+    }
+    private bool SetVertical(float yVelocity)
+    {
+        if (body != null)
+        {
+            Vector2 currentVelocity = body.velocity;
+            Vector2 newVelocity = new Vector2(currentVelocity.x, yVelocity);
+            body.velocity = newVelocity;
+            return true;
+        }
+        return false;
+    }
     private bool Turn()
     {
-        throw new System.NotImplementedException();
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            playerCharacterData.facingRight = !playerCharacterData.facingRight;
+            return true;
+        }
+        return false;
     }
 }
