@@ -19,25 +19,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
             ""id"": ""857945f0-6bf3-462f-a610-4d2fbdf172a2"",
             ""actions"": [
                 {
-                    ""name"": ""Strafe Left"",
-                    ""type"": ""Value"",
-                    ""id"": ""39ea9cdc-c2a8-4003-92a6-bf39f3c0d7a6"",
-                    ""expectedControlType"": ""Digital"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Strafe Right"",
-                    ""type"": ""Value"",
-                    ""id"": ""44f2295f-4282-40e8-81be-70d669e2618f"",
-                    ""expectedControlType"": ""Digital"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Jump"",
+                    ""name"": ""Move Right"",
                     ""type"": ""Button"",
-                    ""id"": ""ade8005d-af26-4c78-8fb4-1118c7874b03"",
+                    ""id"": ""51fccbee-d763-42c8-96a4-40001f5a663b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -45,23 +29,15 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Move Left"",
                     ""type"": ""Button"",
-                    ""id"": ""817c8498-8d8b-4a94-897e-d72201e01a87"",
+                    ""id"": ""774d2c3d-fcc4-4d65-bf51-42b9d5c6f1f8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Move Right"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""382a9798-3913-4ecf-b9cb-142f3d6c4a6c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Crouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""673d9c7f-b29f-4b25-a3e1-82c4a64d54d3"",
+                    ""id"": ""32a1019b-9e2c-418e-b06b-b6f2421d746d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -69,7 +45,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
-                    ""id"": ""286d09a2-3182-468f-83e4-53e5f5af8975"",
+                    ""id"": ""e41f5a14-5407-48a1-ad24-d87e4ef9092b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -78,78 +54,45 @@ public class @VirtualController : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""3bb27e9e-5eae-4862-a62f-cbbe104ac8ef"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Strafe Left"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7133c8df-a8fc-4341-997a-fee305e27c3c"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Strafe Right"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""51d1bdc5-5742-4c3a-bc4f-1998f3fb3dcb"",
+                    ""id"": ""4037f3bb-f3d5-4757-9bb2-d4e1fe0a2493"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ca05347f-d0ca-4a3b-b1c7-7b399ea9cf99"",
-                    ""path"": """",
+                    ""id"": ""0bd1041b-c10e-46ce-b29d-406e43b86ec5"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4cb4b9c2-e6a9-4186-ba25-191c70220afb"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Move Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""aa126b16-2121-4c8d-8e6b-ef04701e7839"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Right"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ab96d5f5-c60b-4067-8d72-ecf5bb809a52"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""386a3106-ef3b-46dd-a1ce-68138aa8a3d0"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""id"": ""9912f122-5725-494c-9e50-db35527cfd24"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Dash"",
+                    ""action"": ""Move Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -183,12 +126,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
 }");
         // Player Character
         m_PlayerCharacter = asset.FindActionMap("Player Character", throwIfNotFound: true);
-        m_PlayerCharacter_StrafeLeft = m_PlayerCharacter.FindAction("Strafe Left", throwIfNotFound: true);
-        m_PlayerCharacter_StrafeRight = m_PlayerCharacter.FindAction("Strafe Right", throwIfNotFound: true);
-        m_PlayerCharacter_Jump = m_PlayerCharacter.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerCharacter_MoveLeft = m_PlayerCharacter.FindAction("Move Left", throwIfNotFound: true);
         m_PlayerCharacter_MoveRight = m_PlayerCharacter.FindAction("Move Right", throwIfNotFound: true);
-        m_PlayerCharacter_Crouch = m_PlayerCharacter.FindAction("Crouch", throwIfNotFound: true);
+        m_PlayerCharacter_MoveLeft = m_PlayerCharacter.FindAction("Move Left", throwIfNotFound: true);
+        m_PlayerCharacter_Jump = m_PlayerCharacter.FindAction("Jump", throwIfNotFound: true);
         m_PlayerCharacter_Dash = m_PlayerCharacter.FindAction("Dash", throwIfNotFound: true);
     }
 
@@ -239,23 +179,17 @@ public class @VirtualController : IInputActionCollection, IDisposable
     // Player Character
     private readonly InputActionMap m_PlayerCharacter;
     private IPlayerCharacterActions m_PlayerCharacterActionsCallbackInterface;
-    private readonly InputAction m_PlayerCharacter_StrafeLeft;
-    private readonly InputAction m_PlayerCharacter_StrafeRight;
-    private readonly InputAction m_PlayerCharacter_Jump;
-    private readonly InputAction m_PlayerCharacter_MoveLeft;
     private readonly InputAction m_PlayerCharacter_MoveRight;
-    private readonly InputAction m_PlayerCharacter_Crouch;
+    private readonly InputAction m_PlayerCharacter_MoveLeft;
+    private readonly InputAction m_PlayerCharacter_Jump;
     private readonly InputAction m_PlayerCharacter_Dash;
     public struct PlayerCharacterActions
     {
         private @VirtualController m_Wrapper;
         public PlayerCharacterActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
-        public InputAction @StrafeLeft => m_Wrapper.m_PlayerCharacter_StrafeLeft;
-        public InputAction @StrafeRight => m_Wrapper.m_PlayerCharacter_StrafeRight;
-        public InputAction @Jump => m_Wrapper.m_PlayerCharacter_Jump;
-        public InputAction @MoveLeft => m_Wrapper.m_PlayerCharacter_MoveLeft;
         public InputAction @MoveRight => m_Wrapper.m_PlayerCharacter_MoveRight;
-        public InputAction @Crouch => m_Wrapper.m_PlayerCharacter_Crouch;
+        public InputAction @MoveLeft => m_Wrapper.m_PlayerCharacter_MoveLeft;
+        public InputAction @Jump => m_Wrapper.m_PlayerCharacter_Jump;
         public InputAction @Dash => m_Wrapper.m_PlayerCharacter_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCharacter; }
         public void Enable() { Get().Enable(); }
@@ -266,24 +200,15 @@ public class @VirtualController : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerCharacterActionsCallbackInterface != null)
             {
-                @StrafeLeft.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnStrafeLeft;
-                @StrafeLeft.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnStrafeLeft;
-                @StrafeLeft.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnStrafeLeft;
-                @StrafeRight.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnStrafeRight;
-                @StrafeRight.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnStrafeRight;
-                @StrafeRight.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnStrafeRight;
-                @Jump.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnJump;
-                @MoveLeft.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveLeft;
-                @MoveLeft.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveLeft;
-                @MoveLeft.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveLeft;
                 @MoveRight.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveRight;
                 @MoveRight.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveRight;
                 @MoveRight.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveRight;
-                @Crouch.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnCrouch;
-                @Crouch.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnCrouch;
-                @Crouch.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnCrouch;
+                @MoveLeft.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveLeft;
+                @MoveLeft.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveLeft;
+                @MoveLeft.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnMoveLeft;
+                @Jump.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnJump;
                 @Dash.started -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerCharacterActionsCallbackInterface.OnDash;
@@ -291,24 +216,15 @@ public class @VirtualController : IInputActionCollection, IDisposable
             m_Wrapper.m_PlayerCharacterActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @StrafeLeft.started += instance.OnStrafeLeft;
-                @StrafeLeft.performed += instance.OnStrafeLeft;
-                @StrafeLeft.canceled += instance.OnStrafeLeft;
-                @StrafeRight.started += instance.OnStrafeRight;
-                @StrafeRight.performed += instance.OnStrafeRight;
-                @StrafeRight.canceled += instance.OnStrafeRight;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
-                @MoveLeft.started += instance.OnMoveLeft;
-                @MoveLeft.performed += instance.OnMoveLeft;
-                @MoveLeft.canceled += instance.OnMoveLeft;
                 @MoveRight.started += instance.OnMoveRight;
                 @MoveRight.performed += instance.OnMoveRight;
                 @MoveRight.canceled += instance.OnMoveRight;
-                @Crouch.started += instance.OnCrouch;
-                @Crouch.performed += instance.OnCrouch;
-                @Crouch.canceled += instance.OnCrouch;
+                @MoveLeft.started += instance.OnMoveLeft;
+                @MoveLeft.performed += instance.OnMoveLeft;
+                @MoveLeft.canceled += instance.OnMoveLeft;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
@@ -336,12 +252,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
     }
     public interface IPlayerCharacterActions
     {
-        void OnStrafeLeft(InputAction.CallbackContext context);
-        void OnStrafeRight(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
-        void OnMoveLeft(InputAction.CallbackContext context);
         void OnMoveRight(InputAction.CallbackContext context);
-        void OnCrouch(InputAction.CallbackContext context);
+        void OnMoveLeft(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
     }
 }

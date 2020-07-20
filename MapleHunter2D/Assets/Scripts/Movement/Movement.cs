@@ -1,31 +1,10 @@
 ﻿using UnityEngine;
 
-public class Movement : MonoBehaviour
+public static class Movement
 {
-
-    Rigidbody2D body = null;
-    PlayerCharacterData playerCharacterData = null;
-
-    private void Start()
+    public static bool IsAirborne(GameObject character)
     {
-        body = GetComponent<Rigidbody2D>();
-        playerCharacterData = GetComponent<PlayerCharacterData>();
-    }
-
-
-    public bool Dash(float velocity, float duration)
-    {
-        if(body != null)
-        {
-            body.AddForce(new Vector2(velocity, 0), ForceMode2D.Impulse);
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool IsAirborne()
-    {
+        Rigidbody2D body = character.GetComponent<Rigidbody2D>();
         Vector2 currentVeclocity = body.velocity;
         if (currentVeclocity.y != 0)
         {
@@ -33,81 +12,41 @@ public class Movement : MonoBehaviour
         }
         return false;
     }
-    public bool ForceStop()
+    public static void StopHorizontal(GameObject character)
     {
-        return SetVelocity(0, 0);
+        SetHorizontal(character, 0);
     }
-    public bool StopHorizontal()
+    public static bool Move(GameObject character, float linearVelocity)
     {
-        if (playerCharacterData.canStop)
-        {
-            return SetHorizontal(0);
-        }
-        return false;
-    }
-    public bool StopVertical()
-    {
-        if (playerCharacterData.canStop)
-        {
-            return SetVertical(0);
-        }
-        return false;
-    }
-    public bool Strafe(float linearVelocity)
-    {
-        return SetHorizontal(linearVelocity);
-    }
-    public bool Move(float linearVelocity)
-    {
+        CharacterObjectData characterData = character.GetComponent<CharacterObjectData>();
         if (linearVelocity > 0) //move to the right
         {
-            if (!playerCharacterData.facingRight) //currently facing left
+            if (!characterData.isFacingRight) //currently facing left
             {
-                Turn(); //turn to face right
+                Turn(character); //turn to face right
             }
         }
         else //move to left
         {
-            if (playerCharacterData.facingRight) //currently facing right
+            if (characterData.isFacingRight) //currently facing right
             {
-                Turn(); //turn to face left
+                Turn(character); //turn to face left
             }
         }
-        return SetHorizontal(linearVelocity);
+        return SetHorizontal(character, linearVelocity);
     }
 
-    public bool Jump(float linearVelocity)
+    public static bool Jump(GameObject character, float linearVelocity)
     {
-        if (!this.IsAirborne())
+        if (!IsAirborne(character))
         {
-            return SetVertical(linearVelocity);
+            return SetVertical(character, linearVelocity);
         }
         return false;
     }
-    private bool SetVelocity(float xVelocity, float yVelocity)
+    private static bool SetHorizontal(GameObject character, float xVelocity)
     {
-        if (body != null)
-        {
-            body.velocity = new Vector2(xVelocity, yVelocity);
-            return true;
-        }
-        return false;
-    }
-
-    private bool AddVelocity(float xVelocity, float yVelocity)
-    {
-        if (body != null)
-        {
-            Vector2 currentVelocity = body.velocity;
-            Vector2 newVelocity = new Vector2(currentVelocity.x + xVelocity, currentVelocity.y + yVelocity);
-            body.velocity = newVelocity;
-            return true;
-        }
-        return false;
-    }
-
-    private bool SetHorizontal(float xVelocity)
-    {
+        Rigidbody2D body = character.GetComponent<Rigidbody2D>();
         if (body != null)
         {
             Vector2 currentVelocity = body.velocity;
@@ -117,8 +56,9 @@ public class Movement : MonoBehaviour
         }
         return false;
     }
-    private bool SetVertical(float yVelocity)
+    private static bool SetVertical(GameObject character, float yVelocity)
     {
+        Rigidbody2D body = character.GetComponent<Rigidbody2D>();
         if (body != null)
         {
             Vector2 currentVelocity = body.velocity;
@@ -128,13 +68,14 @@ public class Movement : MonoBehaviour
         }
         return false;
     }
-    private bool Turn()
+    private static bool Turn(GameObject character)
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer spriteRenderer = character.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
+            CharacterObjectData characterData = character.GetComponent<CharacterObjectData>();
             spriteRenderer.flipX = !spriteRenderer.flipX;
-            playerCharacterData.facingRight = !playerCharacterData.facingRight;
+            characterData.isFacingRight = !characterData.isFacingRight;
             return true;
         }
         return false;
