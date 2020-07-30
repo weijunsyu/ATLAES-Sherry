@@ -3,24 +3,19 @@ using UnityEngine.Audio;
 
 public class GlobalPersistentObject : MonoBehaviour
 {
+    //Definitions:
+
     // Config Parameters
+
+    // Cached References:
     [SerializeField] private AudioMixer mixer = null;
 
-    // State Parameters
-    public PlayerCharacterData playerData = null;
+    // State Parameters and Objects
     public SaveLoadWrapper saveLoadWrapper = new SaveLoadWrapper();
-
 
     private void Awake()
     {
         KeepPersistentStatus();
-    }
-
-    private void Start()
-    {
-        //init all persistent objects
-        //saveLoadWrapper = new SaveLoadWrapper();
-        //playerData = new PlayerCharacterData(); do this on loading of some save game and populate parameters at that time
     }
 
     private void KeepPersistentStatus()

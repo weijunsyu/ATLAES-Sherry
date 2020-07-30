@@ -6,11 +6,32 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
-    guid: 04bdb152b3ab6e643bcc25eac1fa260c
-  - enabled: 1
-    path: Assets/Scenes/Main Menu (Startup Scene).unity
+    path: Assets/Scenes/(0) Main Menu (Startup Scene).unity
     guid: 23cf8c3c17eba6a4eb00a81ae112411e
+  - enabled: 1
+    path: Assets/Scenes/(1) Load Menu.unity
+    guid: 0b1b700ef8ff5e04aa7a8486fc401fdb
+  - enabled: 1
+    path: Assets/Scenes/(2) Settings Menu.unity
+    guid: 17a80a41f74fd084cafb606cca356e14
+  - enabled: 1
+    path: Assets/Scenes/(3) Control Config Menu.unity
+    guid: 92cb08ab05e31c042a86a520ee04aecf
+  - enabled: 1
+    path: Assets/Scenes/(4) Advanced Settings Menu.unity
+    guid: bd9cf1d7174ef5c4494b9ec338679ce3
+  - enabled: 1
+    path: Assets/Scenes/(5) Credits.unity
+    guid: 65d35732319d9704da1d04176c754c33
+  - enabled: 1
+    path: Assets/Scenes/(6) Intro Level (Tutorial).unity
+    guid: 7d504b8018418a54daf069366769e5a9
+  - enabled: 1
+    path: Assets/Scenes/(7) Home Level (Central Hub).unity
+    guid: 20fe5a259e4f5a44a87d2002e9172fac
+  - enabled: 1
+    path: Assets/Scenes/(8) Level 1.unity
+    guid: 04bdb152b3ab6e643bcc25eac1fa260c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ae796748650aa414fb40af321ba025d0,
       type: 2}
