@@ -1,9 +1,18 @@
 ﻿/*
  * Class containing  static helper functions
  */
+using UnityEngine;
+
 public static class StaticFunctions
 {
     // Vector functions:
+    // Find the unit vector of a 2D vector
+    public static Vector2 UnitVector(Vector2 vector)
+    {
+        float[] unitVectorArray = UnitVector(vector.x, vector.y);
+        return new Vector2(unitVectorArray[0], unitVectorArray[1]);
+    }
+
     // Do scalar multiplication on some vector vectorArray by value scalar
     public static float[] ScalarMultiplication(float scalar, params float[] vectorArray)
     {

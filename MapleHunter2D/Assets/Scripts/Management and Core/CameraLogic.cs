@@ -2,8 +2,9 @@
 
 public class CameraLogic : MonoBehaviour
 {
+    //[SerializeField] GameObject playerCharacter = null;
 
-    private Camera mainCamera = null;
+    private Camera mainCamera = null; 
 
     private Vector2 resolution;
     private bool screenResized;
@@ -17,6 +18,12 @@ public class CameraLogic : MonoBehaviour
         resolution = new Vector2(Screen.width, Screen.height);
     }
     private void Update()
+    {
+        // Change screen size dynamically as window size changes
+        MaintainAspectRatio();
+    }
+
+    private void MaintainAspectRatio()
     {
         if (screenSizeChanged())
         {
@@ -35,23 +42,33 @@ public class CameraLogic : MonoBehaviour
 
     private void AdjustCameraAspectRatio(float targetWidthByRatio, float targetHeightByRatio)
     {
-        ResetCamera();
         float targetAspect = targetWidthByRatio / targetHeightByRatio;
         float windowAspect = (float)Screen.width / (float)Screen.height;
-        float scaleDifference = windowAspect / targetAspect;
-        mainCamera.aspect = targetAspect;
+        float scaleHeight = windowAspect / targetAspect;
 
-        if (scaleDifference < 1.0f) //add letterboxes (horizontal lines on the top and bottom)
+        if (scaleHeight < 1.0f) //add letterboxes (horizontal lines on the top and bottom)
         {
-            float cameraHeight = mainCamera.orthographicSize * 2;
-            float cameraWidth = targetAspect * cameraHeight;
-            float offset = ((cameraWidth * Screen.height) - (Screen.width * cameraHeight)) / (Screen.width * 2);
-            mainCamera.aspect = windowAspect;
-            mainCamera.orthographicSize += offset;
+            Rect rect = mainCamera.rect;
+
+            rect.width = 1.0f;
+            rect.height = scaleHeight;
+            rect.x = 0;
+            rect.y = (1.0f - scaleHeight) / 2.0f;
+
+            mainCamera.rect = rect;
         }
         else //add pillarboxes (vertical lines on the left and right)
         {
-            mainCamera.aspect = windowAspect;
+            float scaleWidth = 1.0f / scaleHeight;
+
+            Rect rect = mainCamera.rect;
+
+            rect.width = scaleWidth;
+            rect.height = 1.0f;
+            rect.x = (1.0f - scaleWidth) / 2.0f;
+            rect.y = 0;
+
+            mainCamera.rect = rect;
         }
     }
     
@@ -62,10 +79,5 @@ public class CameraLogic : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    private void ResetCamera()
-    {
-        mainCamera.orthographicSize = GameConstants.DEFAULT_CAMERA_SIZE;
     }
 }
