@@ -152,7 +152,7 @@ Transform:
   - {fileID: 90851467}
   - {fileID: 388545106}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &90851465
 GameObject:
@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b53bbe2770a53a42bb69f82fc4ec1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCharacterLogic: {fileID: 0}
 --- !u!114 &388545111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,77 +363,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627e26f490594e942afa96f8e02d4f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFacingRight: 0
-  isAirborne: 0
---- !u!1001 &486945398
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8238646493650495188, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_Name
-      value: Scene Loader
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 13.624559
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.2193713
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -35.86965
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4d799887e614f5d4b806c503aa60ac9a, type: 3}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpVelocity: 4
+  moveSpeed: 5
+  dashSpeed: 20
+  canJumpDelayAfterAirborneInSeconds: 0.125
+  playerController: {fileID: 0}
+  gameCamera: {fileID: 0}
+  reticleObject: {fileID: 0}
+  attackOrigin: {fileID: 0}
+  playerHasControl: 1
 --- !u!1 &503111164
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +480,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &827315357
@@ -763,7 +705,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1041058311
@@ -893,7 +835,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1208020809
@@ -1001,7 +943,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &1308903719
@@ -1234,7 +1176,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1661222129
@@ -1423,7 +1365,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &1869180127
@@ -1605,7 +1547,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2022740712
@@ -1713,6 +1655,6 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

@@ -1,5 +1,4 @@
-﻿using UnityEngine.InputSystem.Controls;
-
+﻿
 public static class GameConstants
 {
     // Save settings
@@ -22,4 +21,7 @@ public static class GameConstants
     public const float IS_AIRBORNE_CHECK_BOX_X_OFFSET = -0.05f; // Width offset for checking if character is airborne
     public const float IS_AIRBORNE_CHECK_BOX_Y_OFFSET = 0.5f; // Height offset for checking if character is airborne
     public const float DIRECTIONAL_BOX_OFFSET = 0.05f; // Offset for diretion collision checks
+
+    // Input Settings
+    public const float AIM_ATTACK_JOYSTICK_MIN_MAGNITUDE = 0.7f; // Calibrate sensitivity of Aim Attack between 0-1 where 0 is most sensitive
 }
