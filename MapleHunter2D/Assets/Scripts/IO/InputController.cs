@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    // Definitions:
     /*
      * List of movement inputs in order of importance from least to most important
      * such that more imortant inputs override less important inputs
@@ -30,22 +31,27 @@ public class InputController : MonoBehaviour
         UTILITY_1 = 10,
         UTILITY_2 = 11
     }
-    // Cached References:
-    [SerializeField] private PlayerCharacterLogic playerCharacterLogic = null;
-    private VirtualController virtualController;
 
+
+    // Cached References:
+    [SerializeField] private PlayerCharacterData playerCharacterData = null;
+    [SerializeField] private PlayerMovement playerMovement = null;
+    [SerializeField] private PlayerAction playerAction = null;
+    private VirtualController virtualController;
 
     // State Parameters and Objects:
     private List<MovementInput> movementInputList = new List<MovementInput>(); //should never be emtpy as character should be STOP if not doing anything
     private List<ActionInput> actionInputList = new List<ActionInput>(); //when empty it means no action is being performed at current point in time
-    private bool aimAttackIsSecondary = false; //toggle aim attack between primary and secondary attack (used only in controller input)
-    private int currentComboPosition = 0; //stores the current number of inputs in potential combo
-    private float comboInputInitialTime = 0; //store the time when potential combo starts
-    private float comboInputCurrentTime = 0; //stores the current time (used to find delta time between combo start and combo evaluation
+    private bool aimAttackIsSecondary; //toggle aim attack between primary and secondary attack (used only in controller input)
+    private int currentComboPosition; //stores the current number of inputs in potential combo
+    private float comboInputInitialTime; //store the time when potential combo starts
+    private float comboInputCurrentTime; //stores the current time (used to find delta time between combo start and combo evaluation
 
+    // Unity Events:
     private void Awake()
     {
         virtualController = new VirtualController();
+        
         // Move Right
         virtualController.MouseAndKeyboard.MoveRight.performed += ctx => MovementAddEvaluate(MovementInput.MOVE_RIGHT);
         virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => MovementRemoveEvaluate(MovementInput.MOVE_RIGHT);
@@ -106,7 +112,7 @@ public class InputController : MonoBehaviour
 
         // MOUSE ONLY:
         // Aim
-        virtualController.MouseAndKeyboard.Aim.performed += ctx => Aim(ctx.ReadValue<Vector2>());
+        virtualController.MouseAndKeyboard.Aim.performed += ctx => FreeAim(ctx.ReadValue<Vector2>());
 
         // GAMEPAD ONLY:
         // Aim Attack (primary attack on direction aimed)
@@ -119,30 +125,41 @@ public class InputController : MonoBehaviour
 
     private void OnEnable()
     {
+        // Reset state parameters and objects:
+        movementInputList.Clear();
+        movementInputList.Add(MovementInput.STOP); //movementInputList should always have stop
+        actionInputList.Clear();
+        aimAttackIsSecondary = false;
+        currentComboPosition = 0;
+        comboInputInitialTime = 0;
+        comboInputCurrentTime = 0;
+
+        // Enable virtual controller:
         virtualController.Enable();
     }
-    private void Start()
+    private void Update()
     {
-        movementInputList.Add(MovementInput.STOP); //movementInputList should always have stop
+        ReEvaluateMovementInput();
     }
-
     private void OnDisable()
     {
         virtualController.Disable();
     }
 
-    public void ReEvaluateMovementInput()
+
+    // Class Functions:
+    private void ReEvaluateMovementInput()
     {
         EvaluateMovementInput(movementInputList.Max());
     }
-    private void Aim(Vector2 direction)
+    private void FreeAim(Vector2 direction)
     {
-        playerCharacterLogic.AimCharacter(playerCharacterLogic.CorrectPixelAimDirection(direction));
+        playerAction.SetReticleAndAim(direction);
     }
 
     private void AimAttack(Vector2 direction)
     {
-        playerCharacterLogic.AimCharacter(playerCharacterLogic.CorrectJoystickAimDirection(direction));
+        playerAction.AimCharacterJoystick(direction);
         if (aimAttackIsSecondary)
         {
             //Debug.Log("Aim is Secondary");
@@ -256,17 +273,17 @@ public class InputController : MonoBehaviour
     }
     private void EvaluateMovementInput(MovementInput input)
     {
-        if (playerCharacterLogic.playerHasControl)
+        if (playerCharacterData.playerHasControl)
         {
             switch (input)
             {
                 case MovementInput.MOVE_RIGHT:
                     //Debug.Log("Move Right performed");
-                    playerCharacterLogic.MoveWithTurn(playerCharacterLogic.moveSpeed);
+                    playerMovement.MoveWithTurn(playerCharacterData.moveSpeed);
                     break;
                 case MovementInput.MOVE_LEFT:
                     //Debug.Log("Move Left performed");
-                    playerCharacterLogic.MoveWithTurn(-playerCharacterLogic.moveSpeed);
+                    playerMovement.MoveWithTurn(-playerCharacterData.moveSpeed);
                     break;
                 case MovementInput.CROUCH:
                     //Debug.Log("Crouch performed");
@@ -276,21 +293,21 @@ public class InputController : MonoBehaviour
                     break;
                 case MovementInput.JUMP:
                     //Debug.Log("Jump performed");
-                    playerCharacterLogic.Jump(playerCharacterLogic.jumpVelocity);
+                    playerMovement.Jump(playerCharacterData.jumpVelocity);
                     break;
                 case MovementInput.DODGE:
                     //Debug.Log("Dodge performed");
                     break;
                 default:
                     //Debug.Log("Stop performed");
-                    playerCharacterLogic.StopHorizontal();
+                    playerMovement.StopHorizontal();
                     break;
             }
         }
     }
     private void EvaluateActionInput(ActionInput input)
     {
-        if (playerCharacterLogic.playerHasControl)
+        if (playerCharacterData.playerHasControl)
         {
             switch (input)
             {

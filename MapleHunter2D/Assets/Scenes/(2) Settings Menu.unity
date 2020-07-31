@@ -478,7 +478,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1678848209}
+      - m_Target: {fileID: 11400000, guid: 4f2a8c44fae89c8419e0539562eac840, type: 2}
         m_MethodName: LoadSceneByIndex
         m_Mode: 3
         m_Arguments:
@@ -608,7 +608,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1678848209}
+      - m_Target: {fileID: 11400000, guid: 4f2a8c44fae89c8419e0539562eac840, type: 2}
         m_MethodName: LoadSceneByIndex
         m_Mode: 3
         m_Arguments:
@@ -746,87 +746,6 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1660272383}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1678848208
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8238646493650495188, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_Name
-      value: Scene Loader
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8238646493650495190, guid: 4d799887e614f5d4b806c503aa60ac9a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4d799887e614f5d4b806c503aa60ac9a, type: 3}
---- !u!114 &1678848209 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8238646493650495191, guid: 4d799887e614f5d4b806c503aa60ac9a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1678848208}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee1134efe22a4043ad26094b03d62b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1836643712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1678848209}
+      - m_Target: {fileID: 11400000, guid: 4f2a8c44fae89c8419e0539562eac840, type: 2}
         m_MethodName: LoadSceneByIndex
         m_Mode: 3
         m_Arguments:
@@ -1549,7 +1468,7 @@ PrefabInstance:
     - target: {fileID: 1261584617197090099, guid: 1042c3810b99de24d83a08e70846db2b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1261584617197090099, guid: 1042c3810b99de24d83a08e70846db2b,
         type: 3}

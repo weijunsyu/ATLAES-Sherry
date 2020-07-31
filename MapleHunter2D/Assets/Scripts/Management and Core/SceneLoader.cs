@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+[CreateAssetMenu(menuName = "SceneLoader")]
+public class SceneLoader : ScriptableObject
 {
     // Return the index number of the current scene
     public int GetCurrentSceneIndex()
