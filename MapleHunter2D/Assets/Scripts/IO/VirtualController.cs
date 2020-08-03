@@ -67,7 +67,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Dodge"",
+                    ""name"": ""Defend"",
                     ""type"": ""Button"",
                     ""id"": ""f7a48f45-c224-4b9c-a24d-ed356c7916bd"",
                     ""expectedControlType"": ""Button"",
@@ -219,7 +219,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Defend"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -322,7 +322,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Dodge"",
+                    ""name"": ""Defend"",
                     ""type"": ""Button"",
                     ""id"": ""8e84932e-89d3-4049-a1bc-bad3459b0084"",
                     ""expectedControlType"": ""Button"",
@@ -471,7 +471,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Defend"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -626,7 +626,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
         m_MouseAndKeyboard_Crouch = m_MouseAndKeyboard.FindAction("Crouch", throwIfNotFound: true);
         m_MouseAndKeyboard_Up = m_MouseAndKeyboard.FindAction("Up", throwIfNotFound: true);
         m_MouseAndKeyboard_Dash = m_MouseAndKeyboard.FindAction("Dash", throwIfNotFound: true);
-        m_MouseAndKeyboard_Dodge = m_MouseAndKeyboard.FindAction("Dodge", throwIfNotFound: true);
+        m_MouseAndKeyboard_Defend = m_MouseAndKeyboard.FindAction("Defend", throwIfNotFound: true);
         m_MouseAndKeyboard_Aim = m_MouseAndKeyboard.FindAction("Aim", throwIfNotFound: true);
         m_MouseAndKeyboard_Primary = m_MouseAndKeyboard.FindAction("Primary", throwIfNotFound: true);
         m_MouseAndKeyboard_Secondary = m_MouseAndKeyboard.FindAction("Secondary", throwIfNotFound: true);
@@ -641,7 +641,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
         m_GamepadController_Crouch = m_GamepadController.FindAction("Crouch", throwIfNotFound: true);
         m_GamepadController_Up = m_GamepadController.FindAction("Up", throwIfNotFound: true);
         m_GamepadController_Dash = m_GamepadController.FindAction("Dash", throwIfNotFound: true);
-        m_GamepadController_Dodge = m_GamepadController.FindAction("Dodge", throwIfNotFound: true);
+        m_GamepadController_Defend = m_GamepadController.FindAction("Defend", throwIfNotFound: true);
         m_GamepadController_AimAttack = m_GamepadController.FindAction("Aim Attack", throwIfNotFound: true);
         m_GamepadController_HoldSecondaryAimAttack = m_GamepadController.FindAction("Hold Secondary Aim Attack", throwIfNotFound: true);
         m_GamepadController_Primary = m_GamepadController.FindAction("Primary", throwIfNotFound: true);
@@ -704,7 +704,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_MouseAndKeyboard_Crouch;
     private readonly InputAction m_MouseAndKeyboard_Up;
     private readonly InputAction m_MouseAndKeyboard_Dash;
-    private readonly InputAction m_MouseAndKeyboard_Dodge;
+    private readonly InputAction m_MouseAndKeyboard_Defend;
     private readonly InputAction m_MouseAndKeyboard_Aim;
     private readonly InputAction m_MouseAndKeyboard_Primary;
     private readonly InputAction m_MouseAndKeyboard_Secondary;
@@ -721,7 +721,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_MouseAndKeyboard_Crouch;
         public InputAction @Up => m_Wrapper.m_MouseAndKeyboard_Up;
         public InputAction @Dash => m_Wrapper.m_MouseAndKeyboard_Dash;
-        public InputAction @Dodge => m_Wrapper.m_MouseAndKeyboard_Dodge;
+        public InputAction @Defend => m_Wrapper.m_MouseAndKeyboard_Defend;
         public InputAction @Aim => m_Wrapper.m_MouseAndKeyboard_Aim;
         public InputAction @Primary => m_Wrapper.m_MouseAndKeyboard_Primary;
         public InputAction @Secondary => m_Wrapper.m_MouseAndKeyboard_Secondary;
@@ -755,9 +755,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDash;
-                @Dodge.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDodge;
-                @Dodge.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDodge;
-                @Dodge.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDodge;
+                @Defend.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDefend;
+                @Defend.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDefend;
+                @Defend.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDefend;
                 @Aim.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnAim;
@@ -798,9 +798,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @Dodge.started += instance.OnDodge;
-                @Dodge.performed += instance.OnDodge;
-                @Dodge.canceled += instance.OnDodge;
+                @Defend.started += instance.OnDefend;
+                @Defend.performed += instance.OnDefend;
+                @Defend.canceled += instance.OnDefend;
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
@@ -833,7 +833,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_GamepadController_Crouch;
     private readonly InputAction m_GamepadController_Up;
     private readonly InputAction m_GamepadController_Dash;
-    private readonly InputAction m_GamepadController_Dodge;
+    private readonly InputAction m_GamepadController_Defend;
     private readonly InputAction m_GamepadController_AimAttack;
     private readonly InputAction m_GamepadController_HoldSecondaryAimAttack;
     private readonly InputAction m_GamepadController_Primary;
@@ -851,7 +851,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_GamepadController_Crouch;
         public InputAction @Up => m_Wrapper.m_GamepadController_Up;
         public InputAction @Dash => m_Wrapper.m_GamepadController_Dash;
-        public InputAction @Dodge => m_Wrapper.m_GamepadController_Dodge;
+        public InputAction @Defend => m_Wrapper.m_GamepadController_Defend;
         public InputAction @AimAttack => m_Wrapper.m_GamepadController_AimAttack;
         public InputAction @HoldSecondaryAimAttack => m_Wrapper.m_GamepadController_HoldSecondaryAimAttack;
         public InputAction @Primary => m_Wrapper.m_GamepadController_Primary;
@@ -886,9 +886,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDash;
-                @Dodge.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDodge;
-                @Dodge.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDodge;
-                @Dodge.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDodge;
+                @Defend.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDefend;
+                @Defend.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDefend;
+                @Defend.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDefend;
                 @AimAttack.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnAimAttack;
                 @AimAttack.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnAimAttack;
                 @AimAttack.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnAimAttack;
@@ -932,9 +932,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @Dodge.started += instance.OnDodge;
-                @Dodge.performed += instance.OnDodge;
-                @Dodge.canceled += instance.OnDodge;
+                @Defend.started += instance.OnDefend;
+                @Defend.performed += instance.OnDefend;
+                @Defend.canceled += instance.OnDefend;
                 @AimAttack.started += instance.OnAimAttack;
                 @AimAttack.performed += instance.OnAimAttack;
                 @AimAttack.canceled += instance.OnAimAttack;
@@ -986,7 +986,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnDodge(InputAction.CallbackContext context);
+        void OnDefend(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnPrimary(InputAction.CallbackContext context);
         void OnSecondary(InputAction.CallbackContext context);
@@ -1002,7 +1002,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnDodge(InputAction.CallbackContext context);
+        void OnDefend(InputAction.CallbackContext context);
         void OnAimAttack(InputAction.CallbackContext context);
         void OnHoldSecondaryAimAttack(InputAction.CallbackContext context);
         void OnPrimary(InputAction.CallbackContext context);
