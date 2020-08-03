@@ -4,6 +4,7 @@ public class PlayerSpawner : MonoBehaviour
 {
     // Cached References:
     [SerializeField] private GameObject playerObjectToSpawn = null;
+    private GameObject playerCharacter = null;
 
 
     private void Start()
@@ -13,6 +14,6 @@ public class PlayerSpawner : MonoBehaviour
 
     private void SpawnCharacter()
     {
-        GameObject playerCharacter = Instantiate(playerObjectToSpawn, this.transform.position, Quaternion.identity, this.transform);
+        playerCharacter = Instantiate(playerObjectToSpawn, this.transform.position, Quaternion.identity, this.transform);
     }
 }

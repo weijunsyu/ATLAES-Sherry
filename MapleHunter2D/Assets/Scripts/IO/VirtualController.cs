@@ -113,14 +113,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Pause Game"",
-                    ""type"": ""Button"",
-                    ""id"": ""020dfeef-bfc2-4e2c-bca9-f6701a650fb3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -220,17 +212,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Defend"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""56972220-78d2-443e-ade2-44b15517944b"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Pause Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -376,14 +357,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Pause Game"",
-                    ""type"": ""Button"",
-                    ""id"": ""dd2b285a-1ca0-462b-9832-c18b7face947"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -499,17 +472,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f0010621-32fa-48f4-b547-7a3aacdb4d22"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Pause Game"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""1c7753a8-72a8-43a7-9e37-471e031b7504"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
@@ -586,6 +548,44 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MenuControls"",
+            ""id"": ""2f3a2a0e-56f5-4cd2-b775-07fdb1e0b59d"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause Game"",
+                    ""type"": ""Button"",
+                    ""id"": ""897afd00-d8e0-4033-a42f-dc138ab48d80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ca6079db-041b-48fb-919e-8bfc0ad316dd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Pause Game"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ad87cb9-c2ea-48cf-8d81-ab7013f92662"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Pause Game"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -632,7 +632,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
         m_MouseAndKeyboard_Secondary = m_MouseAndKeyboard.FindAction("Secondary", throwIfNotFound: true);
         m_MouseAndKeyboard_Utility1 = m_MouseAndKeyboard.FindAction("Utility 1", throwIfNotFound: true);
         m_MouseAndKeyboard_Utility2 = m_MouseAndKeyboard.FindAction("Utility 2", throwIfNotFound: true);
-        m_MouseAndKeyboard_PauseGame = m_MouseAndKeyboard.FindAction("Pause Game", throwIfNotFound: true);
         // Gamepad Controller
         m_GamepadController = asset.FindActionMap("Gamepad Controller", throwIfNotFound: true);
         m_GamepadController_MoveRight = m_GamepadController.FindAction("Move Right", throwIfNotFound: true);
@@ -648,7 +647,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
         m_GamepadController_Secondary = m_GamepadController.FindAction("Secondary", throwIfNotFound: true);
         m_GamepadController_Utility1 = m_GamepadController.FindAction("Utility 1", throwIfNotFound: true);
         m_GamepadController_Utility2 = m_GamepadController.FindAction("Utility 2", throwIfNotFound: true);
-        m_GamepadController_PauseGame = m_GamepadController.FindAction("Pause Game", throwIfNotFound: true);
+        // MenuControls
+        m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
+        m_MenuControls_PauseGame = m_MenuControls.FindAction("Pause Game", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -710,7 +711,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_MouseAndKeyboard_Secondary;
     private readonly InputAction m_MouseAndKeyboard_Utility1;
     private readonly InputAction m_MouseAndKeyboard_Utility2;
-    private readonly InputAction m_MouseAndKeyboard_PauseGame;
     public struct MouseAndKeyboardActions
     {
         private @VirtualController m_Wrapper;
@@ -727,7 +727,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
         public InputAction @Secondary => m_Wrapper.m_MouseAndKeyboard_Secondary;
         public InputAction @Utility1 => m_Wrapper.m_MouseAndKeyboard_Utility1;
         public InputAction @Utility2 => m_Wrapper.m_MouseAndKeyboard_Utility2;
-        public InputAction @PauseGame => m_Wrapper.m_MouseAndKeyboard_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_MouseAndKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -773,9 +772,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
                 @Utility2.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
                 @Utility2.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
-                @PauseGame.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
-                @PauseGame.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
-                @PauseGame.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -816,9 +812,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started += instance.OnUtility2;
                 @Utility2.performed += instance.OnUtility2;
                 @Utility2.canceled += instance.OnUtility2;
-                @PauseGame.started += instance.OnPauseGame;
-                @PauseGame.performed += instance.OnPauseGame;
-                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -840,7 +833,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_GamepadController_Secondary;
     private readonly InputAction m_GamepadController_Utility1;
     private readonly InputAction m_GamepadController_Utility2;
-    private readonly InputAction m_GamepadController_PauseGame;
     public struct GamepadControllerActions
     {
         private @VirtualController m_Wrapper;
@@ -858,7 +850,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
         public InputAction @Secondary => m_Wrapper.m_GamepadController_Secondary;
         public InputAction @Utility1 => m_Wrapper.m_GamepadController_Utility1;
         public InputAction @Utility2 => m_Wrapper.m_GamepadController_Utility2;
-        public InputAction @PauseGame => m_Wrapper.m_GamepadController_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_GamepadController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -907,9 +898,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
                 @Utility2.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
                 @Utility2.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
-                @PauseGame.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
-                @PauseGame.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
-                @PauseGame.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_GamepadControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -953,13 +941,43 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started += instance.OnUtility2;
                 @Utility2.performed += instance.OnUtility2;
                 @Utility2.canceled += instance.OnUtility2;
+            }
+        }
+    }
+    public GamepadControllerActions @GamepadController => new GamepadControllerActions(this);
+
+    // MenuControls
+    private readonly InputActionMap m_MenuControls;
+    private IMenuControlsActions m_MenuControlsActionsCallbackInterface;
+    private readonly InputAction m_MenuControls_PauseGame;
+    public struct MenuControlsActions
+    {
+        private @VirtualController m_Wrapper;
+        public MenuControlsActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseGame => m_Wrapper.m_MenuControls_PauseGame;
+        public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuControlsActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuControlsActions instance)
+        {
+            if (m_Wrapper.m_MenuControlsActionsCallbackInterface != null)
+            {
+                @PauseGame.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnPauseGame;
+            }
+            m_Wrapper.m_MenuControlsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
                 @PauseGame.started += instance.OnPauseGame;
                 @PauseGame.performed += instance.OnPauseGame;
                 @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
-    public GamepadControllerActions @GamepadController => new GamepadControllerActions(this);
+    public MenuControlsActions @MenuControls => new MenuControlsActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -992,7 +1010,6 @@ public class @VirtualController : IInputActionCollection, IDisposable
         void OnSecondary(InputAction.CallbackContext context);
         void OnUtility1(InputAction.CallbackContext context);
         void OnUtility2(InputAction.CallbackContext context);
-        void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IGamepadControllerActions
     {
@@ -1009,6 +1026,9 @@ public class @VirtualController : IInputActionCollection, IDisposable
         void OnSecondary(InputAction.CallbackContext context);
         void OnUtility1(InputAction.CallbackContext context);
         void OnUtility2(InputAction.CallbackContext context);
+    }
+    public interface IMenuControlsActions
+    {
         void OnPauseGame(InputAction.CallbackContext context);
     }
 }

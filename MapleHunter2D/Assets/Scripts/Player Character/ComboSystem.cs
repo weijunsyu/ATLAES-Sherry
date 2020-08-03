@@ -2,7 +2,7 @@
 public static class ComboSystem
 {
     /*
-     * Combo system integer values in array corresponds to the input enum values in InputController such that:
+     * Combo system integer values in array corresponds to the input enum values in PlayerInputController such that:
      * 0 = STOP
      * 1 = MOVE RIGHT
      * 2 = MOVE LEFT
