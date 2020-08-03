@@ -54,7 +54,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Dodge",
+                    "name": "Defend",
                     "type": "Button",
                     "id": "f7a48f45-c224-4b9c-a24d-ed356c7916bd",
                     "expectedControlType": "Button",
@@ -206,7 +206,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard+Mouse",
-                    "action": "Dodge",
+                    "action": "Defend",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -309,7 +309,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Dodge",
+                    "name": "Defend",
                     "type": "Button",
                     "id": "8e84932e-89d3-4049-a1bc-bad3459b0084",
                     "expectedControlType": "Button",
@@ -458,7 +458,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Dodge",
+                    "action": "Defend",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 public class PlayerAction : CharacterAction
 {
     // Config parameters:
 
     // Cached References:
-    [SerializeField] private GameObject attackOrigin;
-    [SerializeField] private GameObject reticleObject;
+    [SerializeField] private GameObject attackOrigin = null;
+    [SerializeField] private GameObject reticleObject = null;
     private Camera gameCamera;
 
     // State Parameters and Objects:
@@ -28,6 +29,10 @@ public class PlayerAction : CharacterAction
 
 
     // Class Functions:
+    public void DefendAction() //Do action part of defend
+    {
+        //create shield and start draining HP. Mitigate 100% damage, do not prevent knockbacks, successfully blocking regens some HP
+    }
     public void SetReticleAndAim(Vector2 direction)
     {
         mousePositionPixels = direction;

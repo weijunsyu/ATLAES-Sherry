@@ -9,7 +9,7 @@ public static class ComboSystem
      * 3 = CROUCH
      * 4 = DASH
      * 5 = JUMP
-     * 6 = DODGE
+     * 6 = DEFEND
      * 7 = UP
      * 8 = PRIMARY
      * 9 = SECONDARY

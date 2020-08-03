@@ -1,37 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    // Definitions:
-    /*
-     * List of movement inputs in order of importance from least to most important
-     * such that more imortant inputs override less important inputs
-     */
-    private enum MovementInput
-    {
-        STOP = 0, // Stop in horizontal plane only (gravity is a thing)
-        MOVE_RIGHT = 1,
-        MOVE_LEFT = 2,
-        CROUCH = 3,
-        DASH = 4,
-        JUMP = 5,
-        DODGE = 6
-    }
-    /*
-     * List of action inputs of which ALL ACTIONS CAN EXIST INDEPENDENT OF EACH OTHER
-     * No precedence of any kind
-     */
-    private enum ActionInput
-    {
-        UP = 7, // Used for combos and entering portals / interactions
-        PRIMARY = 8,
-        SECONDARY = 9,
-        UTILITY_1 = 10,
-        UTILITY_2 = 11
-    }
-
+    //Config Parameters:
 
     // Cached References:
     [SerializeField] private PlayerCharacterData playerCharacterData = null;
@@ -40,12 +14,17 @@ public class InputController : MonoBehaviour
     private VirtualController virtualController;
 
     // State Parameters and Objects:
-    private List<MovementInput> movementInputList = new List<MovementInput>(); //should never be emtpy as character should be STOP if not doing anything
-    private List<ActionInput> actionInputList = new List<ActionInput>(); //when empty it means no action is being performed at current point in time
+    private List<OrderedInput> orderedInputList = new List<OrderedInput>(); //should never be emtpy as character should be STOP if not doing anything
+    private List<UnorderedInput> unorderedInputList = new List<UnorderedInput>(); //when empty it means no action is being performed at current point in time
     private bool aimAttackIsSecondary; //toggle aim attack between primary and secondary attack (used only in controller input)
     private int currentComboPosition; //stores the current number of inputs in potential combo
     private float comboInputInitialTime; //store the time when potential combo starts
     private float comboInputCurrentTime; //stores the current time (used to find delta time between combo start and combo evaluation
+    private Coroutine dashRoutine = null;
+    private bool isDashing = false;
+    private bool isEvaluatingInputs = true;
+    private bool dashOffWall = false; 
+
 
     // Unity Events:
     private void Awake()
@@ -53,58 +32,60 @@ public class InputController : MonoBehaviour
         virtualController = new VirtualController();
         
         // Move Right
-        virtualController.MouseAndKeyboard.MoveRight.performed += ctx => MovementAddEvaluate(MovementInput.MOVE_RIGHT);
-        virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => MovementRemoveEvaluate(MovementInput.MOVE_RIGHT);
-        virtualController.GamepadController.MoveRight.performed += ctx => MovementAddEvaluate(MovementInput.MOVE_RIGHT);
-        virtualController.GamepadController.MoveRight.canceled += ctx => MovementRemoveEvaluate(MovementInput.MOVE_RIGHT);
+        virtualController.MouseAndKeyboard.MoveRight.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(true); };
+        virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(false); };
+        virtualController.GamepadController.MoveRight.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(true); };
+        virtualController.GamepadController.MoveRight.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(false); };
         // Move Left
-        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => MovementAddEvaluate(MovementInput.MOVE_LEFT);
-        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => MovementRemoveEvaluate(MovementInput.MOVE_LEFT);
-        virtualController.GamepadController.MoveLeft.performed += ctx => MovementAddEvaluate(MovementInput.MOVE_LEFT);
-        virtualController.GamepadController.MoveLeft.canceled += ctx => MovementRemoveEvaluate(MovementInput.MOVE_LEFT);
+        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
+        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
+        virtualController.GamepadController.MoveLeft.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
+        virtualController.GamepadController.MoveLeft.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
         // Jump
-        virtualController.MouseAndKeyboard.Jump.started += ctx => MovementAddEvaluateRemove(MovementInput.JUMP);
-        virtualController.GamepadController.Jump.started += ctx => MovementAddEvaluateRemove(MovementInput.JUMP);
+        virtualController.MouseAndKeyboard.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
+        virtualController.GamepadController.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
 
         // Crouch
-        virtualController.MouseAndKeyboard.Crouch.performed += ctx => MovementAddEvaluate(MovementInput.CROUCH);
-        virtualController.MouseAndKeyboard.Crouch.canceled += ctx => MovementRemoveEvaluate(MovementInput.CROUCH);
-        virtualController.GamepadController.Crouch.performed += ctx => MovementAddEvaluate(MovementInput.CROUCH);
-        virtualController.GamepadController.Crouch.canceled += ctx => MovementRemoveEvaluate(MovementInput.CROUCH);
+        virtualController.MouseAndKeyboard.Crouch.performed += ctx => UnorderedAddEvaluate(UnorderedInput.CROUCH);
+        virtualController.MouseAndKeyboard.Crouch.canceled += ctx => { UnorderedRemoveEvaluate(UnorderedInput.CROUCH); playerMovement.Stand(); };
+        virtualController.GamepadController.Crouch.performed += ctx => UnorderedAddEvaluate(UnorderedInput.CROUCH);
+        virtualController.GamepadController.Crouch.canceled += ctx => { UnorderedRemoveEvaluate(UnorderedInput.CROUCH); playerMovement.Stand(); };
 
         // Up
-        virtualController.MouseAndKeyboard.Up.performed += ctx => ActionAddEvaluate(ActionInput.UP);
-        virtualController.MouseAndKeyboard.Up.canceled += ctx => ActionRemoveEvaluate(ActionInput.UP);
-        virtualController.GamepadController.Up.performed += ctx => ActionAddEvaluate(ActionInput.UP);
-        virtualController.GamepadController.Up.canceled += ctx => ActionRemoveEvaluate(ActionInput.UP);
+        virtualController.MouseAndKeyboard.Up.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UP);
+        virtualController.MouseAndKeyboard.Up.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UP);
+        virtualController.GamepadController.Up.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UP);
+        virtualController.GamepadController.Up.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UP);
 
-        // Dodge
-        virtualController.MouseAndKeyboard.Dodge.started += ctx => MovementAddEvaluateRemove(MovementInput.DODGE);
-        virtualController.GamepadController.Dodge.started += ctx => MovementAddEvaluateRemove(MovementInput.DODGE);
+        // Defend
+        virtualController.MouseAndKeyboard.Defend.performed += ctx => StartDefend();
+        virtualController.MouseAndKeyboard.Defend.canceled += ctx => StopDefend();
+        virtualController.GamepadController.Defend.performed += ctx => StartDefend();
+        virtualController.GamepadController.Defend.canceled += ctx => StopDefend();
         // Dash
-        virtualController.MouseAndKeyboard.Dash.started += ctx => MovementAddEvaluateRemove(MovementInput.DASH);
-        virtualController.GamepadController.Dash.started += ctx => MovementAddEvaluateRemove(MovementInput.DASH);
+        virtualController.MouseAndKeyboard.Dash.started += ctx => Dash();
+        virtualController.GamepadController.Dash.started += ctx => Dash();
 
         // Primary
-        virtualController.MouseAndKeyboard.Primary.performed += ctx => ActionAddEvaluate(ActionInput.PRIMARY);
-        virtualController.MouseAndKeyboard.Primary.canceled += ctx => ActionRemoveEvaluate(ActionInput.PRIMARY);
-        virtualController.GamepadController.Primary.performed += ctx => ActionAddEvaluate(ActionInput.PRIMARY);
-        virtualController.GamepadController.Primary.canceled += ctx => ActionRemoveEvaluate(ActionInput.PRIMARY);
+        virtualController.MouseAndKeyboard.Primary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.PRIMARY);
+        virtualController.MouseAndKeyboard.Primary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
+        virtualController.GamepadController.Primary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.PRIMARY);
+        virtualController.GamepadController.Primary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
         // Secondary
-        virtualController.MouseAndKeyboard.Secondary.performed += ctx => ActionAddEvaluate(ActionInput.SECONDARY);
-        virtualController.MouseAndKeyboard.Secondary.canceled += ctx => ActionRemoveEvaluate(ActionInput.SECONDARY);
-        virtualController.GamepadController.Secondary.performed += ctx => ActionAddEvaluate(ActionInput.SECONDARY);
-        virtualController.GamepadController.Secondary.canceled += ctx => ActionRemoveEvaluate(ActionInput.SECONDARY);
+        virtualController.MouseAndKeyboard.Secondary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.SECONDARY);
+        virtualController.MouseAndKeyboard.Secondary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
+        virtualController.GamepadController.Secondary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.SECONDARY);
+        virtualController.GamepadController.Secondary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
         // Utility 1
-        virtualController.MouseAndKeyboard.Utility1.performed += ctx => ActionAddEvaluate(ActionInput.UTILITY_1);
-        virtualController.MouseAndKeyboard.Utility1.canceled += ctx => ActionRemoveEvaluate(ActionInput.UTILITY_1);
-        virtualController.GamepadController.Utility1.performed += ctx => ActionAddEvaluate(ActionInput.UTILITY_1);
-        virtualController.GamepadController.Utility1.canceled += ctx => ActionRemoveEvaluate(ActionInput.UTILITY_1);
+        virtualController.MouseAndKeyboard.Utility1.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_1);
+        virtualController.MouseAndKeyboard.Utility1.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_1);
+        virtualController.GamepadController.Utility1.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_1);
+        virtualController.GamepadController.Utility1.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_1);
         // Utility 2
-        virtualController.MouseAndKeyboard.Utility2.performed += ctx => ActionAddEvaluate(ActionInput.UTILITY_2);
-        virtualController.MouseAndKeyboard.Utility2.canceled += ctx => ActionRemoveEvaluate(ActionInput.UTILITY_2);
-        virtualController.GamepadController.Utility2.performed += ctx => ActionAddEvaluate(ActionInput.UTILITY_2);
-        virtualController.GamepadController.Utility2.canceled += ctx => ActionRemoveEvaluate(ActionInput.UTILITY_2);
+        virtualController.MouseAndKeyboard.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
+        virtualController.MouseAndKeyboard.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
+        virtualController.GamepadController.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
+        virtualController.GamepadController.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
 
         // Pause Game
         virtualController.MouseAndKeyboard.PauseGame.started += ctx => PauseGame();
@@ -126,9 +107,9 @@ public class InputController : MonoBehaviour
     private void OnEnable()
     {
         // Reset state parameters and objects:
-        movementInputList.Clear();
-        movementInputList.Add(MovementInput.STOP); //movementInputList should always have stop
-        actionInputList.Clear();
+        orderedInputList.Clear();
+        orderedInputList.Add(OrderedInput.STOP); //orderedInputList should always have stop
+        unorderedInputList.Clear();
         aimAttackIsSecondary = false;
         currentComboPosition = 0;
         comboInputInitialTime = 0;
@@ -139,7 +120,7 @@ public class InputController : MonoBehaviour
     }
     private void Update()
     {
-        ReEvaluateMovementInput();
+        ReEvaluateOrderedInput();
     }
     private void OnDisable()
     {
@@ -148,9 +129,9 @@ public class InputController : MonoBehaviour
 
 
     // Class Functions:
-    private void ReEvaluateMovementInput()
+    private void ReEvaluateOrderedInput()
     {
-        EvaluateMovementInput(movementInputList.Max());
+        EvaluateOrderedInput(orderedInputList.Max());
     }
     private void FreeAim(Vector2 direction)
     {
@@ -163,140 +144,148 @@ public class InputController : MonoBehaviour
         if (aimAttackIsSecondary)
         {
             //Debug.Log("Aim is Secondary");
-            ActionAddEvaluate(ActionInput.SECONDARY);
+            UnorderedAddEvaluate(UnorderedInput.SECONDARY);
         }
         else
         {
             //Debug.Log("Aim is Primary");
-            ActionAddEvaluate(ActionInput.PRIMARY);
+            UnorderedAddEvaluate(UnorderedInput.PRIMARY);
         }
         if (direction == Vector2.zero) // Reset Primary and Secondary actions when Right Stick resets at [0,0]
         {
             //Debug.Log("Aim is Reset");
-            ActionRemoveEvaluate(ActionInput.SECONDARY);
-            ActionRemoveEvaluate(ActionInput.PRIMARY);
+            UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
+            UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
         }
     }
 
-    private void MovementAddEvaluate(MovementInput input)
+    private void OrderedAddEvaluate(OrderedInput input)
     {
-        MovementInput newInput = AddToMovementInputList(input);
-        EvaluateMovementInput(newInput);
+        OrderedInput newInput = AddToOrderedInputList(input);
+        EvaluateOrderedInput(newInput);
         
         EvaluateCombo((int)input); //check if input is combo
     }
-    private void ActionAddEvaluate(ActionInput input)
+    private void UnorderedAddEvaluate(UnorderedInput input)
     {
-        AddToActionInputList(input);
-        EvaluateActionInputs();
+        AddToUnorderedInputList(input);
+        EvaluateUnorderedInputs();
         
         EvaluateCombo((int)input); //check if input is combo
     }
-    private void MovementRemoveEvaluate(MovementInput input)
+    private void OrderedRemoveEvaluate(OrderedInput input)
     {
-        MovementInput newInput = RemoveFromMovementInputList(input);
-        EvaluateMovementInput(newInput);
+        OrderedInput newInput = RemoveFromOrderedInputList(input);
+        EvaluateOrderedInput(newInput);
     }
-    private void ActionRemoveEvaluate(ActionInput input)
+    private void UnorderedRemoveEvaluate(UnorderedInput input)
     {
-        RemoveFromActionInputList(input);
-        EvaluateActionInputs();
+        RemoveFromUnorderedInputList(input);
+        EvaluateUnorderedInputs();
     }
-    private void MovementAddEvaluateRemove(MovementInput input)
+    private void OrderedAddEvaluateRemove(OrderedInput input)
     {
-        MovementAddEvaluate(input);
-        MovementRemoveEvaluate(input);
+        OrderedAddEvaluate(input);
+        OrderedRemoveEvaluate(input);
     }
-    private void ActionAddEvaluateRemove(ActionInput input)
+    private void UnorderedAddEvaluateRemove(UnorderedInput input)
     {
-        ActionAddEvaluate(input);
-        ActionRemoveEvaluate(input);
+        UnorderedAddEvaluate(input);
+        UnorderedRemoveEvaluate(input);
     }
 
-    // Add MovementInput input into list of currentInputs if not already in list and return the MovementInput of most precedence
-    private MovementInput AddToMovementInputList(MovementInput input)
+    // Add OrderedInput input into list of currentInputs if not already in list and return the OrderedInput of most precedence
+    private OrderedInput AddToOrderedInputList(OrderedInput input)
     {
-        if (!movementInputList.Any()) // MovementInput list is empty 
+        if (!orderedInputList.Any()) // OrderedInput list is empty 
         {
-            if(input != MovementInput.STOP) //input is NOT stop
+            if(input != OrderedInput.STOP) //input is NOT stop
             {
-                movementInputList.Add(MovementInput.STOP);
-                movementInputList.Add(input);
+                orderedInputList.Add(OrderedInput.STOP);
+                orderedInputList.Add(input);
             }
             else //input IS stop
             {
-                movementInputList.Add(input); //add stop to list
+                orderedInputList.Add(input); //add stop to list
             }
             return input;
         }
-        else // MovementInput list not empty
+        else // OrderedInput list not empty
         {
             
-            if (!movementInputList.Contains(input)) //if input does not already exist in list
+            if (!orderedInputList.Contains(input)) //if input does not already exist in list
             {
-                movementInputList.Add(input);
+                orderedInputList.Add(input);
             }
-            return movementInputList.Max();
+            return orderedInputList.Max();
         }
     }
-    private void AddToActionInputList(ActionInput input)
+    private void AddToUnorderedInputList(UnorderedInput input)
     {
-        if (!actionInputList.Contains(input))
+        if (!unorderedInputList.Contains(input))
         {
-            actionInputList.Add(input);
+            unorderedInputList.Add(input);
         }
     }
 
-    // Remove ALL instances of specified inputs from the input list and return the MovementInput of most precedence or STOP in case of empty list
-    private MovementInput RemoveFromMovementInputList(params MovementInput[] inputListToRemove)
+    // Remove ALL instances of specified inputs from the input list and return the OrderedInput of most precedence or STOP in case of empty list
+    private OrderedInput RemoveFromOrderedInputList(params OrderedInput[] inputListToRemove)
     {
-        if (!movementInputList.Any()) // MovementInput list is empty 
+        if (!orderedInputList.Any()) // OrderedInput list is empty 
         {
-            movementInputList.Add(MovementInput.STOP);
-            return MovementInput.STOP;
+            orderedInputList.Add(OrderedInput.STOP);
+            return OrderedInput.STOP;
         }
-        else // MovementInput list not empty
+        else // OrderedInput list not empty
         {
-            foreach (MovementInput inputToRemove in inputListToRemove)
+            foreach (OrderedInput inputToRemove in inputListToRemove)
             {
-                movementInputList.RemoveAll(input => input == inputToRemove);
+                orderedInputList.RemoveAll(input => input == inputToRemove);
             }
-            return movementInputList.Max();
+            return orderedInputList.Max();
         }
     }
-    private void RemoveFromActionInputList(params ActionInput[] inputListToRemove)
+    private void RemoveFromUnorderedInputList(params UnorderedInput[] inputListToRemove)
     {
-        foreach (ActionInput inputToRemove in inputListToRemove)
+        foreach (UnorderedInput inputToRemove in inputListToRemove)
         {
-            actionInputList.RemoveAll(input => input == inputToRemove);
+            unorderedInputList.RemoveAll(input => input == inputToRemove);
         }
     }
-    private void EvaluateMovementInput(MovementInput input)
+    private void EvaluateOrderedInput(OrderedInput input)
     {
-        if (playerCharacterData.playerHasControl)
+        if (isEvaluatingInputs && playerCharacterData.GetPlayerHasControl())
         {
             switch (input)
             {
-                case MovementInput.MOVE_RIGHT:
+                case OrderedInput.MOVE_RIGHT:
                     //Debug.Log("Move Right performed");
-                    playerMovement.MoveWithTurn(playerCharacterData.moveSpeed);
+                    playerMovement.Move(OrderedInput.MOVE_RIGHT);
                     break;
-                case MovementInput.MOVE_LEFT:
+                case OrderedInput.MOVE_LEFT:
                     //Debug.Log("Move Left performed");
-                    playerMovement.MoveWithTurn(-playerCharacterData.moveSpeed);
+                    playerMovement.Move(OrderedInput.MOVE_LEFT);
                     break;
-                case MovementInput.CROUCH:
-                    //Debug.Log("Crouch performed");
-                    break;
-                case MovementInput.DASH:
+                case OrderedInput.DASH:
                     //Debug.Log("Dash performed");
+                    playerMovement.DashMove(dashOffWall);
                     break;
-                case MovementInput.JUMP:
+                case OrderedInput.JUMP:
                     //Debug.Log("Jump performed");
-                    playerMovement.Jump(playerCharacterData.jumpVelocity);
+                    if (isDashing)
+                    {
+                        EndDash();
+                    }
+                    playerMovement.Jump();
                     break;
-                case MovementInput.DODGE:
-                    //Debug.Log("Dodge performed");
+                case OrderedInput.DEFEND:
+                    //Debug.Log("Defend performed");
+                    if (isDashing)
+                    {
+                        EndDash();
+                    }
+                    playerMovement.StopAll();
+                    playerAction.DefendAction();
                     break;
                 default:
                     //Debug.Log("Stop performed");
@@ -305,25 +294,33 @@ public class InputController : MonoBehaviour
             }
         }
     }
-    private void EvaluateActionInput(ActionInput input)
+    private void EvaluateUnorderedInput(UnorderedInput input)
     {
-        if (playerCharacterData.playerHasControl)
+        if (isEvaluatingInputs && playerCharacterData.GetPlayerHasControl())
         {
             switch (input)
             {
-                case ActionInput.UP:
+                case UnorderedInput.CROUCH:
+                    //Debug.Log("Crouch performed");
+                    if (isDashing)
+                    {
+                        EndDash();
+                    }
+                    playerMovement.Crouch();
+                    break;
+                case UnorderedInput.UP:
                     //Debug.Log("Up performed");
                     break;
-                case ActionInput.PRIMARY:
+                case UnorderedInput.PRIMARY:
                     //Debug.Log("Primary performed");
                     break;
-                case ActionInput.SECONDARY:
+                case UnorderedInput.SECONDARY:
                     //Debug.Log("Secondary performed");
                     break;
-                case ActionInput.UTILITY_1:
+                case UnorderedInput.UTILITY_1:
                     //Debug.Log("Utility 1 performed");
                     break;
-                case ActionInput.UTILITY_2:
+                case UnorderedInput.UTILITY_2:
                     //Debug.Log("Utility 2 performed");
                     break;
                 default:
@@ -332,13 +329,62 @@ public class InputController : MonoBehaviour
             }
         }
     }
-    private void EvaluateActionInputs()
+    private void EvaluateUnorderedInputs()
     {
-        actionInputList.ForEach(input => EvaluateActionInput(input));
+        unorderedInputList.ForEach(input => EvaluateUnorderedInput(input));
     }
-
+    private void ResetOrderedInputs()
+    {
+        orderedInputList.Clear();
+        orderedInputList.Add(OrderedInput.STOP);
+    }
+    private void ResetUnorderedInputs()
+    {
+        unorderedInputList.Clear();
+    }
+    private void Dash()
+    {
+        if (!isDashing && playerMovement.CanDash())
+        {
+            dashRoutine = StartCoroutine(DashRoutine());
+        }
+    }
+    IEnumerator DashRoutine()
+    {
+        isDashing = true;
+        dashOffWall = playerMovement.GetIsSliding();
+        OrderedAddEvaluate(OrderedInput.DASH);
+        playerMovement.Crouch();
+        yield return new WaitForSeconds(playerCharacterData.GetDashDuration());
+        OrderedRemoveEvaluate(OrderedInput.DASH);
+        playerMovement.Stand();
+        isDashing = false;
+    }
+    private void EndDash()
+    {
+        StopCoroutine(dashRoutine);
+        RemoveFromOrderedInputList(OrderedInput.DASH);
+        playerMovement.Stand();
+        isDashing = false;
+    }
+    private void StartDefend()
+    {
+        playerMovement.Float(true);
+        OrderedAddEvaluate(OrderedInput.DEFEND);
+        isEvaluatingInputs = false;
+    }
+    private void StopDefend()
+    {
+        playerMovement.Float(false);
+        isEvaluatingInputs = true;
+        OrderedRemoveEvaluate(OrderedInput.DEFEND);
+    }
     private void EvaluateCombo(int inputValue)
     {
+        if (!isEvaluatingInputs)
+        {
+            return; // If not evaluating inputs then ignore combos
+        }
         comboInputCurrentTime = Time.time;
         //check if previous inputs have expired in potential combo
         float livedTime = comboInputCurrentTime - comboInputInitialTime;
