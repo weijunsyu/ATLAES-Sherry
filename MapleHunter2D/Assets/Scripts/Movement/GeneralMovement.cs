@@ -129,7 +129,7 @@ public class GeneralMovement : MonoBehaviour
         Vector2 newVelocity = new Vector2(currentVelocity.x, (currentVelocity.y + yVelocity));
         body.velocity = newVelocity;
     }
-    protected void Turn()
+    public void Turn()
     {
         this.transform.Rotate(0f, 180f, 0);
         isFacingRight = !isFacingRight;

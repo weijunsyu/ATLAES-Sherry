@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
     //Config Parameters:
 
@@ -23,7 +23,6 @@ public class InputController : MonoBehaviour
     private Coroutine dashRoutine = null;
     private bool isDashing = false;
     private bool isEvaluatingInputs = true;
-    private bool dashOffWall = false; 
 
 
     // Unity Events:
@@ -86,10 +85,6 @@ public class InputController : MonoBehaviour
         virtualController.MouseAndKeyboard.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
         virtualController.GamepadController.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
         virtualController.GamepadController.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
-
-        // Pause Game
-        virtualController.MouseAndKeyboard.PauseGame.started += ctx => PauseGame();
-        virtualController.GamepadController.PauseGame.started += ctx => PauseGame();
 
         // MOUSE ONLY:
         // Aim
@@ -268,7 +263,7 @@ public class InputController : MonoBehaviour
                     break;
                 case OrderedInput.DASH:
                     //Debug.Log("Dash performed");
-                    playerMovement.DashMove(dashOffWall);
+                    playerMovement.DashMove();
                     break;
                 case OrderedInput.JUMP:
                     //Debug.Log("Jump performed");
@@ -344,7 +339,7 @@ public class InputController : MonoBehaviour
     }
     private void Dash()
     {
-        if (!isDashing && playerMovement.CanDash())
+        if (!isDashing && playerMovement.CanDash() && !playerMovement.GetIsSliding())
         {
             dashRoutine = StartCoroutine(DashRoutine());
         }
@@ -352,7 +347,6 @@ public class InputController : MonoBehaviour
     IEnumerator DashRoutine()
     {
         isDashing = true;
-        dashOffWall = playerMovement.GetIsSliding();
         OrderedAddEvaluate(OrderedInput.DASH);
         playerMovement.Crouch();
         yield return new WaitForSeconds(playerCharacterData.GetDashDuration());
@@ -407,9 +401,5 @@ public class InputController : MonoBehaviour
         {
             currentComboPosition = 0;
         }
-    }
-    private void PauseGame()
-    {
-        Debug.Log("Pause Game Button Pressed");
     }
 }

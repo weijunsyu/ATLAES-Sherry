@@ -237,7 +237,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6177288246659169076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b53bbe2770a53a42bb69f82fc4ec1a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e099cd6959454f4386d8726e3fd0287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerCharacterData: {fileID: 4283059364153021658}
@@ -259,7 +259,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   playerCharacterData: {fileID: 4283059364153021658}
-  inputController: {fileID: 5181186177384400817}
 --- !u!114 &7454824589471123440
 MonoBehaviour:
   m_ObjectHideFlags: 0

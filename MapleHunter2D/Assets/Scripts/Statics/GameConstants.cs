@@ -48,8 +48,9 @@ public static class GameConstants
     public const float COLLISION_CHECK_DISTANCE_OFFSET = 0.01f; // Distance offset for extending overlap projection to act as buffer
     public const float FLOATING_BODY_GRAVITY_MODIFIER = 6f; // Factor to modify gravity by while floating
     public const float FLOATING_MAX_DROP_SPEED = -8f; // The max velocity a rigidbody can move at in the y plane while floating
-    public const float WALL_SLIDE_MAX_DROP_SPEED = -5.5f;
-    public const float SIZE_FACTOR_WALL_SLIDE_DASH_INVERT = 0.6f; // The factor for scaling overlapBox size that checks for if wall sliding
+    public const float WALL_SLIDE_MAX_DROP_SPEED = -4f;
+    public const float SIZE_FACTOR_WALL_SLIDE = 0.6f; // The factor for scaling overlapBox size that checks for if wall sliding
+    //public const float MAX_DROP_SPEED = -10f;
 
     // Input Settings
     public const float AIM_ATTACK_JOYSTICK_MIN_MAGNITUDE = 0.7f; // Calibrate sensitivity of Aim Attack between 0-1 where 0 is most sensitive

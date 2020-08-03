@@ -153,16 +153,12 @@ public class PlayerMovement : GeneralMovement
             MoveWithTurn(-playerCharacterData.GetMoveSpeed());
         }
     }
-    public void DashMove(bool dashOffWall = false)
+    public void DashMove()
     {
         if (canDash)
         {
             float linearVelocity = playerCharacterData.GetDashSpeed();
             if (!IsFacingRight()) // player is facing left
-            {
-                linearVelocity = -linearVelocity;
-            }
-            if (dashOffWall)
             {
                 linearVelocity = -linearVelocity;
             }
@@ -226,9 +222,9 @@ public class PlayerMovement : GeneralMovement
             facingDirection = -1;
         }
         Vector2 overlapCenter = new Vector2((boxCollider.bounds.center.x + (facingDirection * boxCollider.bounds.extents.x)),
-                                            boxCollider.bounds.center.y);
+                                            boxCollider.bounds.center.y - (boxCollider.bounds.extents.y / 2));
         Vector2 overlapSize = new Vector2(GameConstants.COLLISION_CHECK_DISTANCE_OFFSET,
-                                          ((boxCollider.bounds.extents.y * GameConstants.SIZE_FACTOR_WALL_SLIDE_DASH_INVERT)
+                                          ((boxCollider.bounds.extents.y * GameConstants.SIZE_FACTOR_WALL_SLIDE)
                                                                                + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
         Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
 
