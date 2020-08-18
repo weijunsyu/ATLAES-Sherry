@@ -113,6 +113,22 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""37bc4ad7-00ec-41f2-a384-f51507ad8ef1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause Game"",
+                    ""type"": ""Button"",
+                    ""id"": ""83af9e11-ec3c-4e27-8aab-c777ece51fc5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -207,7 +223,7 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5fafcdcc-3e5f-49f9-803d-d3f3b16c3381"",
-                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
@@ -245,6 +261,39 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d52a08cd-0ef7-41e7-a48e-872bdab3bfe6"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b29dd50-2ece-44bf-8c21-48676d334c8c"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41856f60-dba9-4c32-8e8e-692b82175c2c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Pause Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -354,6 +403,22 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""name"": ""Utility 2"",
                     ""type"": ""Button"",
                     ""id"": ""2035ae6e-9a83-49f2-8d33-417b1c5b6d6d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""668b8832-8a40-426e-9e6c-7258055ea925"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause Game"",
+                    ""type"": ""Button"",
+                    ""id"": ""23eafbdd-e1cf-49a6-b2ef-0affa98f5200"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -546,37 +611,21 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""action"": ""Hold Secondary Aim Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""MenuControls"",
-            ""id"": ""2f3a2a0e-56f5-4cd2-b775-07fdb1e0b59d"",
-            ""actions"": [
-                {
-                    ""name"": ""Pause Game"",
-                    ""type"": ""Button"",
-                    ""id"": ""897afd00-d8e0-4033-a42f-dc138ab48d80"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""ca6079db-041b-48fb-919e-8bfc0ad316dd"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""0d306634-0919-42dc-a510-791398a6e3c8"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Pause Game"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1ad87cb9-c2ea-48cf-8d81-ab7013f92662"",
+                    ""id"": ""a53c83eb-8d5d-46fd-8463-4dcc9ab9e71d"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -586,6 +635,18 @@ public class @VirtualController : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu Controls"",
+            ""id"": ""2f3a2a0e-56f5-4cd2-b775-07fdb1e0b59d"",
+            ""actions"": [],
+            ""bindings"": []
+        },
+        {
+            ""name"": ""Inventory Controls"",
+            ""id"": ""0e0f8307-5027-4284-9c19-3d55874fb10b"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
@@ -632,6 +693,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
         m_MouseAndKeyboard_Secondary = m_MouseAndKeyboard.FindAction("Secondary", throwIfNotFound: true);
         m_MouseAndKeyboard_Utility1 = m_MouseAndKeyboard.FindAction("Utility 1", throwIfNotFound: true);
         m_MouseAndKeyboard_Utility2 = m_MouseAndKeyboard.FindAction("Utility 2", throwIfNotFound: true);
+        m_MouseAndKeyboard_Inventory = m_MouseAndKeyboard.FindAction("Inventory", throwIfNotFound: true);
+        m_MouseAndKeyboard_PauseGame = m_MouseAndKeyboard.FindAction("Pause Game", throwIfNotFound: true);
         // Gamepad Controller
         m_GamepadController = asset.FindActionMap("Gamepad Controller", throwIfNotFound: true);
         m_GamepadController_MoveRight = m_GamepadController.FindAction("Move Right", throwIfNotFound: true);
@@ -647,9 +710,12 @@ public class @VirtualController : IInputActionCollection, IDisposable
         m_GamepadController_Secondary = m_GamepadController.FindAction("Secondary", throwIfNotFound: true);
         m_GamepadController_Utility1 = m_GamepadController.FindAction("Utility 1", throwIfNotFound: true);
         m_GamepadController_Utility2 = m_GamepadController.FindAction("Utility 2", throwIfNotFound: true);
-        // MenuControls
-        m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
-        m_MenuControls_PauseGame = m_MenuControls.FindAction("Pause Game", throwIfNotFound: true);
+        m_GamepadController_Inventory = m_GamepadController.FindAction("Inventory", throwIfNotFound: true);
+        m_GamepadController_PauseGame = m_GamepadController.FindAction("Pause Game", throwIfNotFound: true);
+        // Menu Controls
+        m_MenuControls = asset.FindActionMap("Menu Controls", throwIfNotFound: true);
+        // Inventory Controls
+        m_InventoryControls = asset.FindActionMap("Inventory Controls", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -711,6 +777,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_MouseAndKeyboard_Secondary;
     private readonly InputAction m_MouseAndKeyboard_Utility1;
     private readonly InputAction m_MouseAndKeyboard_Utility2;
+    private readonly InputAction m_MouseAndKeyboard_Inventory;
+    private readonly InputAction m_MouseAndKeyboard_PauseGame;
     public struct MouseAndKeyboardActions
     {
         private @VirtualController m_Wrapper;
@@ -727,6 +795,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
         public InputAction @Secondary => m_Wrapper.m_MouseAndKeyboard_Secondary;
         public InputAction @Utility1 => m_Wrapper.m_MouseAndKeyboard_Utility1;
         public InputAction @Utility2 => m_Wrapper.m_MouseAndKeyboard_Utility2;
+        public InputAction @Inventory => m_Wrapper.m_MouseAndKeyboard_Inventory;
+        public InputAction @PauseGame => m_Wrapper.m_MouseAndKeyboard_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_MouseAndKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -772,6 +842,12 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
                 @Utility2.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
                 @Utility2.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
+                @Inventory.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnInventory;
+                @PauseGame.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -812,6 +888,12 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started += instance.OnUtility2;
                 @Utility2.performed += instance.OnUtility2;
                 @Utility2.canceled += instance.OnUtility2;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -833,6 +915,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_GamepadController_Secondary;
     private readonly InputAction m_GamepadController_Utility1;
     private readonly InputAction m_GamepadController_Utility2;
+    private readonly InputAction m_GamepadController_Inventory;
+    private readonly InputAction m_GamepadController_PauseGame;
     public struct GamepadControllerActions
     {
         private @VirtualController m_Wrapper;
@@ -850,6 +934,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
         public InputAction @Secondary => m_Wrapper.m_GamepadController_Secondary;
         public InputAction @Utility1 => m_Wrapper.m_GamepadController_Utility1;
         public InputAction @Utility2 => m_Wrapper.m_GamepadController_Utility2;
+        public InputAction @Inventory => m_Wrapper.m_GamepadController_Inventory;
+        public InputAction @PauseGame => m_Wrapper.m_GamepadController_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_GamepadController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -898,6 +984,12 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
                 @Utility2.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
                 @Utility2.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
+                @Inventory.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnInventory;
+                @PauseGame.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_GamepadControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -941,20 +1033,24 @@ public class @VirtualController : IInputActionCollection, IDisposable
                 @Utility2.started += instance.OnUtility2;
                 @Utility2.performed += instance.OnUtility2;
                 @Utility2.canceled += instance.OnUtility2;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
     public GamepadControllerActions @GamepadController => new GamepadControllerActions(this);
 
-    // MenuControls
+    // Menu Controls
     private readonly InputActionMap m_MenuControls;
     private IMenuControlsActions m_MenuControlsActionsCallbackInterface;
-    private readonly InputAction m_MenuControls_PauseGame;
     public struct MenuControlsActions
     {
         private @VirtualController m_Wrapper;
         public MenuControlsActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PauseGame => m_Wrapper.m_MenuControls_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -964,20 +1060,39 @@ public class @VirtualController : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_MenuControlsActionsCallbackInterface != null)
             {
-                @PauseGame.started -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnPauseGame;
-                @PauseGame.performed -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnPauseGame;
-                @PauseGame.canceled -= m_Wrapper.m_MenuControlsActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_MenuControlsActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @PauseGame.started += instance.OnPauseGame;
-                @PauseGame.performed += instance.OnPauseGame;
-                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
     public MenuControlsActions @MenuControls => new MenuControlsActions(this);
+
+    // Inventory Controls
+    private readonly InputActionMap m_InventoryControls;
+    private IInventoryControlsActions m_InventoryControlsActionsCallbackInterface;
+    public struct InventoryControlsActions
+    {
+        private @VirtualController m_Wrapper;
+        public InventoryControlsActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_InventoryControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InventoryControlsActions set) { return set.Get(); }
+        public void SetCallbacks(IInventoryControlsActions instance)
+        {
+            if (m_Wrapper.m_InventoryControlsActionsCallbackInterface != null)
+            {
+            }
+            m_Wrapper.m_InventoryControlsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+            }
+        }
+    }
+    public InventoryControlsActions @InventoryControls => new InventoryControlsActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1010,6 +1125,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
         void OnSecondary(InputAction.CallbackContext context);
         void OnUtility1(InputAction.CallbackContext context);
         void OnUtility2(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IGamepadControllerActions
     {
@@ -1026,9 +1143,13 @@ public class @VirtualController : IInputActionCollection, IDisposable
         void OnSecondary(InputAction.CallbackContext context);
         void OnUtility1(InputAction.CallbackContext context);
         void OnUtility2(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IMenuControlsActions
     {
-        void OnPauseGame(InputAction.CallbackContext context);
+    }
+    public interface IInventoryControlsActions
+    {
     }
 }

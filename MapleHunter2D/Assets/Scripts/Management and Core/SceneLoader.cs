@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu(menuName = "SceneLoader")]
+[CreateAssetMenu(menuName = "ScriptableObject/SceneLoader")]
 public class SceneLoader : ScriptableObject
 {
     // Return the index number of the current scene

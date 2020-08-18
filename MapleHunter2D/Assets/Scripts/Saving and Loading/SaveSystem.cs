@@ -6,19 +6,19 @@ using System.Collections.Generic;
 public static class SaveSystem
 {
 
-    public static void SavePlayerData(Dictionary<string, object> saveData, int saveNumber)
+    public static void SavePlayerData(PlayerData saveData, int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        PlayerSaveData data = new PlayerSaveData(saveData);
+        SaveData data = new SaveData(saveData);
 
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static PlayerSaveData LoadPlayerData(int saveNumber)
+    public static SaveData LoadPlayerData(int saveNumber)
     {
         string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;
         if (File.Exists(path))
@@ -26,7 +26,7 @@ public static class SaveSystem
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            PlayerSaveData data = formatter.Deserialize(stream) as PlayerSaveData;
+            SaveData data = formatter.Deserialize(stream) as SaveData;
             stream.Close();
 
             return data;

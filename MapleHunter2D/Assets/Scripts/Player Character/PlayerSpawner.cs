@@ -4,11 +4,13 @@ public class PlayerSpawner : MonoBehaviour
 {
     // Cached References:
     [SerializeField] private GameObject playerObjectToSpawn = null;
+    [SerializeField] private PlayerData playerData = null;
     private GameObject playerCharacter = null;
 
 
     private void Start()
     {
+        playerData.ResetGame();
         SpawnCharacter();
     }
 

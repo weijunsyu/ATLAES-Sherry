@@ -5,23 +5,23 @@ public class PlayerMovement : GeneralMovement
     // Config parameters:
 
     // Cached References:
-    [SerializeField] private PlayerCharacterData playerCharacterData = null;
+    [SerializeField] private PlayerData playerData = null;
 
     // State Parameters and Objects:
-    private int airJumpsPerformed = 0;
+    private float jumpDelayTimer = 0f;
     private float coyoteJumpTimer = 0f; // Timer run after initial airborne transition to determine if player can still jump
     private float jumpBufferTimer = 0f; // Timer run after jump input to determine if player can jump if input was early
     private bool jumpbufferToggle = false; // Toggle if jumpBufferTimer should start or stop
     private Vector2 crouchColliderSize;
     private Vector2 crouchColliderOffset;
+    private int airJumpsPerformed = 0;
     private bool attemptingStand = false;
     private bool canGroundJump = true;
-    private float jumpDelayTimer = 0f;
     private bool canDash = true;
     private bool isFacingWall = false;
-    private bool inputLeft = false;
-    private bool inputRight = false;
     private bool isSliding = false;
+    private bool inputRight = false;
+    private bool inputLeft = false;
 
 
     // Unity Events:
@@ -29,7 +29,7 @@ public class PlayerMovement : GeneralMovement
     {
         base.Awake(); //do all base class awake methods first
         crouchColliderSize = new Vector2(standColliderSize.x, (standColliderSize.y / 2));
-        crouchColliderOffset = new Vector2(standColliderOffset.x, ((standColliderOffset.y - standColliderSize.y) / 4));
+        crouchColliderOffset = new Vector2(standColliderOffset.x, (standColliderOffset.y * 3));
     }
     private void Update()
     {
@@ -128,14 +128,14 @@ public class PlayerMovement : GeneralMovement
     {
         attemptingStand = false;
         SetCollider(crouchColliderSize, crouchColliderOffset);
-        playerCharacterData.SetMoveSpeed(playerCharacterData.GetCrouchingMoveSpeed());
+        playerData.SetMoveSpeed(GameConstants.PLAYER_BASE_CROUCH_MOVE_SPEED);
     }
     public void Stand()
     {
         if (CanStand())
         {
             SetCollider(standColliderSize, standColliderOffset);
-            playerCharacterData.SetMoveSpeed(playerCharacterData.GetStandingMoveSpeed());
+            playerData.SetMoveSpeed(GameConstants.PLAYER_BASE_STAND_MOVE_SPEED);
         }
         else
         {
@@ -146,18 +146,18 @@ public class PlayerMovement : GeneralMovement
     {
         if (direction == OrderedInput.MOVE_RIGHT)
         {
-            MoveWithTurn(playerCharacterData.GetMoveSpeed());
+            MoveWithTurn(playerData.GetMoveSpeed(), 1);
         }
         else
         {
-            MoveWithTurn(-playerCharacterData.GetMoveSpeed());
+            MoveWithTurn(-playerData.GetMoveSpeed(), -1);
         }
     }
     public void DashMove()
     {
         if (canDash)
         {
-            float linearVelocity = playerCharacterData.GetDashSpeed();
+            float linearVelocity = playerData.GetDashSpeed();
             if (!IsFacingRight()) // player is facing left
             {
                 linearVelocity = -linearVelocity;
@@ -181,19 +181,19 @@ public class PlayerMovement : GeneralMovement
         //Late input forgiveness and perform jump
         if (canGroundJump && coyoteJumpTimer < GameConstants.COYOTE_JUMP_DELAY)
         {
-            SetVertical(playerCharacterData.GetJumpVelocity());
+            SetVertical(playerData.GetJumpVelocity());
             canGroundJump = false;
         }
         else
         {
-            if (airJumpsPerformed++ < playerCharacterData.GetMaxAirJumps())
+            if (airJumpsPerformed++ < playerData.GetMaxAirJumps())
             {
-                SetVertical(playerCharacterData.GetAirJumpVelocity());
+                SetVertical(playerData.GetAirJumpVelocity());
                 jumpbufferToggle = false; // Reset buffer toggle if jump press wasn't meant for ground jump
             }
             else //prevent integer overflow (from spamming jump in air)
             {
-                airJumpsPerformed = playerCharacterData.GetMaxAirJumps();
+                airJumpsPerformed = playerData.GetMaxAirJumps();
             }
         }
     }
@@ -222,10 +222,9 @@ public class PlayerMovement : GeneralMovement
             facingDirection = -1;
         }
         Vector2 overlapCenter = new Vector2((boxCollider.bounds.center.x + (facingDirection * boxCollider.bounds.extents.x)),
-                                            boxCollider.bounds.center.y - (boxCollider.bounds.extents.y / 2));
+                                            boxCollider.bounds.center.y);
         Vector2 overlapSize = new Vector2(GameConstants.COLLISION_CHECK_DISTANCE_OFFSET,
-                                          ((boxCollider.bounds.extents.y * GameConstants.SIZE_FACTOR_WALL_SLIDE)
-                                                                               + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
+                                          ((boxCollider.bounds.extents.y * 2) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
         Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
 
         isFacingWall = (colliderHit != null);
