@@ -8,38 +8,37 @@ public class PlayerInputController : MonoBehaviour
     //Config Parameters:
 
     // Cached References:
-    [SerializeField] private PlayerCharacterData playerCharacterData = null;
+    [SerializeField] private PlayerData playerData = null;
     [SerializeField] private PlayerMovement playerMovement = null;
     [SerializeField] private PlayerAction playerAction = null;
+    [SerializeField] private ComboSystem comboSystem = null;
+    
     private VirtualController virtualController;
 
     // State Parameters and Objects:
     private List<OrderedInput> orderedInputList = new List<OrderedInput>(); //should never be emtpy as character should be STOP if not doing anything
     private List<UnorderedInput> unorderedInputList = new List<UnorderedInput>(); //when empty it means no action is being performed at current point in time
     private bool aimAttackIsSecondary; //toggle aim attack between primary and secondary attack (used only in controller input)
-    private int currentComboPosition; //stores the current number of inputs in potential combo
-    private float comboInputInitialTime; //store the time when potential combo starts
-    private float comboInputCurrentTime; //stores the current time (used to find delta time between combo start and combo evaluation
     private Coroutine dashRoutine = null;
     private bool isDashing = false;
-    private bool isEvaluatingInputs = true;
+    private bool isEvaluatingCharacterInputs = true;
 
 
     // Unity Events:
     private void Awake()
     {
         virtualController = new VirtualController();
-        
+
         // Move Right
         virtualController.MouseAndKeyboard.MoveRight.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(true); };
         virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(false); };
         virtualController.GamepadController.MoveRight.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(true); };
         virtualController.GamepadController.MoveRight.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(false); };
         // Move Left
-        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
-        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
-        virtualController.GamepadController.MoveLeft.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
-        virtualController.GamepadController.MoveLeft.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
+        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => {OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
+        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => {OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
+        virtualController.GamepadController.MoveLeft.performed += ctx => {OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
+        virtualController.GamepadController.MoveLeft.canceled += ctx => {OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
         // Jump
         virtualController.MouseAndKeyboard.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
         virtualController.GamepadController.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
@@ -106,9 +105,6 @@ public class PlayerInputController : MonoBehaviour
         orderedInputList.Add(OrderedInput.STOP); //orderedInputList should always have stop
         unorderedInputList.Clear();
         aimAttackIsSecondary = false;
-        currentComboPosition = 0;
-        comboInputInitialTime = 0;
-        comboInputCurrentTime = 0;
 
         // Enable virtual controller:
         virtualController.Enable();
@@ -158,15 +154,11 @@ public class PlayerInputController : MonoBehaviour
     {
         OrderedInput newInput = AddToOrderedInputList(input);
         EvaluateOrderedInput(newInput);
-        
-        EvaluateCombo((int)input); //check if input is combo
     }
     private void UnorderedAddEvaluate(UnorderedInput input)
     {
         AddToUnorderedInputList(input);
         EvaluateUnorderedInputs();
-        
-        EvaluateCombo((int)input); //check if input is combo
     }
     private void OrderedRemoveEvaluate(OrderedInput input)
     {
@@ -249,7 +241,7 @@ public class PlayerInputController : MonoBehaviour
     }
     private void EvaluateOrderedInput(OrderedInput input)
     {
-        if (isEvaluatingInputs && playerCharacterData.GetPlayerHasControl())
+        if (isEvaluatingCharacterInputs)
         {
             switch (input)
             {
@@ -291,7 +283,7 @@ public class PlayerInputController : MonoBehaviour
     }
     private void EvaluateUnorderedInput(UnorderedInput input)
     {
-        if (isEvaluatingInputs && playerCharacterData.GetPlayerHasControl())
+        if (isEvaluatingCharacterInputs)
         {
             switch (input)
             {
@@ -349,7 +341,7 @@ public class PlayerInputController : MonoBehaviour
         isDashing = true;
         OrderedAddEvaluate(OrderedInput.DASH);
         playerMovement.Crouch();
-        yield return new WaitForSeconds(playerCharacterData.GetDashDuration());
+        yield return new WaitForSeconds(playerData.GetDashDuration());
         OrderedRemoveEvaluate(OrderedInput.DASH);
         playerMovement.Stand();
         isDashing = false;
@@ -365,41 +357,12 @@ public class PlayerInputController : MonoBehaviour
     {
         playerMovement.Float(true);
         OrderedAddEvaluate(OrderedInput.DEFEND);
-        isEvaluatingInputs = false;
+        isEvaluatingCharacterInputs = false;
     }
     private void StopDefend()
     {
         playerMovement.Float(false);
-        isEvaluatingInputs = true;
+        isEvaluatingCharacterInputs = true;
         OrderedRemoveEvaluate(OrderedInput.DEFEND);
-    }
-    private void EvaluateCombo(int inputValue)
-    {
-        if (!isEvaluatingInputs)
-        {
-            return; // If not evaluating inputs then ignore combos
-        }
-        comboInputCurrentTime = Time.time;
-        //check if previous inputs have expired in potential combo
-        float livedTime = comboInputCurrentTime - comboInputInitialTime;
-        if (livedTime > GameConstants.COMBO_INPUT_LIFESPAN_IN_SECONDS) // combo invalid; input delay too large
-        {
-            //reset combo
-            currentComboPosition = 0;
-        }
-
-        if (currentComboPosition == 0) //if input is the start of a new potential combo
-        {
-            comboInputInitialTime = Time.time;
-        }
-
-        if (ComboSystem.NarrowCombo(inputValue, currentComboPosition)) //input part of a valid combo
-        {
-            currentComboPosition++;
-        }
-        else // input invalid for current combo OR input was the last in combo sequence and combo was performed
-        {
-            currentComboPosition = 0;
-        }
     }
 }

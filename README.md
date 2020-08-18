@@ -1,5 +1,8 @@
 # MapleHunter2D
-2D platforming/dungeon crawler; Mono-chromatic, 1-bit black and white aesthetic. BLACKS: 141414, WHITES: FFFFFF
+2D platforming/dungeon crawler; Mono-chromatic, 1-bit black and white aesthetic with red "Blood" accents.
+      BLACK: 141414, WHITE: FCFCFC, RED: D00000
+  UI Colours:
+      BLACK: 141414, WHITE: FCFCFC, RED: D00000, BLUE: 00D1D1, YELLOW: F1D302
 
 Visual Guides: (Definitions can be found in the document "Visual Asset Guidelines and Framework" (VAGF) on Google Drive)
   UNITY UNIT (henceforth referred to as simply unit) shall be equal to 64 linear pixels of which 1 placed in a square will be used as 1 GRID UNIT

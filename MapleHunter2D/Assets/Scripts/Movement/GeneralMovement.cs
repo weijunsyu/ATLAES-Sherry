@@ -15,10 +15,10 @@ public class GeneralMovement : MonoBehaviour
     // State Parameters and Objects:
     private bool isFacingRight = true;
     private bool isAirborne = false;
+    protected bool isFloating = false;
     protected Vector2 standColliderSize;
     protected Vector2 standColliderOffset;
-    protected bool isFloating = false;
-
+    
 
     // Unity Events:
     protected virtual void Awake()
@@ -32,7 +32,7 @@ public class GeneralMovement : MonoBehaviour
     {
         if (isFloating)
         {
-            if(body.velocity.y < GameConstants.FLOATING_MAX_DROP_SPEED)
+            if (body.velocity.y < GameConstants.FLOATING_MAX_DROP_SPEED)
             {
                 body.velocity = new Vector2(body.velocity.x, GameConstants.FLOATING_MAX_DROP_SPEED);
             }
@@ -87,22 +87,23 @@ public class GeneralMovement : MonoBehaviour
             SetVertical(linearVelocity);
         }
     }
-    protected void MoveWithTurn(float linearVelocity)
+    protected void MoveWithTurn(float linearVelocity, int direction = 0)
     {
-        if (linearVelocity > 0) //move to the right
+        if (linearVelocity > 0 || direction == 1) //move to the right
         {
             if (!IsFacingRight()) //currently facing left
             {
                 Turn(); //turn to face right
             }
         }
-        else //move to left
+        else if (linearVelocity < 0 || direction == -1) //move to left
         {
             if (IsFacingRight()) //currently facing right
             {
                 Turn(); //turn to face left
             }
         }
+        //If linearVelocity == 0 then do nothing (if need some action add else block)
         SetHorizontal(linearVelocity);
     }
     protected void SetHorizontal(float xVelocity)

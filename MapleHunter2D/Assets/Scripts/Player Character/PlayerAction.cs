@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAction : CharacterAction
 {
@@ -12,6 +11,7 @@ public class PlayerAction : CharacterAction
 
     // State Parameters and Objects:
     private Vector2 mousePositionPixels = Vector2.zero;
+    private Vector2 aimDirection;
 
 
     // Unity Events:
@@ -29,6 +29,10 @@ public class PlayerAction : CharacterAction
 
 
     // Class Functions:
+    public Vector2 GetAimDirection()
+    {
+        return aimDirection;
+    }
     public void DefendAction() //Do action part of defend
     {
         //create shield and start draining HP. Mitigate 100% damage, do not prevent knockbacks, successfully blocking regens some HP

@@ -65,4 +65,33 @@ public static class StaticFunctions
     {
         return StaticObjects.RANDOM.NextDouble() * (max - min) + min;
     }
+
+
+    /* Modify currentResourceValue by modifyValue such that currentResourceValue = max[0, (currentResourceValue + modifyValue)].
+     * Optional maxResourceValue tag : if given then currentResourceValue = max[0, min[(currentResourceValue + modifyValue), maxResourceValue]]. 
+     * Return the new resource value: newResourceValue */
+    public static float ModifyResourceValue(float currentResourceValue, float modifyValue, float maxResourceValue = 0)
+    {
+        if (modifyValue == 0)
+        {
+            return currentResourceValue;
+        }
+
+        float newResourceValue = currentResourceValue + modifyValue;
+        if (newResourceValue < 0)
+        {
+            return 0;
+        }
+        if (maxResourceValue == 0)
+        {
+            return newResourceValue;
+        }
+        switch ((maxResourceValue - newResourceValue) < 0)
+        {
+            case false: // newResourceValue less than or equal to maxResourceValue
+                return newResourceValue;
+            default: // newResourceValue more than maxResourceValue
+                return maxResourceValue;
+        }
+    }
 }
