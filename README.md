@@ -32,3 +32,7 @@ Visual Guides: (Definitions can be found in the document "Visual Asset Guideline
     Scale Y: 0.015625
     Dynamic Pixels Per Unit: 1
     Reference Pixels Per Unit: 1
+
+  Dynamic UI Canvas (Pause, etc.): (Use for overlay screens such as pause menu screen)
+  Keep everything at default (Scale = 1, etc.)
+  MATCH the pixels per unit! (64) 

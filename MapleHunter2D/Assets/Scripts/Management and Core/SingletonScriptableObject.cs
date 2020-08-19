@@ -10,6 +10,7 @@ public class SingletonScriptableObject<T> : ScriptableObject where T : Scriptabl
         {
             if (_instance = null)
             {
+                /*
                 T[] results = Resources.FindObjectsOfTypeAll<T>();
                 if (results.Length == 0)
                 {
@@ -23,6 +24,8 @@ public class SingletonScriptableObject<T> : ScriptableObject where T : Scriptabl
                 }
                 _instance = results[0];
                 _instance.hideFlags = HideFlags.DontUnloadUnusedAsset;
+                */
+                _instance = Resources.FindObjectsOfTypeAll<T>().FirstOrDefault();
             }
             return _instance;
         }

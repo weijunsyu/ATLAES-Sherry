@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public static class SaveSystem
 {
 
-    public static void SavePlayerData(PlayerData saveData, int saveNumber)
+    public static void SavePlayerData(MasterManager saveData, int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;

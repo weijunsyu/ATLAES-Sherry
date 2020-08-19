@@ -39,7 +39,8 @@ public enum WeaponType
     STAFF,
     SPEAR,
     GLAIVE,
-    WHIP
+    WHIP,
+    NONE = -1
 }
 public enum UtilityType
 {

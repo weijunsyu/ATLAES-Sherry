@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799a512c3fe18a4ca21334da01fe7d3, type: 3}
   m_Name: Master Manager
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 0}
+  _userData: {fileID: 11400000, guid: 84987dcb0cc9f19428862af9a281d513, type: 2}
+  _worldData: {fileID: 11400000, guid: 55bb1a181183f21409667552a6fc1f65, type: 2}
+  _playerCharacterPersistentData: {fileID: 11400000, guid: f32a00f91f39d704c81ff66860d6cf1b,
+    type: 2}
+  _playerCharacterStateData: {fileID: 11400000, guid: 9c662fee6ed9f4448a806b130c9fb0f4,
+    type: 2}
+  _inventoryData: {fileID: 11400000, guid: 82308816cdc10c841a7643866e696838, type: 2}
+  _npcData: {fileID: 11400000, guid: db9d8f4522ebf1241b62a7ba6d92f699, type: 2}
+  _playerCharacterNonPersistData: {fileID: 11400000, guid: a5dc4dcd50d7e1c44b5156cc7ff5e528,
+    type: 2}
