@@ -1,19 +1,10 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "ScriptableObject/InventoryData")]
-public class InventoryData : ScriptableObject
+﻿
+public class InventoryData
 {
     // Inventory Data
     private int gold = 0; // Number of gold coins (money) the player owns
     private bool[] uniqueItems = new bool[GameConstants.TOTAL_NUMBER_UNIQUE_ITEMS]; // Unique items unlocked (items that do not respawn and only occur once in game but are not weapons)
     private int[] inventory = new int[GameConstants.PLAYER_INVENTORY_SIZE]; // List of items in player inventory (index = ItemID, value = amount)
-
-
-    // Unity Events:
-    private void Awake()
-    {
-        ResetAllInventoryData();
-    }
 
 
 

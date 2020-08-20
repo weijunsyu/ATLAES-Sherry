@@ -230,7 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e099cd6959454f4386d8726e3fd0287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterManager: {fileID: 11400000, guid: 78cf0a6f547fa8f45b241e74aa091fa7, type: 2}
   playerMovement: {fileID: 479744381934003795}
   playerAction: {fileID: 7454824589471123440}
   comboSystem: {fileID: 4349220622052108332}
@@ -248,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!114 &7454824589471123440
 MonoBehaviour:
   m_ObjectHideFlags: 0

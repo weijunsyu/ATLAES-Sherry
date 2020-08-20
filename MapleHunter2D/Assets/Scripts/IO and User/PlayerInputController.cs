@@ -340,7 +340,7 @@ public class PlayerInputController : MonoBehaviour
         isDashing = true;
         OrderedAddEvaluate(OrderedInput.DASH);
         playerMovement.Crouch();
-        yield return new WaitForSeconds(MasterManager.PlayerCharacterNonPersistData.GetDashDuration());
+        yield return new WaitForSeconds(MasterManager.playerCharacterNonPersistData.GetDashDuration());
         OrderedRemoveEvaluate(OrderedInput.DASH);
         playerMovement.Stand();
         isDashing = false;

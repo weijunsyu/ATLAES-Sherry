@@ -1,19 +1,11 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "ScriptableObject/NpcData")]
-public class NpcData : ScriptableObject
+﻿
+public class NpcData
 {
     // NPC Data
     private int[] bank = new int[GameConstants.PLAYER_BANK_SIZE]; // List of items in bank (index = ItemID, value = amount)
     private int goldInBank = 0; // Number of gold coins (money) the player owns in the bank
     private int[] npcConvo = new int[System.Enum.GetNames(typeof(NamedNPC)).Length]; // List of NPC conversation and interaction status (index = NamedNPC, value = progress along convo path)
 
-
-    // Unity Events:
-    private void Awake()
-    {
-        ResetAllNpcData();
-    }
 
     // Class Functions:
     public void ResetAllNpcData()

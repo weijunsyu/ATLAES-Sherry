@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "ScriptableObject/PlayerCharacterPersistentData")]
-public class PlayerCharacterPersistentData : ScriptableObject
+﻿
+public class PlayerCharacterPersistentData
 {
     // Player Character Data
     private int level = 1;
@@ -19,12 +17,6 @@ public class PlayerCharacterPersistentData : ScriptableObject
     private UtilityType utility1, utility2 = UtilityType.NONE;
     private int locationSceneIndex = GameConstants.TUTORIAL_LEVEL_INDEX;
 
-
-    // Unity Events:
-    private void Awake()
-    {
-        ResetAllPlayerCharacterPersistentData();
-    }
 
 
     // Class Functions:

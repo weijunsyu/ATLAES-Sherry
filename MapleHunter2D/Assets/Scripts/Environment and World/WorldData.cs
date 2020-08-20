@@ -1,18 +1,11 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "ScriptableObject/WorldData")]
-public class WorldData : ScriptableObject
+﻿
+public class WorldData
 {
     // Player Game Data
     private bool[] warpLocations = new bool[GameConstants.TOTAL_NUMBER_WARP_LOCATIONS]; // teleports unlocked to target locations
     private bool[] bossesDefeated = new bool[GameConstants.TOTAL_NUMBER_BOSSES]; // Bosses that have been defeated
     private float playTime = 0; // Holds the total playtime of the player on this particular save
 
-    // Unity Events:
-    private void Awake()
-    {
-        ResetAllWorldData();
-    }
 
     // Class Functions:
     public void ResetAllWorldData()

@@ -1,17 +1,8 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "ScriptableObject/PlayerCharacterStateData")]
-public class PlayerCharacterStateData : ScriptableObject
+﻿
+public class PlayerCharacterStateData
 {
     private bool playerHasCharacterControl = true;
     private AnimationState animationState = AnimationState.IDLE;
-
-
-    // Unity Events:
-    private void Awake()
-    {
-        ResetAllPlayerCharacterStateData();
-    }
 
 
 

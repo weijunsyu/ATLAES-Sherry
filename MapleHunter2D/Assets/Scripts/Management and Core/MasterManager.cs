@@ -1,37 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
-[CreateAssetMenu(menuName = "ScriptableObject/MasterManager")]
-public class MasterManager : SingletonScriptableObject<MasterManager>
+public class MasterManager : MonoBehaviour
 {
-    //Definitions:
-
-    // Config Parameters:
-
-    // Cached References:
-    [SerializeField] private UserData _userData;
-    [SerializeField] private WorldData _worldData;
-    [SerializeField] private PlayerCharacterPersistentData _playerCharacterPersistentData;
-    [SerializeField] private PlayerCharacterStateData _playerCharacterStateData;
-    [SerializeField] private InventoryData _inventoryData;
-    [SerializeField] private NpcData _npcData;
-    [SerializeField] private PlayerCharacterNonPersistData _playerCharacterNonPersistData;
-
-    // State Parameters and Objects
-    public static UserData UserData { get { return Instance._userData; } }
-    public static WorldData WorldData { get { return Instance._worldData; } }
-    public static PlayerCharacterPersistentData PlayerCharacterPersistentData { get { return Instance._playerCharacterPersistentData; } }
-    public static PlayerCharacterStateData PlayerCharacterStateData { get { return Instance._playerCharacterStateData; } }
-    public static InventoryData InventoryData { get { return Instance._inventoryData; } }
-    public static NpcData NpcData { get { return Instance._npcData; } }
-    public static PlayerCharacterNonPersistData PlayerCharacterNonPersistData { get { return Instance._playerCharacterNonPersistData; } }
+    // Config Parameters
 
 
+    // Cached References
+    [SerializeField] private AudioMixer mixer = null;
+
+    // State Parameters and Objects:
+    public static UserData userData = new UserData();
+    public static WorldData worldData = new WorldData();
+    public static PlayerCharacterPersistentData playerCharacterPersistentData = new PlayerCharacterPersistentData();
+    public static InventoryData inventoryData = new InventoryData();
+    public static NpcData npcData = new NpcData();
+
+    public static PlayerCharacterStateData playerCharacterStateData = new PlayerCharacterStateData();
+    public static PlayerCharacterNonPersistData playerCharacterNonPersistData = new PlayerCharacterNonPersistData();
 
 
+    // Unity Events:
+    private void Awake()
+    {
+        KeepPersistentStatus();
+    }
 
 
-
-
+    // Class Functions:
 
     // Saving and Loading Wrapper Fuctionality
     public void SaveGame(int saveNumber)
@@ -40,12 +36,12 @@ public class MasterManager : SingletonScriptableObject<MasterManager>
     }
     public void ResetGame()
     {
-        WorldData.ResetAllWorldData();
-        PlayerCharacterPersistentData.ResetAllPlayerCharacterPersistentData();
-        InventoryData.ResetAllInventoryData();
-        NpcData.ResetAllNpcData();
-        PlayerCharacterNonPersistData.ResetAllPlayerCharacterNonPersistData();
-        PlayerCharacterStateData.ResetAllPlayerCharacterStateData();
+        worldData.ResetAllWorldData();
+        playerCharacterPersistentData.ResetAllPlayerCharacterPersistentData();
+        inventoryData.ResetAllInventoryData();
+        npcData.ResetAllNpcData();
+        playerCharacterNonPersistData.ResetAllPlayerCharacterNonPersistData();
+        playerCharacterStateData.ResetAllPlayerCharacterStateData();
     }
 
     // Return true if load successful, false otherwise
@@ -91,6 +87,19 @@ public class MasterManager : SingletonScriptableObject<MasterManager>
         else //savefile does not exist
         {
             return false;
+        }
+    }
+    private void KeepPersistentStatus()
+    {
+        int gameStatusCount = FindObjectsOfType<MasterManager>().Length;
+        if (gameStatusCount > 1)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

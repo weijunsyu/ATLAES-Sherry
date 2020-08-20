@@ -127,14 +127,14 @@ public class PlayerMovement : GeneralMovement
     {
         attemptingStand = false;
         SetCollider(crouchColliderSize, crouchColliderOffset);
-        MasterManager.PlayerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_CROUCH_MOVE_SPEED);
+        MasterManager.playerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_CROUCH_MOVE_SPEED);
     }
     public void Stand()
     {
         if (CanStand())
         {
             SetCollider(standColliderSize, standColliderOffset);
-            MasterManager.PlayerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_STAND_MOVE_SPEED);
+            MasterManager.playerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_STAND_MOVE_SPEED);
         }
         else
         {
@@ -145,18 +145,18 @@ public class PlayerMovement : GeneralMovement
     {
         if (direction == OrderedInput.MOVE_RIGHT)
         {
-            MoveWithTurn(MasterManager.PlayerCharacterNonPersistData.GetMoveSpeed(), 1);
+            MoveWithTurn(MasterManager.playerCharacterNonPersistData.GetMoveSpeed(), 1);
         }
         else
         {
-            MoveWithTurn(-MasterManager.PlayerCharacterNonPersistData.GetMoveSpeed(), -1);
+            MoveWithTurn(-MasterManager.playerCharacterNonPersistData.GetMoveSpeed(), -1);
         }
     }
     public void DashMove()
     {
         if (canDash)
         {
-            float linearVelocity = MasterManager.PlayerCharacterNonPersistData.GetDashSpeed();
+            float linearVelocity = MasterManager.playerCharacterNonPersistData.GetDashSpeed();
             if (!IsFacingRight()) // player is facing left
             {
                 linearVelocity = -linearVelocity;
@@ -180,19 +180,19 @@ public class PlayerMovement : GeneralMovement
         //Late input forgiveness and perform jump
         if (canGroundJump && coyoteJumpTimer < GameConstants.COYOTE_JUMP_DELAY)
         {
-            SetVertical(MasterManager.PlayerCharacterNonPersistData.GetJumpVelocity());
+            SetVertical(MasterManager.playerCharacterNonPersistData.GetJumpVelocity());
             canGroundJump = false;
         }
         else
         {
-            if (airJumpsPerformed++ < MasterManager.PlayerCharacterNonPersistData.GetMaxAirJumps())
+            if (airJumpsPerformed++ < MasterManager.playerCharacterNonPersistData.GetMaxAirJumps())
             {
-                SetVertical(MasterManager.PlayerCharacterNonPersistData.GetAirJumpVelocity());
+                SetVertical(MasterManager.playerCharacterNonPersistData.GetAirJumpVelocity());
                 jumpbufferToggle = false; // Reset buffer toggle if jump press wasn't meant for ground jump
             }
             else //prevent integer overflow (from spamming jump in air)
             {
-                airJumpsPerformed = MasterManager.PlayerCharacterNonPersistData.GetMaxAirJumps();
+                airJumpsPerformed = MasterManager.playerCharacterNonPersistData.GetMaxAirJumps();
             }
         }
     }

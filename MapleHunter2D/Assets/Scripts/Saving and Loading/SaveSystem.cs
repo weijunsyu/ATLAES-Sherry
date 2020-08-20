@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections.Generic;
 
 public static class SaveSystem
 {
-
     public static void SavePlayerData(MasterManager saveData, int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -17,7 +15,6 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
-
     public static SaveData LoadPlayerData(int saveNumber)
     {
         string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;

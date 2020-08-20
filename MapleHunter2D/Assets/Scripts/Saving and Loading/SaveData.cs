@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 [System.Serializable] public class SaveData
 {
-    //Player Game Data:
+    // User Data:
+
+    // World Data:
     public bool[] warpLocations;
     public bool[] bossesDefeated;
     public float playTime;
-    // Player Character Data:
+    // Player Character Persistent Data:
     public int level;
     public int currentStatPoints, totalStatPoints;
     public int currentHP, maxHP;
@@ -26,7 +28,7 @@ using System.Collections.Generic;
     public int gold;
     public bool[] uniqueItems;
     public int[] inventory;
-    // NPC and Environment Data
+    // NPC Data
     public int[] bank;
     public int goldInBank;
     public int[] npcConvo;
@@ -35,7 +37,6 @@ using System.Collections.Generic;
     //constructor
     public SaveData(MasterManager saveData)
     {
-        //get all paramaters from playerData
         /*
         this.warpLocations = saveData.GetWarpLocations();
         this.bossesDefeated = saveData.GetBossesDefeated();

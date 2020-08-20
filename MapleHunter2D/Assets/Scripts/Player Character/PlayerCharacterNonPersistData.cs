@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(menuName = "ScriptableObject/PlayerCharacterNonPersistData")]
-public class PlayerCharacterNonPersistData : ScriptableObject
+﻿
+public class PlayerCharacterNonPersistData
 {
     // Player Character Data
     private float moveSpeed = GameConstants.PLAYER_BASE_STAND_MOVE_SPEED;
@@ -11,12 +9,6 @@ public class PlayerCharacterNonPersistData : ScriptableObject
     private float dashSpeed = GameConstants.PLAYER_BASE_DASH_SPEED;
     private float dashDuration = GameConstants.PLAYER_BASE_DASH_DURATION;
 
-
-    // Unity Events:
-    private void Awake()
-    {
-        ResetAllPlayerCharacterNonPersistData();
-    }
 
 
 
