@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 [System.Serializable] public class SaveData
 {
-    //Player Game Data:
+    // User Data:
+
+    // World Data:
     public bool[] warpLocations;
     public bool[] bossesDefeated;
     public float playTime;
-    // Player Character Data:
+    // Player Character Persistent Data:
     public int level;
     public int currentStatPoints, totalStatPoints;
     public int currentHP, maxHP;
@@ -26,43 +28,44 @@ using System.Collections.Generic;
     public int gold;
     public bool[] uniqueItems;
     public int[] inventory;
-    // NPC and Environment Data
+    // NPC Data
     public int[] bank;
     public int goldInBank;
     public int[] npcConvo;
 
 
     //constructor
-    public SaveData(PlayerData playerData)
+    public SaveData(MasterManager saveData)
     {
-        //get all paramaters from playerData
-        this.warpLocations = playerData.GetWarpLocations();
-        this.bossesDefeated = playerData.GetBossesDefeated();
-        this.playTime = playerData.GetPlayTime();
+        /*
+        this.warpLocations = saveData.GetWarpLocations();
+        this.bossesDefeated = saveData.GetBossesDefeated();
+        this.playTime = saveData.GetPlayTime();
 
-        this.level = playerData.GetLevel();
-        this.currentStatPoints = playerData.GetCurrentStatPoints(); this.totalStatPoints = playerData.GetTotalStatPoints();
-        this.currentHP = playerData.GetCurrentHP(); this.maxHP = playerData.GetMaxHP();
-        this.currentSTR = playerData.GetCurrentSTR(); this.maxSTR = playerData.GetMaxSTR();
-        this.currentFIN = playerData.GetCurrentFIN(); this.maxFIN = playerData.GetMaxFIN();
-        this.currentINT = playerData.GetCurrentINT(); this.maxINT = playerData.GetMaxINT();
-        this.currentCHA = playerData.GetCurrentCHA(); this.maxCHA = playerData.GetMaxCHA();
-        this.currentSkillPoints = playerData.GetCurrentSkillPoints(); this.totalSkillPoints = playerData.GetTotalSkillPoints();
-        this.passives = playerData.GetPassives();
-        this.actives = playerData.GetActives();
-        this.weapons = playerData.GetWeapons();
-        this.primaryWeapon = playerData.GetPrimaryWeapon();
-        this.secondaryWeapon = playerData.GetSecondaryWeapon();
-        this.utility1 = playerData.GetUtility1();
-        this.utility2 = playerData.GetUtility2();
-        this.locationSceneIndex = playerData.GetLocationSceneIndex();
+        this.level = saveData.GetLevel();
+        this.currentStatPoints = saveData.GetCurrentStatPoints(); this.totalStatPoints = saveData.GetTotalStatPoints();
+        this.currentHP = saveData.GetCurrentHP(); this.maxHP = saveData.GetMaxHP();
+        this.currentSTR = saveData.GetCurrentSTR(); this.maxSTR = saveData.GetMaxSTR();
+        this.currentFIN = saveData.GetCurrentFIN(); this.maxFIN = saveData.GetMaxFIN();
+        this.currentINT = saveData.GetCurrentINT(); this.maxINT = saveData.GetMaxINT();
+        this.currentCHA = saveData.GetCurrentCHA(); this.maxCHA = saveData.GetMaxCHA();
+        this.currentSkillPoints = saveData.GetCurrentSkillPoints(); this.totalSkillPoints = saveData.GetTotalSkillPoints();
+        this.passives = saveData.GetPassives();
+        this.actives = saveData.GetActives();
+        this.weapons = saveData.GetWeapons();
+        this.primaryWeapon = saveData.GetPrimaryWeapon();
+        this.secondaryWeapon = saveData.GetSecondaryWeapon();
+        this.utility1 = saveData.GetUtility1();
+        this.utility2 = saveData.GetUtility2();
+        this.locationSceneIndex = saveData.GetLocationSceneIndex();
 
-        this.gold = playerData.GetGold();
-        this.uniqueItems = playerData.GetUniqueItems();
-        this.inventory = playerData.GetInventory();
+        this.gold = saveData.GetGold();
+        this.uniqueItems = saveData.GetUniqueItems();
+        this.inventory = saveData.GetInventory();
 
-        this.bank = playerData.GetBank();
-        this.goldInBank = playerData.GetGoldInBank();
-        this.npcConvo = playerData.GetNpcConvo();
+        this.bank = saveData.GetBank();
+        this.goldInBank = saveData.GetGoldInBank();
+        this.npcConvo = saveData.GetNpcConvo();
+        */
     }
 }
