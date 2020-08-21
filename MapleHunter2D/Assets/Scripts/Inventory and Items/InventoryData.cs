@@ -31,6 +31,15 @@ public class InventoryData
     {
         return uniqueItems;
     }
+    public bool SetUniqueItems(bool[] array)
+    {
+        if (array.Length == uniqueItems.Length)
+        {
+            System.Array.Copy(array, uniqueItems, uniqueItems.Length);
+            return true;
+        }
+        return false;
+    }
     public int[] GetInventory()
     {
         return inventory;
@@ -38,6 +47,15 @@ public class InventoryData
     public void ResetInventory()
     {
         System.Array.Clear(inventory, 0, inventory.Length);
+    }
+    public bool SetInventory(int[] array)
+    {
+        if (array.Length == inventory.Length)
+        {
+            System.Array.Copy(array, inventory, inventory.Length);
+            return true;
+        }
+        return false;
     }
     private void ResetUniqueItems()
     {

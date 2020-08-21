@@ -35,6 +35,15 @@ public class WorldData
     {
         return bossesDefeated;
     }
+    public bool SetWarpLocations(bool[] array)
+    {
+        if(array.Length == warpLocations.Length)
+        {
+            System.Array.Copy(array, warpLocations, warpLocations.Length);
+            return true;
+        }
+        return false;
+    }
     public bool ModifyBossesDefeated(int index, bool value = true)
     {
         if (bossesDefeated[index] == value)
@@ -48,6 +57,15 @@ public class WorldData
     {
         System.Array.Clear(bossesDefeated, 0, bossesDefeated.Length);
     }
+    public bool SetBossesDefeated(bool[] array)
+    {
+        if (array.Length == bossesDefeated.Length)
+        {
+            System.Array.Copy(array, bossesDefeated, bossesDefeated.Length);
+            return true;
+        }
+        return false;
+    }
     public float GetPlayTime()
     {
         return playTime;
@@ -60,15 +78,7 @@ public class WorldData
     {
         playTime = 0;
     }
-    private void SetWarpLocations(bool[] newWarpLocations)
-    {
-        warpLocations = newWarpLocations;
-    }
-    private void SetBossesDefeated(bool[] newBossesDefeated)
-    {
-        bossesDefeated = newBossesDefeated;
-    }
-    private void SetPlayTime(float newPlayTime)
+    public void SetPlayTime(float newPlayTime)
     {
         playTime = newPlayTime;
     }

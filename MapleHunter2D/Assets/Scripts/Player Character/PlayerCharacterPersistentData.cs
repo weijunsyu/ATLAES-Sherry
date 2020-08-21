@@ -193,6 +193,15 @@ public class PlayerCharacterPersistentData
     {
         System.Array.Clear(passives, 0, passives.Length);
     }
+    public bool SetPassives(bool[] array)
+    {
+        if (array.Length == passives.Length)
+        {
+            System.Array.Copy(array, passives, passives.Length);
+            return true;
+        }
+        return false;
+    }
     public bool[] GetActives()
     {
         return actives;
@@ -201,6 +210,15 @@ public class PlayerCharacterPersistentData
     {
         System.Array.Clear(actives, 0, actives.Length);
     }
+    public bool SetActives(bool[] array)
+    {
+        if (array.Length == actives.Length)
+        {
+            System.Array.Copy(array, actives, actives.Length);
+            return true;
+        }
+        return false;
+    }
     public int[] GetWeapons()
     {
         return weapons;
@@ -208,6 +226,15 @@ public class PlayerCharacterPersistentData
     public void ResetWeapons()
     {
         System.Array.Clear(weapons, 0, weapons.Length);
+    }
+    public bool SetWeapons(int[] array)
+    {
+        if (array.Length == weapons.Length)
+        {
+            System.Array.Copy(array, weapons, weapons.Length);
+            return true;
+        }
+        return false;
     }
     public WeaponType GetPrimaryWeapon()
     {
@@ -259,6 +286,10 @@ public class PlayerCharacterPersistentData
     {
         utility1 = UtilityType.NONE;
     }
+    public void SetUtility1(UtilityType value)
+    {
+        utility1 = value;
+    }
     public UtilityType GetUtility2()
     {
         return utility2;
@@ -267,6 +298,10 @@ public class PlayerCharacterPersistentData
     {
         utility2 = UtilityType.NONE;
     }
+    public void SetUtility2(UtilityType value)
+    {
+        utility2 = value;
+    }
     public int GetLocationSceneIndex()
     {
         return locationSceneIndex;
@@ -274,17 +309,5 @@ public class PlayerCharacterPersistentData
     public void SetLocationSceneIndex(int value)
     {
         locationSceneIndex = value;
-    }
-    private void SetPassives(bool[] array)
-    {
-        passives = array;
-    }
-    private void SetActives(bool[] array)
-    {
-        actives = array;
-    }
-    private void SetWeapons(int[] array)
-    {
-        weapons = array;
     }
 }

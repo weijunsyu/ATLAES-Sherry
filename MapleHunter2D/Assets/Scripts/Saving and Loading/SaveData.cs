@@ -35,37 +35,43 @@ using System.Collections.Generic;
 
 
     //constructor
-    public SaveData(MasterManager saveData)
+    public SaveData()
     {
-        /*
-        this.warpLocations = saveData.GetWarpLocations();
-        this.bossesDefeated = saveData.GetBossesDefeated();
-        this.playTime = saveData.GetPlayTime();
-
-        this.level = saveData.GetLevel();
-        this.currentStatPoints = saveData.GetCurrentStatPoints(); this.totalStatPoints = saveData.GetTotalStatPoints();
-        this.currentHP = saveData.GetCurrentHP(); this.maxHP = saveData.GetMaxHP();
-        this.currentSTR = saveData.GetCurrentSTR(); this.maxSTR = saveData.GetMaxSTR();
-        this.currentFIN = saveData.GetCurrentFIN(); this.maxFIN = saveData.GetMaxFIN();
-        this.currentINT = saveData.GetCurrentINT(); this.maxINT = saveData.GetMaxINT();
-        this.currentCHA = saveData.GetCurrentCHA(); this.maxCHA = saveData.GetMaxCHA();
-        this.currentSkillPoints = saveData.GetCurrentSkillPoints(); this.totalSkillPoints = saveData.GetTotalSkillPoints();
-        this.passives = saveData.GetPassives();
-        this.actives = saveData.GetActives();
-        this.weapons = saveData.GetWeapons();
-        this.primaryWeapon = saveData.GetPrimaryWeapon();
-        this.secondaryWeapon = saveData.GetSecondaryWeapon();
-        this.utility1 = saveData.GetUtility1();
-        this.utility2 = saveData.GetUtility2();
-        this.locationSceneIndex = saveData.GetLocationSceneIndex();
-
-        this.gold = saveData.GetGold();
-        this.uniqueItems = saveData.GetUniqueItems();
-        this.inventory = saveData.GetInventory();
-
-        this.bank = saveData.GetBank();
-        this.goldInBank = saveData.GetGoldInBank();
-        this.npcConvo = saveData.GetNpcConvo();
-        */
+        // World Data
+        this.warpLocations = MasterManager.worldData.GetWarpLocations();
+        this.bossesDefeated = MasterManager.worldData.GetBossesDefeated();
+        this.playTime = MasterManager.worldData.GetPlayTime();
+        // Player Character Persistent Data
+        this.level = MasterManager.playerCharacterPersistentData.GetLevel();
+        this.currentStatPoints = MasterManager.playerCharacterPersistentData.GetCurrentStatPoints();
+        this.totalStatPoints = MasterManager.playerCharacterPersistentData.GetTotalStatPoints();
+        this.currentHP = MasterManager.playerCharacterPersistentData.GetCurrentHP();
+        this.maxHP = MasterManager.playerCharacterPersistentData.GetMaxHP();
+        this.currentSTR = MasterManager.playerCharacterPersistentData.GetCurrentSTR();
+        this.maxSTR = MasterManager.playerCharacterPersistentData.GetMaxSTR();
+        this.currentFIN = MasterManager.playerCharacterPersistentData.GetCurrentFIN();
+        this.maxFIN = MasterManager.playerCharacterPersistentData.GetMaxFIN();
+        this.currentINT = MasterManager.playerCharacterPersistentData.GetCurrentINT();
+        this.maxINT = MasterManager.playerCharacterPersistentData.GetMaxINT();
+        this.currentCHA = MasterManager.playerCharacterPersistentData.GetCurrentCHA();
+        this.maxCHA = MasterManager.playerCharacterPersistentData.GetMaxCHA();
+        this.currentSkillPoints = MasterManager.playerCharacterPersistentData.GetCurrentSkillPoints();
+        this.totalSkillPoints = MasterManager.playerCharacterPersistentData.GetTotalSkillPoints();
+        this.passives = MasterManager.playerCharacterPersistentData.GetPassives();
+        this.actives = MasterManager.playerCharacterPersistentData.GetActives();
+        this.weapons = MasterManager.playerCharacterPersistentData.GetWeapons();
+        this.primaryWeapon = MasterManager.playerCharacterPersistentData.GetPrimaryWeapon();
+        this.secondaryWeapon = MasterManager.playerCharacterPersistentData.GetSecondaryWeapon();
+        this.utility1 = MasterManager.playerCharacterPersistentData.GetUtility1();
+        this.utility2 = MasterManager.playerCharacterPersistentData.GetUtility2();
+        this.locationSceneIndex = MasterManager.playerCharacterPersistentData.GetLocationSceneIndex();
+        // Inventory Data
+        this.gold = MasterManager.inventoryData.GetGold();
+        this.uniqueItems = MasterManager.inventoryData.GetUniqueItems();
+        this.inventory = MasterManager.inventoryData.GetInventory();
+        // NPC Data
+        this.bank = MasterManager.npcData.GetBank();
+        this.goldInBank = MasterManager.npcData.GetGoldInBank();
+        this.npcConvo = MasterManager.npcData.GetNpcConvo();
     }
 }
