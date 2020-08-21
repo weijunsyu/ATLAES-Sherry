@@ -22,6 +22,15 @@ public class NpcData
     {
         System.Array.Clear(bank, 0, bank.Length);
     }
+    public bool SetBank(int[] array)
+    {
+        if (array.Length == bank.Length)
+        {
+            System.Array.Copy(array, bank, bank.Length);
+            return true;
+        }
+        return false;
+    }
     public int GetGoldInBank()
     {
         return goldInBank;
@@ -37,5 +46,14 @@ public class NpcData
     private void ResetNpcConvo()
     {
         System.Array.Clear(npcConvo, 0, npcConvo.Length);
+    }
+    public bool SetNpcConvo(int[] array)
+    {
+        if (array.Length == npcConvo.Length)
+        {
+            System.Array.Copy(array, npcConvo, npcConvo.Length);
+            return true;
+        }
+        return false;
     }
 }

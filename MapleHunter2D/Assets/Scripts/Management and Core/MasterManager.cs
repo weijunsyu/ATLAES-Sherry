@@ -32,7 +32,58 @@ public class MasterManager : MonoBehaviour
     // Saving and Loading Wrapper Fuctionality
     public void SaveGame(int saveNumber)
     {
-        SaveSystem.SavePlayerData(this, saveNumber);
+        SaveSystem.SavePlayerData(saveNumber);
+    }
+    // Return true if load successful, false otherwise
+    public bool LoadGame(int saveNumber)
+    {
+        SaveData data = SaveSystem.LoadPlayerData(saveNumber);
+
+        if (data != null) //savefile exists
+        {
+            // World Data
+            worldData.SetWarpLocations(data.warpLocations);
+            worldData.SetBossesDefeated(data.bossesDefeated);
+            worldData.SetPlayTime(data.playTime);
+            // Player Character Persistent Data
+            playerCharacterPersistentData.SetLevel(data.level);
+            playerCharacterPersistentData.SetCurrentStatPoints(data.currentStatPoints);
+            playerCharacterPersistentData.SetTotalStatPoints(data.totalStatPoints);
+            playerCharacterPersistentData.SetCurrentHP(data.currentHP);
+            playerCharacterPersistentData.SetMaxHP(data.maxHP);
+            playerCharacterPersistentData.SetCurrentSTR(data.currentSTR);
+            playerCharacterPersistentData.SetMaxSTR(data.maxSTR);
+            playerCharacterPersistentData.SetCurrentFIN(data.currentFIN);
+            playerCharacterPersistentData.SetMaxFIN(data.maxFIN);
+            playerCharacterPersistentData.SetCurrentINT(data.currentINT);
+            playerCharacterPersistentData.SetMaxINT(data.maxINT);
+            playerCharacterPersistentData.SetCurrentCHA(data.currentCHA);
+            playerCharacterPersistentData.SetMaxCHA(data.maxCHA);
+            playerCharacterPersistentData.SetCurrentSkillPoints(data.currentSkillPoints);
+            playerCharacterPersistentData.SetTotalSkillPoints(data.totalSkillPoints);
+            playerCharacterPersistentData.SetPassives(data.passives);
+            playerCharacterPersistentData.SetActives(data.actives);
+            playerCharacterPersistentData.SetWeapons(data.weapons);
+            playerCharacterPersistentData.SetPrimaryWeapon(data.primaryWeapon);
+            playerCharacterPersistentData.SetSecondaryWeapon(data.secondaryWeapon);
+            playerCharacterPersistentData.SetUtility1(data.utility1);
+            playerCharacterPersistentData.SetUtility2(data.utility2);
+            playerCharacterPersistentData.SetLocationSceneIndex(data.locationSceneIndex);
+            // Inventory Data
+            inventoryData.SetGold(data.gold);
+            inventoryData.SetUniqueItems(data.uniqueItems);
+            inventoryData.SetInventory(data.inventory);
+            // NPC Data
+            npcData.SetBank(data.bank);
+            npcData.SetGoldInBank(data.goldInBank);
+            npcData.SetNpcConvo(data.npcConvo);
+
+            return true;
+        }
+        else //savefile does not exist
+        {
+            return false;
+        }
     }
     public void ResetGame()
     {
@@ -44,51 +95,7 @@ public class MasterManager : MonoBehaviour
         playerCharacterStateData.ResetAllPlayerCharacterStateData();
     }
 
-    // Return true if load successful, false otherwise
-    public bool LoadGame(int saveNumber)
-    {
-        SaveData data = SaveSystem.LoadPlayerData(saveNumber);
 
-        if (data != null) //savefile exists
-        {
-            /*
-            this.warpLocations = data.warpLocations;
-            this.bossesDefeated = data.bossesDefeated;
-            this.playTime = data.playTime;
-
-            this.level = data.level;
-            this.currentStatPoints = data.currentStatPoints; this.totalStatPoints = data.totalStatPoints;
-            this.currentHP = data.currentHP; this.maxHP = data.maxHP;
-            this.currentSTR = data.currentSTR; this.maxSTR = data.maxSTR;
-            this.currentFIN = data.currentFIN; this.maxFIN = data.maxFIN;
-            this.currentINT = data.currentINT; this.maxINT = data.maxINT;
-            this.currentCHA = data.currentCHA; this.maxCHA = data.maxCHA;
-            this.currentSkillPoints = data.currentSkillPoints; this.totalSkillPoints = data.totalSkillPoints;
-            this.passives = data.passives;
-            this.actives = data.actives;
-            this.weapons = data.weapons;
-            this.primaryWeapon = data.primaryWeapon;
-            this.secondaryWeapon = data.secondaryWeapon;
-            this.utility1 = data.utility1;
-            this.utility2 = data.utility2;
-            this.locationSceneIndex = data.locationSceneIndex;
-
-            this.gold = data.gold;
-            this.uniqueItems = data.uniqueItems;
-            this.inventory = data.inventory;
-
-            this.bank = data.bank;
-            this.goldInBank = data.goldInBank;
-            this.npcConvo = data.npcConvo;
-            */
-
-            return true;
-        }
-        else //savefile does not exist
-        {
-            return false;
-        }
-    }
     private void KeepPersistentStatus()
     {
         int gameStatusCount = FindObjectsOfType<MasterManager>().Length;

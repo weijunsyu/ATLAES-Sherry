@@ -71,7 +71,7 @@ public class PlayerMovement : GeneralMovement
             }
         }
         int facingDirection = CheckFront();
-        if (isFacingWall)
+        if (isFacingWall && IsAirborne())
         {
             if (facingDirection == 1 && inputRight) // Facing right and pressing right input
             {
@@ -118,8 +118,7 @@ public class PlayerMovement : GeneralMovement
     public bool CanStand()
     {
         Vector2 overlapCenter = new Vector2(boxCollider.bounds.center.x, (boxCollider.bounds.center.y + crouchColliderSize.y)); // Center-top
-        //(boxCollider.bounds.center.y + (boxCollider.bounds.extents.y * 2))
-        Vector2 overlapSize = crouchColliderSize;
+        Vector2 overlapSize = new Vector2((crouchColliderSize.x + GameConstants.COLLISION_CHECK_SHRINK_OFFSET), crouchColliderSize.y);
         Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
         return (colliderHit == null);
     }
