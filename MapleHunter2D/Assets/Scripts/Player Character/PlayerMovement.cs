@@ -5,6 +5,8 @@ public class PlayerMovement : GeneralMovement
     // Config parameters:
 
     // Cached References:
+    private new PlayerStateController stateController = null;
+
 
     // State Parameters and Objects:
     private float jumpDelayTimer = 0f;
@@ -21,6 +23,7 @@ public class PlayerMovement : GeneralMovement
     private bool isSliding = false;
     private bool inputRight = false;
     private bool inputLeft = false;
+    private bool isDefending = false;
 
 
     // Unity Events:
@@ -45,6 +48,13 @@ public class PlayerMovement : GeneralMovement
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (isDefending)
+        {
+            if (body.velocity.y < GameConstants.FLOATING_MAX_DROP_SPEED)
+            {
+                body.velocity = new Vector2(body.velocity.x, GameConstants.FLOATING_MAX_DROP_SPEED);
+            }
+        }
         if (!UpdateAirborne()) // If not airborne (and update update airbourne value)
         {
             if(jumpDelayTimer > GameConstants.JUMP_RESET_DELAY)
@@ -97,6 +107,19 @@ public class PlayerMovement : GeneralMovement
     }
 
     // Class Functions:
+    public void Defend(bool value)
+    {
+        if (value && !isDefending)
+        {
+            body.gravityScale /= GameConstants.FLOATING_BODY_GRAVITY_MODIFIER;
+            isDefending = true;
+        }
+        else if (!value && isDefending)
+        {
+            body.gravityScale *= GameConstants.FLOATING_BODY_GRAVITY_MODIFIER;
+            isDefending = false;
+        }
+    }
     public bool GetIsSliding()
     {
         return isSliding;

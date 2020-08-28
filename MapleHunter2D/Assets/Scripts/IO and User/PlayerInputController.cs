@@ -11,7 +11,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement = null;
     [SerializeField] private PlayerAction playerAction = null;
     [SerializeField] private ComboSystem comboSystem = null;
-    
+    [SerializeField] private PlayerStateController playerStateController = null;
     private VirtualController virtualController;
 
     // State Parameters and Objects:
@@ -19,7 +19,6 @@ public class PlayerInputController : MonoBehaviour
     private List<UnorderedInput> unorderedInputList = new List<UnorderedInput>(); //when empty it means no action is being performed at current point in time
     private bool aimAttackIsSecondary; //toggle aim attack between primary and secondary attack (used only in controller input)
     private Coroutine dashRoutine = null;
-    private bool isDashing = false;
     private bool isEvaluatingCharacterInputs = true;
 
 
@@ -29,15 +28,15 @@ public class PlayerInputController : MonoBehaviour
         virtualController = new VirtualController();
 
         // Move Right
-        virtualController.MouseAndKeyboard.MoveRight.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(true); };
-        virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(false); };
-        virtualController.GamepadController.MoveRight.performed += ctx => { OrderedAddEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(true); };
-        virtualController.GamepadController.MoveRight.canceled += ctx => { OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT); playerMovement.SetInputRight(false); };
+        virtualController.MouseAndKeyboard.MoveRight.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_RIGHT);
+        virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT);
+        virtualController.GamepadController.MoveRight.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_RIGHT);
+        virtualController.GamepadController.MoveRight.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT);
         // Move Left
-        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => {OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
-        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => {OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
-        virtualController.GamepadController.MoveLeft.performed += ctx => {OrderedAddEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(true); };
-        virtualController.GamepadController.MoveLeft.canceled += ctx => {OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT); playerMovement.SetInputLeft(false); };
+        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_LEFT);
+        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT);
+        virtualController.GamepadController.MoveLeft.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_LEFT);
+        virtualController.GamepadController.MoveLeft.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT);
         // Jump
         virtualController.MouseAndKeyboard.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
         virtualController.GamepadController.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
@@ -247,10 +246,14 @@ public class PlayerInputController : MonoBehaviour
                 case OrderedInput.MOVE_RIGHT:
                     //Debug.Log("Move Right performed");
                     playerMovement.Move(OrderedInput.MOVE_RIGHT);
+                    // if sliding: do stuff
+                    playerStateController.SetAnimationState(PlayerAnimationState.WALK);
                     break;
                 case OrderedInput.MOVE_LEFT:
                     //Debug.Log("Move Left performed");
                     playerMovement.Move(OrderedInput.MOVE_LEFT);
+                    // if sliding: do stuff
+                    playerStateController.SetAnimationState(PlayerAnimationState.WALK);
                     break;
                 case OrderedInput.DASH:
                     //Debug.Log("Dash performed");
@@ -258,24 +261,27 @@ public class PlayerInputController : MonoBehaviour
                     break;
                 case OrderedInput.JUMP:
                     //Debug.Log("Jump performed");
-                    if (isDashing)
+                    if (playerStateController.GetAnimationState() == PlayerAnimationState.DASH)
                     {
                         EndDash();
                     }
                     playerMovement.Jump();
+                    playerStateController.SetAnimationState(PlayerAnimationState.JUMP);
                     break;
                 case OrderedInput.DEFEND:
                     //Debug.Log("Defend performed");
-                    if (isDashing)
+                    if (playerStateController.GetAnimationState() == PlayerAnimationState.DASH)
                     {
                         EndDash();
                     }
                     playerMovement.StopAll();
                     playerAction.DefendAction();
+                    playerStateController.SetAnimationState(PlayerAnimationState.DEFEND);
                     break;
                 default:
                     //Debug.Log("Stop performed");
                     playerMovement.StopHorizontal();
+                    playerStateController.SetAnimationState(PlayerAnimationState.IDLE);
                     break;
             }
         }
@@ -288,11 +294,12 @@ public class PlayerInputController : MonoBehaviour
             {
                 case UnorderedInput.CROUCH:
                     //Debug.Log("Crouch performed");
-                    if (isDashing)
+                    if (playerStateController.GetAnimationState() == PlayerAnimationState.DASH)
                     {
                         EndDash();
                     }
                     playerMovement.Crouch();
+                    playerStateController.SetAnimationState(PlayerAnimationState.CROUCH);
                     break;
                 case UnorderedInput.UP:
                     //Debug.Log("Up performed");
@@ -330,37 +337,37 @@ public class PlayerInputController : MonoBehaviour
     }
     private void Dash()
     {
-        if (!isDashing && playerMovement.CanDash() && !playerMovement.GetIsSliding())
+        if ((playerStateController.GetAnimationState() != PlayerAnimationState.DASH) && playerMovement.CanDash() && !playerMovement.GetIsSliding())
         {
             dashRoutine = StartCoroutine(DashRoutine());
         }
     }
     IEnumerator DashRoutine()
     {
-        isDashing = true;
+        playerStateController.SetAnimationState(PlayerAnimationState.DASH);
         OrderedAddEvaluate(OrderedInput.DASH);
         playerMovement.Crouch();
         yield return new WaitForSeconds(MasterManager.playerCharacterNonPersistData.GetDashDuration());
         OrderedRemoveEvaluate(OrderedInput.DASH);
         playerMovement.Stand();
-        isDashing = false;
+        playerStateController.SetAnimationState(PlayerAnimationState.IDLE);
     }
     private void EndDash()
     {
         StopCoroutine(dashRoutine);
         RemoveFromOrderedInputList(OrderedInput.DASH);
         playerMovement.Stand();
-        isDashing = false;
+        playerStateController.SetAnimationState(PlayerAnimationState.IDLE);
     }
     private void StartDefend()
     {
-        playerMovement.Float(true);
+        playerMovement.Defend(true);
         OrderedAddEvaluate(OrderedInput.DEFEND);
         isEvaluatingCharacterInputs = false;
     }
     private void StopDefend()
     {
-        playerMovement.Float(false);
+        playerMovement.Defend(false);
         isEvaluatingCharacterInputs = true;
         OrderedRemoveEvaluate(OrderedInput.DEFEND);
     }

@@ -4,7 +4,7 @@
 /*
  * List of player states used to determine current animation state
  */
-public enum AnimationState // Append new states here as they appear such as combos etc.
+public enum PlayerAnimationState // Append new states here as they appear such as combos etc.
 {
     IDLE,
     WALK,
@@ -53,7 +53,7 @@ public enum Passive // Name of skill, effects in game, previous skill needed, sk
 }
 public enum ItemID
 {
-    BLOOD_POTION,
+    BLOOD_POTION // restore blood (HP)
 }
 /*
  * List of named NPC that have conversations/etc with player character and need to be saved

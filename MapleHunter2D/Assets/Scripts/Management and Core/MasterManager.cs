@@ -16,7 +16,6 @@ public class MasterManager : MonoBehaviour
     public static InventoryData inventoryData = new InventoryData();
     public static NpcData npcData = new NpcData();
 
-    public static PlayerCharacterStateData playerCharacterStateData = new PlayerCharacterStateData();
     public static PlayerCharacterNonPersistData playerCharacterNonPersistData = new PlayerCharacterNonPersistData();
 
 
@@ -92,7 +91,6 @@ public class MasterManager : MonoBehaviour
         inventoryData.ResetAllInventoryData();
         npcData.ResetAllNpcData();
         playerCharacterNonPersistData.ResetAllPlayerCharacterNonPersistData();
-        playerCharacterStateData.ResetAllPlayerCharacterStateData();
     }
 
 
