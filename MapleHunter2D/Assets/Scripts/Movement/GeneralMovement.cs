@@ -2,20 +2,19 @@
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-
 public class GeneralMovement : MonoBehaviour
 {
     // Config Parameters:
 
     // Cached References:
     [SerializeField] protected LayerMask groundLayer;
+    [SerializeField] protected GeneralStateController stateController = null;
     protected Rigidbody2D body;
     protected BoxCollider2D boxCollider;
 
     // State Parameters and Objects:
     private bool isFacingRight = true;
     private bool isAirborne = false;
-    protected bool isFloating = false;
     protected Vector2 standColliderSize;
     protected Vector2 standColliderOffset;
     
@@ -30,29 +29,9 @@ public class GeneralMovement : MonoBehaviour
     }
     protected virtual void FixedUpdate()
     {
-        if (isFloating)
-        {
-            if (body.velocity.y < GameConstants.FLOATING_MAX_DROP_SPEED)
-            {
-                body.velocity = new Vector2(body.velocity.x, GameConstants.FLOATING_MAX_DROP_SPEED);
-            }
-        }
     }
 
     // Class Functions:
-    public void Float(bool value)
-    {
-        if (value && !isFloating)
-        {
-            body.gravityScale /= GameConstants.FLOATING_BODY_GRAVITY_MODIFIER;
-            isFloating = true;
-        }
-        else if (!value && isFloating)
-        {
-            body.gravityScale *= GameConstants.FLOATING_BODY_GRAVITY_MODIFIER;
-            isFloating = false;
-        }
-    }
     public void SetCollider(Vector2 size, Vector2 offset)
     {
         boxCollider.size = size;
