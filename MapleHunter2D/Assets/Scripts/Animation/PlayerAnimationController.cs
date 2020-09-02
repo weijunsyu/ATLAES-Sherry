@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class PlayerStateController : GeneralStateController
+public class PlayerAnimationController : AnimationController
 {
     public enum PlayerMoveState
     {

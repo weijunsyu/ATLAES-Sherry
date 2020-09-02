@@ -2,33 +2,32 @@
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class GeneralMovement : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     // Config Parameters:
 
     // Cached References:
-    [SerializeField] protected LayerMask groundLayer;
-    [SerializeField] protected GeneralStateController stateController = null;
-    protected Rigidbody2D body;
-    protected BoxCollider2D boxCollider;
+    [SerializeField] public LayerMask groundLayer;
+    
+    [HideInInspector] private Rigidbody2D body;
+    [HideInInspector] private BoxCollider2D boxCollider;
+
+    // Public Variables:
+    [HideInInspector] public Vector2 standColliderSize;
+    [HideInInspector] public Vector2 standColliderOffset;
 
     // State Parameters and Objects:
     private bool isFacingRight = true;
     private bool isAirborne = false;
-    protected Vector2 standColliderSize;
-    protected Vector2 standColliderOffset;
     
 
     // Unity Events:
-    protected virtual void Awake()
+    private void Awake()
     {
         body = this.GetComponent<Rigidbody2D>();
         boxCollider = this.GetComponent<BoxCollider2D>();
         standColliderSize = boxCollider.size;
         standColliderOffset = boxCollider.offset;
-    }
-    protected virtual void FixedUpdate()
-    {
     }
 
     // Class Functions:
@@ -59,51 +58,25 @@ public class GeneralMovement : MonoBehaviour
     {
         isAirborne = value;
     }
-    protected void Jump(float linearVelocity)
-    {
-        if (!IsAirborne())
-        {
-            SetVertical(linearVelocity);
-        }
-    }
-    protected void MoveWithTurn(float linearVelocity, int direction = 0)
-    {
-        if (linearVelocity > 0 || direction == 1) //move to the right
-        {
-            if (!IsFacingRight()) //currently facing left
-            {
-                Turn(); //turn to face right
-            }
-        }
-        else if (linearVelocity < 0 || direction == -1) //move to left
-        {
-            if (IsFacingRight()) //currently facing right
-            {
-                Turn(); //turn to face left
-            }
-        }
-        //If linearVelocity == 0 then do nothing (if need some action add else block)
-        SetHorizontal(linearVelocity);
-    }
-    protected void SetHorizontal(float xVelocity)
+    public void SetHorizontal(float xVelocity)
     {
         Vector2 currentVelocity = body.velocity;
         Vector2 newVelocity = new Vector2(xVelocity, currentVelocity.y);
         body.velocity = newVelocity;
     }
-    protected void SetVertical(float yVelocity)
+    public void SetVertical(float yVelocity)
     {
         Vector2 currentVelocity = body.velocity;
         Vector2 newVelocity = new Vector2(currentVelocity.x, yVelocity);
         body.velocity = newVelocity;
     }
-    protected void AddHorizontal(float xVelocity)
+    public void AddHorizontal(float xVelocity)
     {
         Vector2 currentVelocity = body.velocity;
         Vector2 newVelocity = new Vector2((currentVelocity.x + xVelocity), currentVelocity.y);
         body.velocity = newVelocity;
     }
-    protected void AddVertical(float yVelocity)
+    public void AddVertical(float yVelocity)
     {
         Vector2 currentVelocity = body.velocity;
         Vector2 newVelocity = new Vector2(currentVelocity.x, (currentVelocity.y + yVelocity));

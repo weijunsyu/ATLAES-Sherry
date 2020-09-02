@@ -8,11 +8,11 @@ public class PlayerInputController : MonoBehaviour
     //Config Parameters:
 
     // Cached References:
-    [SerializeField] private PlayerMovement playerMovement = null;
+    [SerializeField] private PlayerOnlyMovement playerMovement = null;
     [SerializeField] private PlayerAction playerAction = null;
     [SerializeField] private ComboSystem comboSystem = null;
-    [SerializeField] private PlayerStateController playerStateController = null;
-    private VirtualController virtualController;
+    [SerializeField] private PlayerAnimationController playerStateController = null;
+    private PlayerControls playerControls;
 
     // State Parameters and Objects:
     private List<OrderedInput> orderedInputList = new List<OrderedInput>(); //should never be emtpy as character should be STOP if not doing anything
@@ -25,74 +25,74 @@ public class PlayerInputController : MonoBehaviour
     // Unity Events:
     private void Awake()
     {
-        virtualController = new VirtualController();
+        playerControls = new PlayerControls();
 
         // Move Right
-        virtualController.MouseAndKeyboard.MoveRight.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_RIGHT);
-        virtualController.MouseAndKeyboard.MoveRight.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT);
-        virtualController.GamepadController.MoveRight.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_RIGHT);
-        virtualController.GamepadController.MoveRight.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT);
+        playerControls.MouseAndKeyboard.MoveRight.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_RIGHT);
+        playerControls.MouseAndKeyboard.MoveRight.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT);
+        playerControls.GamepadController.MoveRight.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_RIGHT);
+        playerControls.GamepadController.MoveRight.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_RIGHT);
         // Move Left
-        virtualController.MouseAndKeyboard.MoveLeft.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_LEFT);
-        virtualController.MouseAndKeyboard.MoveLeft.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT);
-        virtualController.GamepadController.MoveLeft.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_LEFT);
-        virtualController.GamepadController.MoveLeft.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT);
+        playerControls.MouseAndKeyboard.MoveLeft.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_LEFT);
+        playerControls.MouseAndKeyboard.MoveLeft.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT);
+        playerControls.GamepadController.MoveLeft.performed += ctx => OrderedAddEvaluate(OrderedInput.MOVE_LEFT);
+        playerControls.GamepadController.MoveLeft.canceled += ctx => OrderedRemoveEvaluate(OrderedInput.MOVE_LEFT);
         // Jump
-        virtualController.MouseAndKeyboard.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
-        virtualController.GamepadController.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
+        playerControls.MouseAndKeyboard.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
+        playerControls.GamepadController.Jump.started += ctx => OrderedAddEvaluateRemove(OrderedInput.JUMP);
 
         // Crouch
-        virtualController.MouseAndKeyboard.Crouch.performed += ctx => UnorderedAddEvaluate(UnorderedInput.CROUCH);
-        virtualController.MouseAndKeyboard.Crouch.canceled += ctx => { UnorderedRemoveEvaluate(UnorderedInput.CROUCH); playerMovement.Stand(); };
-        virtualController.GamepadController.Crouch.performed += ctx => UnorderedAddEvaluate(UnorderedInput.CROUCH);
-        virtualController.GamepadController.Crouch.canceled += ctx => { UnorderedRemoveEvaluate(UnorderedInput.CROUCH); playerMovement.Stand(); };
+        playerControls.MouseAndKeyboard.Crouch.performed += ctx => UnorderedAddEvaluate(UnorderedInput.CROUCH);
+        playerControls.MouseAndKeyboard.Crouch.canceled += ctx => { UnorderedRemoveEvaluate(UnorderedInput.CROUCH); playerMovement.Stand(); };
+        playerControls.GamepadController.Crouch.performed += ctx => UnorderedAddEvaluate(UnorderedInput.CROUCH);
+        playerControls.GamepadController.Crouch.canceled += ctx => { UnorderedRemoveEvaluate(UnorderedInput.CROUCH); playerMovement.Stand(); };
 
         // Up
-        virtualController.MouseAndKeyboard.Up.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UP);
-        virtualController.MouseAndKeyboard.Up.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UP);
-        virtualController.GamepadController.Up.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UP);
-        virtualController.GamepadController.Up.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UP);
+        playerControls.MouseAndKeyboard.Up.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UP);
+        playerControls.MouseAndKeyboard.Up.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UP);
+        playerControls.GamepadController.Up.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UP);
+        playerControls.GamepadController.Up.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UP);
 
         // Defend
-        virtualController.MouseAndKeyboard.Defend.performed += ctx => StartDefend();
-        virtualController.MouseAndKeyboard.Defend.canceled += ctx => StopDefend();
-        virtualController.GamepadController.Defend.performed += ctx => StartDefend();
-        virtualController.GamepadController.Defend.canceled += ctx => StopDefend();
+        playerControls.MouseAndKeyboard.Defend.performed += ctx => StartDefend();
+        playerControls.MouseAndKeyboard.Defend.canceled += ctx => StopDefend();
+        playerControls.GamepadController.Defend.performed += ctx => StartDefend();
+        playerControls.GamepadController.Defend.canceled += ctx => StopDefend();
         // Dash
-        virtualController.MouseAndKeyboard.Dash.started += ctx => Dash();
-        virtualController.GamepadController.Dash.started += ctx => Dash();
+        playerControls.MouseAndKeyboard.Dash.started += ctx => Dash();
+        playerControls.GamepadController.Dash.started += ctx => Dash();
 
         // Primary
-        virtualController.MouseAndKeyboard.Primary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.PRIMARY);
-        virtualController.MouseAndKeyboard.Primary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
-        virtualController.GamepadController.Primary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.PRIMARY);
-        virtualController.GamepadController.Primary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
+        playerControls.MouseAndKeyboard.Primary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.PRIMARY);
+        playerControls.MouseAndKeyboard.Primary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
+        playerControls.GamepadController.Primary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.PRIMARY);
+        playerControls.GamepadController.Primary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.PRIMARY);
         // Secondary
-        virtualController.MouseAndKeyboard.Secondary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.SECONDARY);
-        virtualController.MouseAndKeyboard.Secondary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
-        virtualController.GamepadController.Secondary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.SECONDARY);
-        virtualController.GamepadController.Secondary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
+        playerControls.MouseAndKeyboard.Secondary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.SECONDARY);
+        playerControls.MouseAndKeyboard.Secondary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
+        playerControls.GamepadController.Secondary.performed += ctx => UnorderedAddEvaluate(UnorderedInput.SECONDARY);
+        playerControls.GamepadController.Secondary.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.SECONDARY);
         // Utility 1
-        virtualController.MouseAndKeyboard.Utility1.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_1);
-        virtualController.MouseAndKeyboard.Utility1.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_1);
-        virtualController.GamepadController.Utility1.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_1);
-        virtualController.GamepadController.Utility1.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_1);
+        playerControls.MouseAndKeyboard.Utility1.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_1);
+        playerControls.MouseAndKeyboard.Utility1.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_1);
+        playerControls.GamepadController.Utility1.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_1);
+        playerControls.GamepadController.Utility1.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_1);
         // Utility 2
-        virtualController.MouseAndKeyboard.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
-        virtualController.MouseAndKeyboard.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
-        virtualController.GamepadController.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
-        virtualController.GamepadController.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
+        playerControls.MouseAndKeyboard.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
+        playerControls.MouseAndKeyboard.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
+        playerControls.GamepadController.Utility2.performed += ctx => UnorderedAddEvaluate(UnorderedInput.UTILITY_2);
+        playerControls.GamepadController.Utility2.canceled += ctx => UnorderedRemoveEvaluate(UnorderedInput.UTILITY_2);
 
         // MOUSE ONLY:
         // Aim
-        virtualController.MouseAndKeyboard.Aim.performed += ctx => FreeAim(ctx.ReadValue<Vector2>());
+        playerControls.MouseAndKeyboard.Aim.performed += ctx => FreeAim(ctx.ReadValue<Vector2>());
 
         // GAMEPAD ONLY:
         // Aim Attack (primary attack on direction aimed)
-        virtualController.GamepadController.AimAttack.performed += ctx => AimAttack(ctx.ReadValue<Vector2>());
+        playerControls.GamepadController.AimAttack.performed += ctx => AimAttack(ctx.ReadValue<Vector2>());
         // Hold Secondary Aim Attack Mode (hold to switch Aim Attack to Secondary from Primary)
-        virtualController.GamepadController.HoldSecondaryAimAttack.performed += ctx => aimAttackIsSecondary = true;
-        virtualController.GamepadController.HoldSecondaryAimAttack.canceled += ctx => aimAttackIsSecondary = false;
+        playerControls.GamepadController.HoldSecondaryAimAttack.performed += ctx => aimAttackIsSecondary = true;
+        playerControls.GamepadController.HoldSecondaryAimAttack.canceled += ctx => aimAttackIsSecondary = false;
 
     }
 
@@ -105,7 +105,7 @@ public class PlayerInputController : MonoBehaviour
         aimAttackIsSecondary = false;
 
         // Enable virtual controller:
-        virtualController.Enable();
+        playerControls.Enable();
     }
     private void Update()
     {
@@ -113,7 +113,7 @@ public class PlayerInputController : MonoBehaviour
     }
     private void OnDisable()
     {
-        virtualController.Disable();
+        playerControls.Disable();
     }
 
 

@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : GeneralMovement
+public class PlayerOnlyMovement : MonoBehaviour
 {
     // Config parameters:
 
     // Cached References:
-    private new PlayerStateController stateController = null;
 
 
     // State Parameters and Objects:
@@ -136,33 +135,6 @@ public class PlayerMovement : GeneralMovement
     {
         return canDash;
     }
-    /* Check if player character can stand back up (assume character is already crouching or dashing)
-     * Implemented by simply checking if current collider has ground collider above itself */
-    public bool CanStand()
-    {
-        Vector2 overlapCenter = new Vector2(boxCollider.bounds.center.x, (boxCollider.bounds.center.y + crouchColliderSize.y)); // Center-top
-        Vector2 overlapSize = new Vector2((crouchColliderSize.x + GameConstants.COLLISION_CHECK_SHRINK_OFFSET), crouchColliderSize.y);
-        Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
-        return (colliderHit == null);
-    }
-    public void Crouch()
-    {
-        attemptingStand = false;
-        SetCollider(crouchColliderSize, crouchColliderOffset);
-        MasterManager.playerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_CROUCH_MOVE_SPEED);
-    }
-    public void Stand()
-    {
-        if (CanStand())
-        {
-            SetCollider(standColliderSize, standColliderOffset);
-            MasterManager.playerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_STAND_MOVE_SPEED);
-        }
-        else
-        {
-            attemptingStand = true;
-        }
-    }
     public void Move(OrderedInput direction)
     {
         if (direction == OrderedInput.MOVE_RIGHT)
@@ -217,19 +189,6 @@ public class PlayerMovement : GeneralMovement
                 airJumpsPerformed = MasterManager.playerCharacterNonPersistData.GetMaxAirJumps();
             }
         }
-    }
-    public void StopHorizontal()
-    {
-        SetHorizontal(0);
-    }
-    public void StopVertical()
-    {
-        SetVertical(0);
-    }
-    public void StopAll()
-    {
-        StopHorizontal();
-        StopVertical();
     }
     private int CheckFront()
     {
