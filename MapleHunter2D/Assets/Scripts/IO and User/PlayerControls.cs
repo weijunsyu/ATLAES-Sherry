@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @VirtualController : IInputActionCollection, IDisposable
+public class @PlayerControls : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @VirtualController()
+    public @PlayerControls()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerControls"",
@@ -858,8 +858,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_MouseAndKeyboard_PauseGame;
     public struct MouseAndKeyboardActions
     {
-        private @VirtualController m_Wrapper;
-        public MouseAndKeyboardActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
+        private @PlayerControls m_Wrapper;
+        public MouseAndKeyboardActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveRight => m_Wrapper.m_MouseAndKeyboard_MoveRight;
         public InputAction @MoveLeft => m_Wrapper.m_MouseAndKeyboard_MoveLeft;
         public InputAction @Jump => m_Wrapper.m_MouseAndKeyboard_Jump;
@@ -996,8 +996,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_GamepadController_PauseGame;
     public struct GamepadControllerActions
     {
-        private @VirtualController m_Wrapper;
-        public GamepadControllerActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
+        private @PlayerControls m_Wrapper;
+        public GamepadControllerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveRight => m_Wrapper.m_GamepadController_MoveRight;
         public InputAction @MoveLeft => m_Wrapper.m_GamepadController_MoveLeft;
         public InputAction @Jump => m_Wrapper.m_GamepadController_Jump;
@@ -1127,8 +1127,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_PauseMenu_PauseGame;
     public struct PauseMenuActions
     {
-        private @VirtualController m_Wrapper;
-        public PauseMenuActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
+        private @PlayerControls m_Wrapper;
+        public PauseMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PauseGame => m_Wrapper.m_PauseMenu_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
         public void Enable() { Get().Enable(); }
@@ -1160,8 +1160,8 @@ public class @VirtualController : IInputActionCollection, IDisposable
     private readonly InputAction m_Inventory_Inventory;
     public struct InventoryActions
     {
-        private @VirtualController m_Wrapper;
-        public InventoryActions(@VirtualController wrapper) { m_Wrapper = wrapper; }
+        private @PlayerControls m_Wrapper;
+        public InventoryActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inventory => m_Wrapper.m_Inventory_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_Inventory; }
         public void Enable() { Get().Enable(); }
