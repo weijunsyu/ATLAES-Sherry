@@ -9,12 +9,14 @@ public class MovementController : MonoBehaviour
     // Cached References:
     [SerializeField] public LayerMask groundLayer;
     
-    [HideInInspector] private Rigidbody2D body;
-    [HideInInspector] private BoxCollider2D boxCollider;
+    [HideInInspector] public Rigidbody2D body;
+    [HideInInspector] public BoxCollider2D boxCollider;
 
     // Public Variables:
     [HideInInspector] public Vector2 standColliderSize;
     [HideInInspector] public Vector2 standColliderOffset;
+    [HideInInspector] public Vector2 crouchColliderSize;
+    [HideInInspector] public Vector2 crouchColliderOffset;
 
     // State Parameters and Objects:
     private bool isFacingRight = true;
@@ -28,6 +30,9 @@ public class MovementController : MonoBehaviour
         boxCollider = this.GetComponent<BoxCollider2D>();
         standColliderSize = boxCollider.size;
         standColliderOffset = boxCollider.offset;
+
+        crouchColliderSize = new Vector2(standColliderSize.x, (standColliderSize.y / 2));
+        crouchColliderOffset = new Vector2(standColliderOffset.x, (standColliderOffset.y * 3));
     }
 
     // Class Functions:

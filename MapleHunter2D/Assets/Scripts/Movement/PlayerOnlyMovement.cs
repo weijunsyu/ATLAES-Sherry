@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 
-public class PlayerOnlyMovement : MonoBehaviour
+public static class PlayerOnlyMovement
 {
-    // Config parameters:
 
-    // Cached References:
 
 
     // State Parameters and Objects:
@@ -12,8 +10,7 @@ public class PlayerOnlyMovement : MonoBehaviour
     private float coyoteJumpTimer = 0f; // Timer run after initial airborne transition to determine if player can still jump
     private float jumpBufferTimer = 0f; // Timer run after jump input to determine if player can jump if input was early
     private bool jumpbufferToggle = false; // Toggle if jumpBufferTimer should start or stop
-    private Vector2 crouchColliderSize;
-    private Vector2 crouchColliderOffset;
+
     private int airJumpsPerformed = 0;
     private bool attemptingStand = false;
     private bool canGroundJump = true;
@@ -26,12 +23,6 @@ public class PlayerOnlyMovement : MonoBehaviour
 
 
     // Unity Events:
-    protected override void Awake()
-    {
-        base.Awake(); //do all base class awake methods first
-        crouchColliderSize = new Vector2(standColliderSize.x, (standColliderSize.y / 2));
-        crouchColliderOffset = new Vector2(standColliderOffset.x, (standColliderOffset.y * 3));
-    }
     private void Update()
     {
         if (jumpbufferToggle)
@@ -106,19 +97,6 @@ public class PlayerOnlyMovement : MonoBehaviour
     }
 
     // Class Functions:
-    public void Defend(bool value)
-    {
-        if (value && !isDefending)
-        {
-            body.gravityScale /= GameConstants.FLOATING_BODY_GRAVITY_MODIFIER;
-            isDefending = true;
-        }
-        else if (!value && isDefending)
-        {
-            body.gravityScale *= GameConstants.FLOATING_BODY_GRAVITY_MODIFIER;
-            isDefending = false;
-        }
-    }
     public bool GetIsSliding()
     {
         return isSliding;
@@ -131,10 +109,6 @@ public class PlayerOnlyMovement : MonoBehaviour
     {
         inputLeft = value;
     }
-    public bool CanDash()
-    {
-        return canDash;
-    }
     public void Move(OrderedInput direction)
     {
         if (direction == OrderedInput.MOVE_RIGHT)
@@ -146,22 +120,7 @@ public class PlayerOnlyMovement : MonoBehaviour
             MoveWithTurn(-MasterManager.playerCharacterNonPersistData.GetMoveSpeed(), -1);
         }
     }
-    public void DashMove()
-    {
-        if (canDash)
-        {
-            float linearVelocity = MasterManager.playerCharacterNonPersistData.GetDashSpeed();
-            if (!IsFacingRight()) // player is facing left
-            {
-                linearVelocity = -linearVelocity;
-            }
-            SetHorizontal(linearVelocity);
-            StopVertical();
-            canDash = false;
-            airJumpsPerformed = 0;
-        }
-        StopVertical();
-    }
+    
     public void Jump()
     {
         // Early input forgiveness
@@ -188,33 +147,6 @@ public class PlayerOnlyMovement : MonoBehaviour
             {
                 airJumpsPerformed = MasterManager.playerCharacterNonPersistData.GetMaxAirJumps();
             }
-        }
-    }
-    private int CheckFront()
-    {
-        int facingDirection;
-        if (IsFacingRight())
-        {
-            facingDirection = 1;
-        }
-        else
-        {
-            facingDirection = -1;
-        }
-        Vector2 overlapCenter = new Vector2((boxCollider.bounds.center.x + (facingDirection * boxCollider.bounds.extents.x)),
-                                            boxCollider.bounds.center.y);
-        Vector2 overlapSize = new Vector2(GameConstants.COLLISION_CHECK_DISTANCE_OFFSET,
-                                          ((boxCollider.bounds.extents.y * 2) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
-        Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
-
-        isFacingWall = (colliderHit != null);
-        return facingDirection;
-    }
-    private void Slide()
-    {
-        if (body.velocity.y < GameConstants.WALL_SLIDE_MAX_DROP_SPEED)
-        {
-            body.velocity = new Vector2(body.velocity.x, GameConstants.WALL_SLIDE_MAX_DROP_SPEED);
         }
     }
 }

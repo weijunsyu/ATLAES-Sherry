@@ -1,5 +1,5 @@
 ﻿
-public static class BasicMovement
+public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y only, both x and y)
 {
     public static void Jump(MovementController movementController, float linearVelocity)
     {
@@ -7,6 +7,10 @@ public static class BasicMovement
         {
             movementController.SetVertical(linearVelocity);
         }
+    }
+    public static void Strafe(MovementController movementController, float linearVelocity)
+    {
+        movementController.SetHorizontal(linearVelocity);
     }
     public static void MoveWithTurn(MovementController movementController, float linearVelocity, int direction = 0)
     {
