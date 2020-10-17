@@ -2,31 +2,6 @@
 
 // Definitions:
 /*
- * List of player states used to determine current animation state
- */
-public enum PlayerAnimationState // Append new states here as they appear such as combos etc.
-{
-    IDLE,
-    WALK,
-    DASH,
-    JUMP,
-    FALL,
-    CROUCH,
-    WALL_SLIDE,
-    DEFEND,
-    MELEE_ATK_PRIMARY, // Futher clarification on particular attack done elsewhere
-    MELEE_ATK_SECONDARY, // ""
-    MELEE_ATK_DUAL, // ""
-    RANGE_ATK_PRIMARY, // Futher clarification on particular attack done elsewhere
-    RANGE_ATK_SECONDARY, // ""
-    RANGE_ATK_DUAL, // ""
-    UTILITY_1, // Futher clarification on particular utility skill done elsewhere
-    UTILITY_2, // ""
-    UTILITY_BOTH, // ""
-    DEATH, // Futher clarification on particular circumstance of death done elsewhere
-    FAST_FALL
-}
-/*
  * List of weapons available in game
  */
 public enum WeaponType

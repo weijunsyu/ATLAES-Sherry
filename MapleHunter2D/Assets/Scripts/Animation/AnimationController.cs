@@ -9,7 +9,9 @@ public class AnimationController : MonoBehaviour
     private Animator animator;
 
     // State Parameters and Objects:
-    private int[] animationState = new int[3]; // moveState = 0, actionState = 1, specialState = 2
+    private int moveState;
+    private int actionState;
+    private int specialState;
 
 
     // Unity Events:
@@ -20,42 +22,34 @@ public class AnimationController : MonoBehaviour
 
 
     // Class Functions:
-    public int[] GetAnimationState()
-    {
-        return animationState;
-    }
     public int GetMoveState()
     {
-        return animationState[0];
+        return moveState;
     }
     public int GetActionState()
     {
-        return animationState[1];
+        return actionState;
     }
     public int GetSpecialState()
     {
-        return animationState[2];
-    }
-    public void SetAnimationState(int[] animationState)
-    {
-        this.animationState = animationState;
+        return specialState;
     }
     public void SetMoveState(int state)
     {
-        animationState[0] = state;
+        moveState = state;
     }
     public void SetActionState(int state)
     {
-        animationState[1] = state;
+        actionState = state;
     }
     public void SetSpecialState(int state)
     {
-        animationState[2] = state;
+        specialState = state;
     }
-    public void RunAnimationState()
+    public void RunAnimationStates()
     {
-        animator.SetInteger("Move State", GetAnimationState()[0]);
-        animator.SetInteger("Action State", GetAnimationState()[1]);
-        animator.SetInteger("Special State", GetAnimationState()[2]);
+        animator.SetInteger("Move State", GetMoveState());
+        animator.SetInteger("Action State", GetActionState());
+        animator.SetInteger("Special State", GetSpecialState());
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(MovementController))]
 [RequireComponent(typeof(AnimationController))]
@@ -14,7 +11,9 @@ public abstract class AbstractStateController : MonoBehaviour
     protected AnimationController animationController;
 
     // State Parameters and Objects:
-    protected List<AbstractState> states = new List<AbstractState>();
+    protected AbstractState moveState;
+    protected AbstractState actionState;
+    protected AbstractState specialState;
 
     protected virtual void Awake()
     {
