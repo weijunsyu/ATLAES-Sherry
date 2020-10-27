@@ -23,7 +23,7 @@ public class SceneLoader : ScriptableObject
         }
     }
 
-    public void LoadPreviousScreen()
+    public void LoadPreviousScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex - 1 > 0)

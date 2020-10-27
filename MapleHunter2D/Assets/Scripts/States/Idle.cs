@@ -23,6 +23,8 @@ public class Idle : AbstractState
         // Check if ground under player has disapeared (not implemented as of now)
         // movementController.UpdateAirborne();
 
+
+
     }
     public override void Exit()
     {
