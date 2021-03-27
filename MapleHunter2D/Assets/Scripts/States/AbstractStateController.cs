@@ -4,20 +4,45 @@
 [RequireComponent(typeof(AnimationController))]
 public abstract class AbstractStateController : MonoBehaviour
 {
-    // Config Parameters:
+    //Config Parameters:
 
     // Cached References:
-    protected MovementController movementController;
-    protected AnimationController animationController;
+    [HideInInspector] public MovementController movementController;
+    [HideInInspector] public AnimationController animationController;
 
     // State Parameters and Objects:
-    protected AbstractState moveState;
-    protected AbstractState actionState;
-    protected AbstractState specialState;
+    [HideInInspector] public StateMachine stateMachine = null;
+    
+    [HideInInspector] public IState startState = null;
 
+    // Unity Events:
     protected virtual void Awake()
     {
-        movementController = this.GetComponent<MovementController>();
-        animationController = this.GetComponent<AnimationController>();
+        movementController = GetComponent<MovementController>();
+        animationController = GetComponent<AnimationController>();
+        stateMachine = new StateMachine();
+        InitializeStates();
+    }
+    protected virtual void Start()
+    {
+        InitializeStateMachine();
+    }
+    protected virtual void Update()
+    {
+        //stateMachine.stateStack.Peek().ExecuteLogic();
+        stateMachine.state.ExecuteLogic();
+    }
+    protected virtual void FixedUpdate()
+    {
+        //stateMachine.stateStack.Peek().ExecutePhysics();
+        stateMachine.state.ExecutePhysics();
+    }
+
+    // Class Functions:
+    protected abstract void InitializeStates();
+
+    protected virtual void InitializeStateMachine()
+    {
+        stateMachine.Initialize(startState);
     }
 }

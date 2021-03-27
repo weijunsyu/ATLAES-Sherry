@@ -21,7 +21,7 @@ public static bool CanStand(MovementController movementController)
     public static void Crouch(MovementController movementController)
     {
         movementController.SetCollider(movementController.crouchColliderSize, movementController.crouchColliderOffset);
-        MasterManager.playerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_BASE_CROUCH_MOVE_SPEED);
+        //MasterManager.playerCharacterNonPersistData.SetMoveSpeed(GameConstants.PLAYER_CROUCH_MOVE_SPEED);
     }
     // Return true if character successfully stands, false if cannot stand
     public static bool Stand(MovementController movementController)

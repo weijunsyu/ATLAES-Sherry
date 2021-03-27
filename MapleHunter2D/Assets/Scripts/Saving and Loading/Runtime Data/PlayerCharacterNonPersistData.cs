@@ -2,10 +2,10 @@
 public class PlayerCharacterNonPersistData
 {
     // Player Character Data
-    private float moveSpeed = GameConstants.PLAYER_BASE_STAND_MOVE_SPEED;
+    private float moveSpeed = GameConstants.PLAYER_BASE_WALK_MOVE_SPEED;
     private float jumpVelocity = GameConstants.PLAYER_BASE_GROUND_JUMP_VELOCITY;
     private float airJumpVelocity = GameConstants.PLAYER_BASE_AIR_JUMP_VELOCITY;
-    private int maxAirJumps = GameConstants.PLAYER_BASE_AIR_JUMP_NUMBER;
+    private int maxAirJumps = GameConstants.PLAYER_NUMBER_AIR_JUMP;
     private float dashSpeed = GameConstants.PLAYER_BASE_DASH_SPEED;
     private float dashDuration = GameConstants.PLAYER_BASE_DASH_DURATION;
 
@@ -15,10 +15,10 @@ public class PlayerCharacterNonPersistData
     // Class Functions:
     public void ResetAllPlayerCharacterNonPersistData()
     {
-        SetMoveSpeed(GameConstants.PLAYER_BASE_STAND_MOVE_SPEED);
+        SetMoveSpeed(GameConstants.PLAYER_BASE_WALK_MOVE_SPEED);
         SetJumpVelocity(GameConstants.PLAYER_BASE_GROUND_JUMP_VELOCITY);
         SetAirJumpVelocity(GameConstants.PLAYER_BASE_AIR_JUMP_VELOCITY);
-        SetMaxAirJumps(GameConstants.PLAYER_BASE_AIR_JUMP_NUMBER);
+        SetMaxAirJumps(GameConstants.PLAYER_NUMBER_AIR_JUMP);
         SetDashSpeed(GameConstants.PLAYER_BASE_DASH_SPEED);
         SetDashDuration(GameConstants.PLAYER_BASE_DASH_DURATION);
     }

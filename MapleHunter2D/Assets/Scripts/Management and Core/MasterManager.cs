@@ -18,6 +18,7 @@ public class MasterManager : MonoBehaviour
 
     public static PlayerCharacterNonPersistData playerCharacterNonPersistData = new PlayerCharacterNonPersistData();
 
+    public static double timeInSeconds = 0d;
 
     // Unity Events:
     private void Awake()
@@ -25,6 +26,10 @@ public class MasterManager : MonoBehaviour
         KeepPersistentStatus();
     }
 
+    public void Update()
+    {
+        timeInSeconds += Time.deltaTime;
+    }
 
     // Class Functions:
 
@@ -45,28 +50,11 @@ public class MasterManager : MonoBehaviour
             worldData.SetBossesDefeated(data.bossesDefeated);
             worldData.SetPlayTime(data.playTime);
             // Player Character Persistent Data
-            playerCharacterPersistentData.SetLevel(data.level);
-            playerCharacterPersistentData.SetCurrentStatPoints(data.currentStatPoints);
-            playerCharacterPersistentData.SetTotalStatPoints(data.totalStatPoints);
             playerCharacterPersistentData.SetCurrentHP(data.currentHP);
             playerCharacterPersistentData.SetMaxHP(data.maxHP);
-            playerCharacterPersistentData.SetCurrentSTR(data.currentSTR);
-            playerCharacterPersistentData.SetMaxSTR(data.maxSTR);
-            playerCharacterPersistentData.SetCurrentFIN(data.currentFIN);
-            playerCharacterPersistentData.SetMaxFIN(data.maxFIN);
-            playerCharacterPersistentData.SetCurrentINT(data.currentINT);
-            playerCharacterPersistentData.SetMaxINT(data.maxINT);
-            playerCharacterPersistentData.SetCurrentCHA(data.currentCHA);
-            playerCharacterPersistentData.SetMaxCHA(data.maxCHA);
-            playerCharacterPersistentData.SetCurrentSkillPoints(data.currentSkillPoints);
-            playerCharacterPersistentData.SetTotalSkillPoints(data.totalSkillPoints);
-            playerCharacterPersistentData.SetPassives(data.passives);
-            playerCharacterPersistentData.SetActives(data.actives);
             playerCharacterPersistentData.SetWeapons(data.weapons);
             playerCharacterPersistentData.SetPrimaryWeapon(data.primaryWeapon);
             playerCharacterPersistentData.SetSecondaryWeapon(data.secondaryWeapon);
-            playerCharacterPersistentData.SetUtility1(data.utility1);
-            playerCharacterPersistentData.SetUtility2(data.utility2);
             playerCharacterPersistentData.SetLocationSceneIndex(data.locationSceneIndex);
             // Inventory Data
             inventoryData.SetGold(data.gold);

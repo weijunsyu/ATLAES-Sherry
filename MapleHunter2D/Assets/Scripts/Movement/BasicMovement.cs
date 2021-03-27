@@ -3,10 +3,13 @@ public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y
 {
     public static void Jump(MovementController movementController, float linearVelocity)
     {
+        /*
         if (!movementController.IsAirborne())
         {
             movementController.SetVertical(linearVelocity);
         }
+        */
+        movementController.SetVertical(linearVelocity);
     }
     public static void Strafe(MovementController movementController, float linearVelocity)
     {
@@ -28,7 +31,7 @@ public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y
                 movementController.Turn(); //turn to face left
             }
         }
-        //If linearVelocity == 0 then do nothing (if need some action add else block)
+        //If linearVelocity == 0 then do nothing
         movementController.SetHorizontal(linearVelocity);
     }
     public static void StopHorizontal(MovementController movementController)

@@ -67,23 +67,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Defend"",
+                    ""name"": ""Guard"",
                     ""type"": ""Button"",
-                    ""id"": ""f7a48f45-c224-4b9c-a24d-ed356c7916bd"",
+                    ""id"": ""6ec68bd7-4b2f-4786-a9bc-630b0fbcb0ea"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Aim"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""9022af75-6ac2-4072-82ca-68494c738d3c"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Primary"",
+                    ""name"": ""Light"",
                     ""type"": ""Button"",
                     ""id"": ""3f597fe4-f510-457c-af9c-aabc138e32a8"",
                     ""expectedControlType"": ""Button"",
@@ -91,7 +83,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Secondary"",
+                    ""name"": ""Medium"",
                     ""type"": ""Button"",
                     ""id"": ""06159f99-66a1-4437-a80a-78403d579504"",
                     ""expectedControlType"": ""Button"",
@@ -99,25 +91,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Utility 1"",
+                    ""name"": ""Heavy"",
                     ""type"": ""Button"",
-                    ""id"": ""ba1bbb04-afb9-4bfc-bad8-0341aa9298ae"",
+                    ""id"": ""f7a48f45-c224-4b9c-a24d-ed356c7916bd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Utility 2"",
+                    ""name"": ""Switch Weapon"",
                     ""type"": ""Button"",
-                    ""id"": ""c87ceb0d-db06-4763-a3bc-fa6f298a51f2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Inventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""37bc4ad7-00ec-41f2-a384-f51507ad8ef1"",
+                    ""id"": ""3055e0d2-a036-47fc-bec9-dfec69078b1c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -139,6 +123,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21c7a3dd-d560-4dc3-a552-ccb62e66fc82"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -172,7 +167,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Secondary"",
+                    ""action"": ""Medium"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc0b3284-c3a0-45ce-bb3c-d94515e015b2"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Medium"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -183,7 +189,18 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Primary"",
+                    ""action"": ""Light"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c50da95b-35c2-4705-8093-41b809d56b09"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Light"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -195,50 +212,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""18686145-fe24-4520-9561-fd8e93475766"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Utility 1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f4b738de-74e4-422d-b019-420af81b6a7d"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Utility 2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5fafcdcc-3e5f-49f9-803d-d3f3b16c3381"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Defend"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dbcaabe1-b041-4fab-8cef-f3e3f52fba40"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -266,23 +239,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d52a08cd-0ef7-41e7-a48e-872bdab3bfe6"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""id"": ""e00b9d08-b626-4514-bdd4-96cd069df1c2"",
+                    ""path"": ""<Keyboard>/l"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8b29dd50-2ece-44bf-8c21-48676d334c8c"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -294,6 +256,72 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Pause Game"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de8c02e7-bb28-428f-a304-a703cd9773e8"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Pause Game"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e239079-7b98-49ea-887b-37a2b62abecc"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Guard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee8800a7-f428-4279-b082-92937fd6e96f"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Guard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1344b751-6adc-41ec-8193-a2ef3e2b039a"",
+                    ""path"": ""<Mouse>/forwardButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5fafcdcc-3e5f-49f9-803d-d3f3b16c3381"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Heavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c14f1504-7d71-4377-bce5-e4f5d6df1269"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Switch Weapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -352,23 +380,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Defend"",
-                    ""type"": ""Button"",
-                    ""id"": ""8e84932e-89d3-4049-a1bc-bad3459b0084"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Aim Attack"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""eec16e37-eb56-48ab-9d69-bc50f457d234"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Hold Secondary Aim Attack"",
+                    ""name"": ""Guard"",
                     ""type"": ""Button"",
                     ""id"": ""4043881a-5eb7-4839-ae21-73fd1bc1e2f3"",
                     ""expectedControlType"": ""Button"",
@@ -376,7 +388,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Primary"",
+                    ""name"": ""Light"",
                     ""type"": ""Button"",
                     ""id"": ""a0d5ee3c-805b-4c54-a18d-c3e90b31a4e0"",
                     ""expectedControlType"": ""Button"",
@@ -384,7 +396,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Secondary"",
+                    ""name"": ""Medium"",
                     ""type"": ""Button"",
                     ""id"": ""65926634-e774-47b1-aaa8-7ae6becd8d5d"",
                     ""expectedControlType"": ""Button"",
@@ -392,25 +404,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Utility 1"",
+                    ""name"": ""Heavy"",
                     ""type"": ""Button"",
-                    ""id"": ""8fdcff05-5ab1-4b15-8f8a-f65212000e39"",
+                    ""id"": ""8e84932e-89d3-4049-a1bc-bad3459b0084"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Utility 2"",
+                    ""name"": ""Switch Weapon"",
                     ""type"": ""Button"",
-                    ""id"": ""2035ae6e-9a83-49f2-8d33-417b1c5b6d6d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Inventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""668b8832-8a40-426e-9e6c-7258055ea925"",
+                    ""id"": ""d05aeabe-3301-4716-807f-be770499ad43"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -504,50 +508,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""73c06646-9881-4e0e-963c-83849c6fa9ba"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Defend"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""be1d793f-21aa-4bdb-b903-c386069c8963"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Utility 1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""50e28cbf-55b0-4994-9e16-c04f2e8ebf48"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Utility 2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1c7753a8-72a8-43a7-9e37-471e031b7504"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Aim Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""fd6d286e-122a-4320-a106-c4ba9a856222"",
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
@@ -586,7 +546,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Primary"",
+                    ""action"": ""Light"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -597,29 +557,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Secondary"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0aaf38e0-4ed4-4a6a-bc96-770eca2ef733"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Hold Secondary Aim Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0d306634-0919-42dc-a510-791398a6e3c8"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""Medium"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -633,6 +571,61 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Pause Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0aaf38e0-4ed4-4a6a-bc96-770eca2ef733"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Guard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73c06646-9881-4e0e-963c-83849c6fa9ba"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Heavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0470fc17-c823-46ac-bc97-f4df3207fe40"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a864a3c5-6339-4b16-ac4f-14bcda603cb9"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Switch Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8797a1fb-55e9-45a0-bb4c-37b1f31e9ee3"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -641,7 +634,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
             ""id"": ""2f3a2a0e-56f5-4cd2-b775-07fdb1e0b59d"",
             ""actions"": [
                 {
-                    ""name"": ""Pause Game"",
+                    ""name"": ""Resume Game"",
                     ""type"": ""Button"",
                     ""id"": ""255b00d7-d511-472b-98d8-e088a0e6b8f5"",
                     ""expectedControlType"": ""Button"",
@@ -657,7 +650,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Pause Game"",
+                    ""action"": ""Resume Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -668,56 +661,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Pause Game"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Inventory"",
-            ""id"": ""0e0f8307-5027-4284-9c19-3d55874fb10b"",
-            ""actions"": [
-                {
-                    ""name"": ""Inventory"",
-                    ""type"": ""Button"",
-                    ""id"": ""a8d4aaf0-0338-4e31-ab19-06c9b665bdab"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""f38e313d-80a9-49b5-9dff-a099268053f1"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""983b8f64-b298-46f5-81d2-988e6ca4c1ed"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard+Mouse"",
-                    ""action"": ""Inventory"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9516a723-e8d9-4f80-a83a-03eaae75ae4c"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Inventory"",
+                    ""action"": ""Resume Game"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -736,7 +680,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""devicePath"": ""<Mouse>"",
-                    ""isOptional"": false,
+                    ""isOptional"": true,
                     ""isOR"": false
                 }
             ]
@@ -762,13 +706,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_MouseAndKeyboard_Crouch = m_MouseAndKeyboard.FindAction("Crouch", throwIfNotFound: true);
         m_MouseAndKeyboard_Up = m_MouseAndKeyboard.FindAction("Up", throwIfNotFound: true);
         m_MouseAndKeyboard_Dash = m_MouseAndKeyboard.FindAction("Dash", throwIfNotFound: true);
-        m_MouseAndKeyboard_Defend = m_MouseAndKeyboard.FindAction("Defend", throwIfNotFound: true);
-        m_MouseAndKeyboard_Aim = m_MouseAndKeyboard.FindAction("Aim", throwIfNotFound: true);
-        m_MouseAndKeyboard_Primary = m_MouseAndKeyboard.FindAction("Primary", throwIfNotFound: true);
-        m_MouseAndKeyboard_Secondary = m_MouseAndKeyboard.FindAction("Secondary", throwIfNotFound: true);
-        m_MouseAndKeyboard_Utility1 = m_MouseAndKeyboard.FindAction("Utility 1", throwIfNotFound: true);
-        m_MouseAndKeyboard_Utility2 = m_MouseAndKeyboard.FindAction("Utility 2", throwIfNotFound: true);
-        m_MouseAndKeyboard_Inventory = m_MouseAndKeyboard.FindAction("Inventory", throwIfNotFound: true);
+        m_MouseAndKeyboard_Guard = m_MouseAndKeyboard.FindAction("Guard", throwIfNotFound: true);
+        m_MouseAndKeyboard_Light = m_MouseAndKeyboard.FindAction("Light", throwIfNotFound: true);
+        m_MouseAndKeyboard_Medium = m_MouseAndKeyboard.FindAction("Medium", throwIfNotFound: true);
+        m_MouseAndKeyboard_Heavy = m_MouseAndKeyboard.FindAction("Heavy", throwIfNotFound: true);
+        m_MouseAndKeyboard_SwitchWeapon = m_MouseAndKeyboard.FindAction("Switch Weapon", throwIfNotFound: true);
         m_MouseAndKeyboard_PauseGame = m_MouseAndKeyboard.FindAction("Pause Game", throwIfNotFound: true);
         // Gamepad Controller
         m_GamepadController = asset.FindActionMap("Gamepad Controller", throwIfNotFound: true);
@@ -778,21 +720,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamepadController_Crouch = m_GamepadController.FindAction("Crouch", throwIfNotFound: true);
         m_GamepadController_Up = m_GamepadController.FindAction("Up", throwIfNotFound: true);
         m_GamepadController_Dash = m_GamepadController.FindAction("Dash", throwIfNotFound: true);
-        m_GamepadController_Defend = m_GamepadController.FindAction("Defend", throwIfNotFound: true);
-        m_GamepadController_AimAttack = m_GamepadController.FindAction("Aim Attack", throwIfNotFound: true);
-        m_GamepadController_HoldSecondaryAimAttack = m_GamepadController.FindAction("Hold Secondary Aim Attack", throwIfNotFound: true);
-        m_GamepadController_Primary = m_GamepadController.FindAction("Primary", throwIfNotFound: true);
-        m_GamepadController_Secondary = m_GamepadController.FindAction("Secondary", throwIfNotFound: true);
-        m_GamepadController_Utility1 = m_GamepadController.FindAction("Utility 1", throwIfNotFound: true);
-        m_GamepadController_Utility2 = m_GamepadController.FindAction("Utility 2", throwIfNotFound: true);
-        m_GamepadController_Inventory = m_GamepadController.FindAction("Inventory", throwIfNotFound: true);
+        m_GamepadController_Guard = m_GamepadController.FindAction("Guard", throwIfNotFound: true);
+        m_GamepadController_Light = m_GamepadController.FindAction("Light", throwIfNotFound: true);
+        m_GamepadController_Medium = m_GamepadController.FindAction("Medium", throwIfNotFound: true);
+        m_GamepadController_Heavy = m_GamepadController.FindAction("Heavy", throwIfNotFound: true);
+        m_GamepadController_SwitchWeapon = m_GamepadController.FindAction("Switch Weapon", throwIfNotFound: true);
         m_GamepadController_PauseGame = m_GamepadController.FindAction("Pause Game", throwIfNotFound: true);
         // Pause Menu
         m_PauseMenu = asset.FindActionMap("Pause Menu", throwIfNotFound: true);
-        m_PauseMenu_PauseGame = m_PauseMenu.FindAction("Pause Game", throwIfNotFound: true);
-        // Inventory
-        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_Inventory = m_Inventory.FindAction("Inventory", throwIfNotFound: true);
+        m_PauseMenu_ResumeGame = m_PauseMenu.FindAction("Resume Game", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -848,13 +784,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_MouseAndKeyboard_Crouch;
     private readonly InputAction m_MouseAndKeyboard_Up;
     private readonly InputAction m_MouseAndKeyboard_Dash;
-    private readonly InputAction m_MouseAndKeyboard_Defend;
-    private readonly InputAction m_MouseAndKeyboard_Aim;
-    private readonly InputAction m_MouseAndKeyboard_Primary;
-    private readonly InputAction m_MouseAndKeyboard_Secondary;
-    private readonly InputAction m_MouseAndKeyboard_Utility1;
-    private readonly InputAction m_MouseAndKeyboard_Utility2;
-    private readonly InputAction m_MouseAndKeyboard_Inventory;
+    private readonly InputAction m_MouseAndKeyboard_Guard;
+    private readonly InputAction m_MouseAndKeyboard_Light;
+    private readonly InputAction m_MouseAndKeyboard_Medium;
+    private readonly InputAction m_MouseAndKeyboard_Heavy;
+    private readonly InputAction m_MouseAndKeyboard_SwitchWeapon;
     private readonly InputAction m_MouseAndKeyboard_PauseGame;
     public struct MouseAndKeyboardActions
     {
@@ -866,13 +800,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_MouseAndKeyboard_Crouch;
         public InputAction @Up => m_Wrapper.m_MouseAndKeyboard_Up;
         public InputAction @Dash => m_Wrapper.m_MouseAndKeyboard_Dash;
-        public InputAction @Defend => m_Wrapper.m_MouseAndKeyboard_Defend;
-        public InputAction @Aim => m_Wrapper.m_MouseAndKeyboard_Aim;
-        public InputAction @Primary => m_Wrapper.m_MouseAndKeyboard_Primary;
-        public InputAction @Secondary => m_Wrapper.m_MouseAndKeyboard_Secondary;
-        public InputAction @Utility1 => m_Wrapper.m_MouseAndKeyboard_Utility1;
-        public InputAction @Utility2 => m_Wrapper.m_MouseAndKeyboard_Utility2;
-        public InputAction @Inventory => m_Wrapper.m_MouseAndKeyboard_Inventory;
+        public InputAction @Guard => m_Wrapper.m_MouseAndKeyboard_Guard;
+        public InputAction @Light => m_Wrapper.m_MouseAndKeyboard_Light;
+        public InputAction @Medium => m_Wrapper.m_MouseAndKeyboard_Medium;
+        public InputAction @Heavy => m_Wrapper.m_MouseAndKeyboard_Heavy;
+        public InputAction @SwitchWeapon => m_Wrapper.m_MouseAndKeyboard_SwitchWeapon;
         public InputAction @PauseGame => m_Wrapper.m_MouseAndKeyboard_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_MouseAndKeyboard; }
         public void Enable() { Get().Enable(); }
@@ -901,27 +833,21 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDash;
-                @Defend.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDefend;
-                @Defend.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDefend;
-                @Defend.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnDefend;
-                @Aim.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnAim;
-                @Aim.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnAim;
-                @Aim.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnAim;
-                @Primary.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPrimary;
-                @Primary.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPrimary;
-                @Primary.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPrimary;
-                @Secondary.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSecondary;
-                @Secondary.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSecondary;
-                @Secondary.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSecondary;
-                @Utility1.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility1;
-                @Utility1.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility1;
-                @Utility1.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility1;
-                @Utility2.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
-                @Utility2.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
-                @Utility2.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnUtility2;
-                @Inventory.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnInventory;
-                @Inventory.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnInventory;
-                @Inventory.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnInventory;
+                @Guard.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnGuard;
+                @Guard.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnGuard;
+                @Guard.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnGuard;
+                @Light.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnLight;
+                @Light.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnLight;
+                @Light.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnLight;
+                @Medium.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnMedium;
+                @Medium.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnMedium;
+                @Medium.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnMedium;
+                @Heavy.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnHeavy;
+                @Heavy.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnHeavy;
+                @Heavy.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnHeavy;
+                @SwitchWeapon.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSwitchWeapon;
                 @PauseGame.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
                 @PauseGame.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
                 @PauseGame.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
@@ -947,27 +873,21 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @Defend.started += instance.OnDefend;
-                @Defend.performed += instance.OnDefend;
-                @Defend.canceled += instance.OnDefend;
-                @Aim.started += instance.OnAim;
-                @Aim.performed += instance.OnAim;
-                @Aim.canceled += instance.OnAim;
-                @Primary.started += instance.OnPrimary;
-                @Primary.performed += instance.OnPrimary;
-                @Primary.canceled += instance.OnPrimary;
-                @Secondary.started += instance.OnSecondary;
-                @Secondary.performed += instance.OnSecondary;
-                @Secondary.canceled += instance.OnSecondary;
-                @Utility1.started += instance.OnUtility1;
-                @Utility1.performed += instance.OnUtility1;
-                @Utility1.canceled += instance.OnUtility1;
-                @Utility2.started += instance.OnUtility2;
-                @Utility2.performed += instance.OnUtility2;
-                @Utility2.canceled += instance.OnUtility2;
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
+                @Guard.started += instance.OnGuard;
+                @Guard.performed += instance.OnGuard;
+                @Guard.canceled += instance.OnGuard;
+                @Light.started += instance.OnLight;
+                @Light.performed += instance.OnLight;
+                @Light.canceled += instance.OnLight;
+                @Medium.started += instance.OnMedium;
+                @Medium.performed += instance.OnMedium;
+                @Medium.canceled += instance.OnMedium;
+                @Heavy.started += instance.OnHeavy;
+                @Heavy.performed += instance.OnHeavy;
+                @Heavy.canceled += instance.OnHeavy;
+                @SwitchWeapon.started += instance.OnSwitchWeapon;
+                @SwitchWeapon.performed += instance.OnSwitchWeapon;
+                @SwitchWeapon.canceled += instance.OnSwitchWeapon;
                 @PauseGame.started += instance.OnPauseGame;
                 @PauseGame.performed += instance.OnPauseGame;
                 @PauseGame.canceled += instance.OnPauseGame;
@@ -985,14 +905,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamepadController_Crouch;
     private readonly InputAction m_GamepadController_Up;
     private readonly InputAction m_GamepadController_Dash;
-    private readonly InputAction m_GamepadController_Defend;
-    private readonly InputAction m_GamepadController_AimAttack;
-    private readonly InputAction m_GamepadController_HoldSecondaryAimAttack;
-    private readonly InputAction m_GamepadController_Primary;
-    private readonly InputAction m_GamepadController_Secondary;
-    private readonly InputAction m_GamepadController_Utility1;
-    private readonly InputAction m_GamepadController_Utility2;
-    private readonly InputAction m_GamepadController_Inventory;
+    private readonly InputAction m_GamepadController_Guard;
+    private readonly InputAction m_GamepadController_Light;
+    private readonly InputAction m_GamepadController_Medium;
+    private readonly InputAction m_GamepadController_Heavy;
+    private readonly InputAction m_GamepadController_SwitchWeapon;
     private readonly InputAction m_GamepadController_PauseGame;
     public struct GamepadControllerActions
     {
@@ -1004,14 +921,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_GamepadController_Crouch;
         public InputAction @Up => m_Wrapper.m_GamepadController_Up;
         public InputAction @Dash => m_Wrapper.m_GamepadController_Dash;
-        public InputAction @Defend => m_Wrapper.m_GamepadController_Defend;
-        public InputAction @AimAttack => m_Wrapper.m_GamepadController_AimAttack;
-        public InputAction @HoldSecondaryAimAttack => m_Wrapper.m_GamepadController_HoldSecondaryAimAttack;
-        public InputAction @Primary => m_Wrapper.m_GamepadController_Primary;
-        public InputAction @Secondary => m_Wrapper.m_GamepadController_Secondary;
-        public InputAction @Utility1 => m_Wrapper.m_GamepadController_Utility1;
-        public InputAction @Utility2 => m_Wrapper.m_GamepadController_Utility2;
-        public InputAction @Inventory => m_Wrapper.m_GamepadController_Inventory;
+        public InputAction @Guard => m_Wrapper.m_GamepadController_Guard;
+        public InputAction @Light => m_Wrapper.m_GamepadController_Light;
+        public InputAction @Medium => m_Wrapper.m_GamepadController_Medium;
+        public InputAction @Heavy => m_Wrapper.m_GamepadController_Heavy;
+        public InputAction @SwitchWeapon => m_Wrapper.m_GamepadController_SwitchWeapon;
         public InputAction @PauseGame => m_Wrapper.m_GamepadController_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_GamepadController; }
         public void Enable() { Get().Enable(); }
@@ -1040,30 +954,21 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDash;
-                @Defend.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDefend;
-                @Defend.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDefend;
-                @Defend.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnDefend;
-                @AimAttack.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnAimAttack;
-                @AimAttack.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnAimAttack;
-                @AimAttack.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnAimAttack;
-                @HoldSecondaryAimAttack.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnHoldSecondaryAimAttack;
-                @HoldSecondaryAimAttack.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnHoldSecondaryAimAttack;
-                @HoldSecondaryAimAttack.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnHoldSecondaryAimAttack;
-                @Primary.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPrimary;
-                @Primary.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPrimary;
-                @Primary.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPrimary;
-                @Secondary.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSecondary;
-                @Secondary.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSecondary;
-                @Secondary.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSecondary;
-                @Utility1.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility1;
-                @Utility1.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility1;
-                @Utility1.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility1;
-                @Utility2.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
-                @Utility2.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
-                @Utility2.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnUtility2;
-                @Inventory.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnInventory;
-                @Inventory.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnInventory;
-                @Inventory.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnInventory;
+                @Guard.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnGuard;
+                @Guard.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnGuard;
+                @Guard.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnGuard;
+                @Light.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnLight;
+                @Light.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnLight;
+                @Light.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnLight;
+                @Medium.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnMedium;
+                @Medium.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnMedium;
+                @Medium.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnMedium;
+                @Heavy.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnHeavy;
+                @Heavy.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnHeavy;
+                @Heavy.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnHeavy;
+                @SwitchWeapon.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSwitchWeapon;
+                @SwitchWeapon.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSwitchWeapon;
                 @PauseGame.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
                 @PauseGame.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
                 @PauseGame.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
@@ -1089,30 +994,21 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @Defend.started += instance.OnDefend;
-                @Defend.performed += instance.OnDefend;
-                @Defend.canceled += instance.OnDefend;
-                @AimAttack.started += instance.OnAimAttack;
-                @AimAttack.performed += instance.OnAimAttack;
-                @AimAttack.canceled += instance.OnAimAttack;
-                @HoldSecondaryAimAttack.started += instance.OnHoldSecondaryAimAttack;
-                @HoldSecondaryAimAttack.performed += instance.OnHoldSecondaryAimAttack;
-                @HoldSecondaryAimAttack.canceled += instance.OnHoldSecondaryAimAttack;
-                @Primary.started += instance.OnPrimary;
-                @Primary.performed += instance.OnPrimary;
-                @Primary.canceled += instance.OnPrimary;
-                @Secondary.started += instance.OnSecondary;
-                @Secondary.performed += instance.OnSecondary;
-                @Secondary.canceled += instance.OnSecondary;
-                @Utility1.started += instance.OnUtility1;
-                @Utility1.performed += instance.OnUtility1;
-                @Utility1.canceled += instance.OnUtility1;
-                @Utility2.started += instance.OnUtility2;
-                @Utility2.performed += instance.OnUtility2;
-                @Utility2.canceled += instance.OnUtility2;
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
+                @Guard.started += instance.OnGuard;
+                @Guard.performed += instance.OnGuard;
+                @Guard.canceled += instance.OnGuard;
+                @Light.started += instance.OnLight;
+                @Light.performed += instance.OnLight;
+                @Light.canceled += instance.OnLight;
+                @Medium.started += instance.OnMedium;
+                @Medium.performed += instance.OnMedium;
+                @Medium.canceled += instance.OnMedium;
+                @Heavy.started += instance.OnHeavy;
+                @Heavy.performed += instance.OnHeavy;
+                @Heavy.canceled += instance.OnHeavy;
+                @SwitchWeapon.started += instance.OnSwitchWeapon;
+                @SwitchWeapon.performed += instance.OnSwitchWeapon;
+                @SwitchWeapon.canceled += instance.OnSwitchWeapon;
                 @PauseGame.started += instance.OnPauseGame;
                 @PauseGame.performed += instance.OnPauseGame;
                 @PauseGame.canceled += instance.OnPauseGame;
@@ -1124,12 +1020,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     // Pause Menu
     private readonly InputActionMap m_PauseMenu;
     private IPauseMenuActions m_PauseMenuActionsCallbackInterface;
-    private readonly InputAction m_PauseMenu_PauseGame;
+    private readonly InputAction m_PauseMenu_ResumeGame;
     public struct PauseMenuActions
     {
         private @PlayerControls m_Wrapper;
         public PauseMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PauseGame => m_Wrapper.m_PauseMenu_PauseGame;
+        public InputAction @ResumeGame => m_Wrapper.m_PauseMenu_ResumeGame;
         public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1139,53 +1035,20 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PauseMenuActionsCallbackInterface != null)
             {
-                @PauseGame.started -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnPauseGame;
-                @PauseGame.performed -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnPauseGame;
-                @PauseGame.canceled -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnPauseGame;
+                @ResumeGame.started -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnResumeGame;
+                @ResumeGame.performed -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnResumeGame;
+                @ResumeGame.canceled -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnResumeGame;
             }
             m_Wrapper.m_PauseMenuActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @PauseGame.started += instance.OnPauseGame;
-                @PauseGame.performed += instance.OnPauseGame;
-                @PauseGame.canceled += instance.OnPauseGame;
+                @ResumeGame.started += instance.OnResumeGame;
+                @ResumeGame.performed += instance.OnResumeGame;
+                @ResumeGame.canceled += instance.OnResumeGame;
             }
         }
     }
     public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
-
-    // Inventory
-    private readonly InputActionMap m_Inventory;
-    private IInventoryActions m_InventoryActionsCallbackInterface;
-    private readonly InputAction m_Inventory_Inventory;
-    public struct InventoryActions
-    {
-        private @PlayerControls m_Wrapper;
-        public InventoryActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Inventory => m_Wrapper.m_Inventory_Inventory;
-        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
-        public void SetCallbacks(IInventoryActions instance)
-        {
-            if (m_Wrapper.m_InventoryActionsCallbackInterface != null)
-            {
-                @Inventory.started -= m_Wrapper.m_InventoryActionsCallbackInterface.OnInventory;
-                @Inventory.performed -= m_Wrapper.m_InventoryActionsCallbackInterface.OnInventory;
-                @Inventory.canceled -= m_Wrapper.m_InventoryActionsCallbackInterface.OnInventory;
-            }
-            m_Wrapper.m_InventoryActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Inventory.started += instance.OnInventory;
-                @Inventory.performed += instance.OnInventory;
-                @Inventory.canceled += instance.OnInventory;
-            }
-        }
-    }
-    public InventoryActions @Inventory => new InventoryActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1212,13 +1075,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnDefend(InputAction.CallbackContext context);
-        void OnAim(InputAction.CallbackContext context);
-        void OnPrimary(InputAction.CallbackContext context);
-        void OnSecondary(InputAction.CallbackContext context);
-        void OnUtility1(InputAction.CallbackContext context);
-        void OnUtility2(InputAction.CallbackContext context);
-        void OnInventory(InputAction.CallbackContext context);
+        void OnGuard(InputAction.CallbackContext context);
+        void OnLight(InputAction.CallbackContext context);
+        void OnMedium(InputAction.CallbackContext context);
+        void OnHeavy(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IGamepadControllerActions
@@ -1229,22 +1090,15 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnDefend(InputAction.CallbackContext context);
-        void OnAimAttack(InputAction.CallbackContext context);
-        void OnHoldSecondaryAimAttack(InputAction.CallbackContext context);
-        void OnPrimary(InputAction.CallbackContext context);
-        void OnSecondary(InputAction.CallbackContext context);
-        void OnUtility1(InputAction.CallbackContext context);
-        void OnUtility2(InputAction.CallbackContext context);
-        void OnInventory(InputAction.CallbackContext context);
+        void OnGuard(InputAction.CallbackContext context);
+        void OnLight(InputAction.CallbackContext context);
+        void OnMedium(InputAction.CallbackContext context);
+        void OnHeavy(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IPauseMenuActions
     {
-        void OnPauseGame(InputAction.CallbackContext context);
-    }
-    public interface IInventoryActions
-    {
-        void OnInventory(InputAction.CallbackContext context);
+        void OnResumeGame(InputAction.CallbackContext context);
     }
 }
