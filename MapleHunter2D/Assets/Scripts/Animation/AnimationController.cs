@@ -9,9 +9,9 @@ public class AnimationController : MonoBehaviour
     private Animator animator;
 
     // State Parameters and Objects:
-    private int moveState;
-    private int actionState;
-    private int specialState;
+    private int primaryState;
+    private int secondaryState;
+    private int overrideState;
 
 
     // Unity Events:
@@ -22,34 +22,34 @@ public class AnimationController : MonoBehaviour
 
 
     // Class Functions:
-    public int GetMoveState()
+    public int GetPrimaryState()
     {
-        return moveState;
+        return primaryState;
     }
-    public int GetActionState()
+    public int GetSecondaryState()
     {
-        return actionState;
+        return secondaryState;
     }
-    public int GetSpecialState()
+    public int GetOverrideState()
     {
-        return specialState;
+        return overrideState;
     }
-    public void SetMoveState(int state)
+    public void SetPrimaryState(int state)
     {
-        moveState = state;
+        primaryState = state;
     }
-    public void SetActionState(int state)
+    public void SetSecondaryState(int state)
     {
-        actionState = state;
+        secondaryState = state;
     }
-    public void SetSpecialState(int state)
+    public void SetOverrideState(int state)
     {
-        specialState = state;
+        overrideState = state;
     }
     public void RunAnimationStates()
     {
-        animator.SetInteger("Move State", GetMoveState());
-        animator.SetInteger("Action State", GetActionState());
-        animator.SetInteger("Special State", GetSpecialState());
+        animator.SetInteger("Primary State", GetPrimaryState());
+        animator.SetInteger("Secondary State", GetSecondaryState());
+        animator.SetInteger("Override State", GetOverrideState());
     }
 }

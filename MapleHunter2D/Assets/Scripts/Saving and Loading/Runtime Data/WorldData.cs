@@ -4,7 +4,7 @@ public class WorldData
     // Player Game Data
     private bool[] warpLocations = new bool[GameConstants.TOTAL_NUMBER_WARP_LOCATIONS]; // teleports unlocked to target locations
     private bool[] bossesDefeated = new bool[GameConstants.TOTAL_NUMBER_BOSSES]; // Bosses that have been defeated
-    private float playTime = 0; // Holds the total playtime of the player on this particular save
+    private double playTime = 0; // Holds the total playtime of the player on this particular save
 
 
     // Class Functions:
@@ -66,11 +66,11 @@ public class WorldData
         }
         return false;
     }
-    public float GetPlayTime()
+    public double GetPlayTime()
     {
         return playTime;
     }
-    public void AddToPlayTime(float valueToAdd)
+    public void AddToPlayTime(double valueToAdd)
     {
         playTime += valueToAdd;
     }
@@ -78,7 +78,7 @@ public class WorldData
     {
         playTime = 0;
     }
-    public void SetPlayTime(float newPlayTime)
+    public void SetPlayTime(double newPlayTime)
     {
         playTime = newPlayTime;
     }
