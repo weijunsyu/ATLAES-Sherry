@@ -52,9 +52,8 @@ public static class GameConstants
     public const float JOYSTICK_BOOL_DEADZONE = 0.7f; // Calibrate sensitivity of joysticks between 0-1 where 0 is most sensitive for boolean use
 
     // Player Constants
-    public const float COYOTE_JUMP_DELAY = 0.125f;
-    public const float JUMP_BUFFER = 0.125f;
-    public const float JUMP_RESET_DELAY = 0.05f; // Must be set such that the length of time is less than coyote time but enough to clear airborne check height
+    public const float COYOTE_JUMP_DELAY = 0.125f; // Amount of time after player leaves valid state for jump where player may still jump
+    public const float JUMP_BUFFER = 0.125f; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
     public const float PLAYER_BASE_GROUND_JUMP_VELOCITY = 10f;
     public const float PLAYER_BASE_AIR_JUMP_VELOCITY = 8f;
     public const float PLAYER_BASE_WALK_MOVE_SPEED = 3.0f;

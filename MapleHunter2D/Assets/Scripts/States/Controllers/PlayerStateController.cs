@@ -16,6 +16,8 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerFallingState fallingState;
     [HideInInspector] public PlayerCrouchingState crouchingState;
     [HideInInspector] public PlayerDashingState dashingState;
+    [HideInInspector] public PlayerSlidingState slidingState;
+    [HideInInspector] public PlayerSlidingJumpState slidingJumpState;
     [HideInInspector] public PlayerStandingGuardState standingGuardState;
     [HideInInspector] public PlayerCrouchingGuardState crouchingGuardState;
     // Action
@@ -33,7 +35,8 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerDeathAirState deathAirState;
 
     // Player Flags:
-    //private bool canJump = true;
+    [HideInInspector] public bool canAirJump = true;
+    [HideInInspector] public bool canAirDash = true;
 
     // Unity Events:
     protected override void Awake()
@@ -62,6 +65,8 @@ public class PlayerStateController : AbstractStateController
         fallingState = new PlayerFallingState(this, stateMachine);
         crouchingState = new PlayerCrouchingState(this, stateMachine);
         dashingState = new PlayerDashingState(this, stateMachine);
+        slidingState = new PlayerSlidingState(this, stateMachine);
+        slidingJumpState = new PlayerSlidingJumpState(this, stateMachine);
         //standingGuardState = new PlayerStandingGuardState(this, stateMachine);
         //crouchingGuardState = new PlayerCrouchingGuardState(this, stateMachine);
 
@@ -80,5 +85,44 @@ public class PlayerStateController : AbstractStateController
 
         // Initialize the starting state
         startState = standingState;
+    }
+
+    public static void HandleMoveInput(MovementController movementController)
+    {
+        // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
+        if (PlayerInputController.pressedInputs[1] == true) // right
+        {
+            BasicMovement.MoveWithTurn(movementController, 5f);
+        }
+        else if (PlayerInputController.pressedInputs[2] == true) // left
+        {
+            BasicMovement.MoveWithTurn(movementController, -5f);
+        }
+        else // right and left both unpressed
+        {
+            BasicMovement.StopHorizontal(movementController);
+        }
+    }
+    // return true if sliding and false otherwise
+    public static bool HandleSlideCheck(MovementController movementController)
+    {
+        if (AdvancedMovement.checkFront(movementController)) // if wall in front of player
+        {
+            // If facing right and NOT pressing right button
+            if (movementController.IsFacingRight() && !PlayerInputController.pressedInputs[1])
+            {
+                return false;
+            }
+            // Else if facing left and NOT pressing left button
+            else if (!movementController.IsFacingRight() && !PlayerInputController.pressedInputs[2])
+            {
+                return false;
+            }
+            return true;
+        }
+        else //Nothing in front
+        {
+            return false;
+        }
     }
 }
