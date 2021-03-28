@@ -1,5 +1,5 @@
 # MapleHunter2D
-2D platforming/dungeon crawler; Mono-chromatic, 1-bit black and white aesthetic with red "Blood" accents.
+2D platforming/dungeon crawler hybrid fighting game; Mono-chromatic, 2-bit black and white aesthetic with red "Blood" accents.
       BLACK: 141414, WHITE: FCFCFC, RED: D00000
   UI Colours:
       BLACK: 141414, WHITE: FCFCFC, RED: D00000, BLUE: 00D1D1, YELLOW: F1D302
@@ -35,4 +35,4 @@ Visual Guides: (Definitions can be found in the document "Visual Asset Guideline
 
   Dynamic UI Canvas (Pause, etc.): (Use for overlay screens such as pause menu screen)
   Keep everything at default (Scale = 1, etc.)
-  MATCH the pixels per unit! (64) 
+  MATCH the pixels per unit! (64)
