@@ -20,10 +20,11 @@ public class PlayerStandingState : IState
     {
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
-
-        Debug.Log("StandingState");
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Stand(movementController);
+        movementController.SetAirborne(false);
+        playerController.canAirJump = true;
+        playerController.canAirDash = true;
     }
     public void ExecuteLogic()
     {
@@ -31,28 +32,13 @@ public class PlayerStandingState : IState
     }
     public void ExecutePhysics()
     {
-        if (PlayerInputController.pressedInputs[1] == true)
+        movementController.UpdateAirborne(); // Check if still grounded
+        if (movementController.IsAirborne() == true) // if airborne
         {
-            BasicMovement.MoveWithTurn(movementController, 5f);
-            return;
+            stateMachine.ChangeState(playerController.fallingState); // Go to falling state
         }
-        else if (PlayerInputController.pressedInputs[2] == true)
-        {
-            BasicMovement.MoveWithTurn(movementController, -5f);
-            return;
-        }
-
-        else if (PlayerInputController.pressedInputs[1] == false)
-        {
-            BasicMovement.StopHorizontal(movementController);
-            return;
-        }
-        else if (PlayerInputController.pressedInputs[2] == false)
-        {
-            BasicMovement.StopHorizontal(movementController);
-            return;
-        }
-        //handle falling, getting hit, and dying
+        PlayerStateController.HandleMoveInput(movementController);
+        //getting hit, and dying
     }
     public void Exit()
     {

@@ -189,25 +189,27 @@ public class PlayerInputController : MonoBehaviour
     // let go of the currently active button and pressed the inactive button.
     private void EvaluateSOCD(int[] socd, RawInput input)
     {
-        int firstInput = socd[0];
-        int secondInput = socd[1];
+        // NOTE: Comments written for the specific case of right and left cleaning
+        int firstInput = socd[0]; // right
+        int secondInput = socd[1]; // left
 
-        if((int)input == firstInput)
+        if((int)input == firstInput) // If right is being pressed
         {
             socd[2] = 1; //set right to pressed
-            if (socd[3] == 1)
+            if (socd[3] == 1) // If left is pressed
             {
                 DoInput((RawInput)(-secondInput)); // if left is being held then unpress left
                 socd[3] = -1; //change status to physically held but unpressed
             }
             DoInput(input); // press right
         }
-        else if ((int)input == -firstInput)
+        else if ((int)input == -firstInput) // If right is being unpressed
         {
             socd[2] = 0; //set right to unpressed
             if (socd[3] == -1) // if direction was right
             {
                 DoInput(input); //release right
+                socd[3] = 1; // Set left to pressed
                 DoInput((RawInput)secondInput); // press left
             }
             else if (socd[3] == 0) // if left was not pressed at all
@@ -216,27 +218,28 @@ public class PlayerInputController : MonoBehaviour
             }
             //if (socd[3] == 1) { } // if direction was left, do nothing as it has already been released
         }
-        else if ((int)input == secondInput)
+        else if ((int)input == secondInput) // If left is being pressed
         {
-            socd[3] = 1;
-            if (socd[2] == 1)
+            socd[3] = 1; // Set left to pressed
+            if (socd[2] == 1) // If right is pressed
             {
-                DoInput((RawInput)(-firstInput));
-                socd[2] = -1;
+                DoInput((RawInput)(-firstInput)); // Unpress right
+                socd[2] = -1; // set right to held but unpressed
             }
-            DoInput(input);
+            DoInput(input); // press left
         }
-        else if ((int)input == -secondInput)
+        else if ((int)input == -secondInput) // If left is being unpressed
         {
-            socd[3] = 0;
-            if (socd[2] == -1)
+            socd[3] = 0; // Set left to unpressed
+            if (socd[2] == -1) // If right is held but not pressed
             {
-                DoInput(input);
-                DoInput((RawInput)firstInput);
+                DoInput(input); // Release left
+                socd[2] = 1; // Set right to pressed
+                DoInput((RawInput)firstInput); // Press right
             }
-            else if (socd[2] == 0)
+            else if (socd[2] == 0) //If right is unpressed
             {
-                DoInput(input);
+                DoInput(input); // Unpress Left
             }
             //if (socd[2] == 1) { }
         }

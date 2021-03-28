@@ -1,14 +1,7 @@
-﻿
-public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y only, both x and y)
+﻿public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y only, both x and y)
 {
     public static void Jump(MovementController movementController, float linearVelocity)
     {
-        /*
-        if (!movementController.IsAirborne())
-        {
-            movementController.SetVertical(linearVelocity);
-        }
-        */
         movementController.SetVertical(linearVelocity);
     }
     public static void Strafe(MovementController movementController, float linearVelocity)
@@ -41,6 +34,7 @@ public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y
     public static void StopVertical(MovementController movementController)
     {
         movementController.SetVertical(0);
+        movementController.NegateGravity();
     }
     public static void StopAll(MovementController movementController)
     {

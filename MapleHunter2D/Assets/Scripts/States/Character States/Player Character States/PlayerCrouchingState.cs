@@ -22,9 +22,11 @@ public class PlayerCrouchingState : IState
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
 
-        //Debug.Log("CrouchingState");
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Crouch(movementController);
+
+        playerController.canAirJump = true;
+        playerController.canAirDash = true;
     }
     public void ExecuteLogic()
     {
@@ -73,9 +75,6 @@ public class PlayerCrouchingState : IState
                 {
                     stateMachine.ChangeState(playerController.standingState);
                 }
-                break;
-            case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                stateMachine.ChangeState(playerController.dashingState);
                 break;
         }
     }

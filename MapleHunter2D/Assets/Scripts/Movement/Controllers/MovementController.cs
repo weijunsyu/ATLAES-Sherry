@@ -67,6 +67,10 @@ public class MovementController : MonoBehaviour
     {
         isAirborne = value;
     }
+    public void NegateGravity()
+    {
+        body.AddForce(-Physics.gravity * body.gravityScale);
+    }
     public void SetHorizontal(float xVelocity)
     {
         Vector2 currentVelocity = body.velocity;

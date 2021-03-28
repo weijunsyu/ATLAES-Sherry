@@ -24,8 +24,7 @@ public class PlayerDashingState : IState
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
 
-        Debug.Log("DashingState");
-        BasicMovement.StopHorizontal(movementController);
+        BasicMovement.StopAll(movementController);
         SpecialMovement.DashMove(movementController, 10f);
     }
     public void ExecuteLogic()
@@ -62,23 +61,26 @@ public class PlayerDashingState : IState
     {
         switch (inputEvent.input)
         {
-            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                //stateMachine.ChangeState(playerController.lightState);
-                break;
-            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                //stateMachine.ChangeState(playerController.mediumState);
-                break;
-            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                //stateMachine.ChangeState(playerController.heavyState);
-                break;
-            case PlayerInputController.RawInput.GUARD_PRESS: // Guard
-                //stateMachine.ChangeState(playerController.standingGuardState);
-                break;
             case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                stateMachine.ChangeState(playerController.jumpingState);
+                if (!movementController.IsAirborne())
+                {
+                    stateMachine.ChangeState(playerController.jumpingState);
+                }
+                else if (playerController.canAirJump)
+                {
+                    stateMachine.ChangeState(playerController.jumpingState);
+                    playerController.canAirJump = false;
+                }
                 break;
             case PlayerInputController.RawInput.CROUCH_PRESS: // Crouch
-                stateMachine.ChangeState(playerController.crouchingState);
+                if (!movementController.IsAirborne())
+                {
+                    stateMachine.ChangeState(playerController.crouchingState);
+                }
+                else
+                {
+                    stateMachine.ChangeState(playerController.fallingState);
+                }
                 break;
         }
     }

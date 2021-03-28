@@ -21,8 +21,8 @@ public class PlayerJumpingState : IState
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
 
-        Debug.Log("JumpingState");
         BasicMovement.Jump(movementController, 9f);
+        BasicMovement.StopHorizontal(movementController);
         movementController.SetAirborne(true);
     }
     public void ExecuteLogic()
@@ -36,27 +36,10 @@ public class PlayerJumpingState : IState
         {
             stateMachine.ChangeState(playerController.fallingState);
         }
-
-        if (PlayerInputController.pressedInputs[1] == true)
+        PlayerStateController.HandleMoveInput(movementController);
+        if (PlayerStateController.HandleSlideCheck(movementController))
         {
-            BasicMovement.MoveWithTurn(movementController, 5f);
-            return;
-        }
-        else if (PlayerInputController.pressedInputs[2] == true)
-        {
-            BasicMovement.MoveWithTurn(movementController, -5f);
-            return;
-        }
-
-        else if (PlayerInputController.pressedInputs[1] == false)
-        {
-            BasicMovement.StopHorizontal(movementController);
-            return;
-        }
-        else if (PlayerInputController.pressedInputs[2] == false)
-        {
-            BasicMovement.StopAll(movementController);
-            return;
+            stateMachine.ChangeState(playerController.slidingState);
         }
     }
     public void Exit()
@@ -78,7 +61,18 @@ public class PlayerJumpingState : IState
                 //stateMachine.ChangeState(playerController.heavyState);
                 break;
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                stateMachine.ChangeState(playerController.dashingState);
+                if (playerController.canAirDash)
+                {
+                    stateMachine.ChangeState(playerController.dashingState);
+                    playerController.canAirDash = false;
+                }
+                break;
+            case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
+                if (playerController.canAirJump)
+                {
+                    stateMachine.ChangeState(playerController.jumpingState);
+                    playerController.canAirJump = false;
+                }
                 break;
         }
     }
