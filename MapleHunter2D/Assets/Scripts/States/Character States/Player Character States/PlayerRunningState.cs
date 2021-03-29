@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerStandingState : IState
+public class PlayerRunningState : IState
 {
     private PlayerStateController playerController = null;
     private StateMachine stateMachine = null;
@@ -10,7 +10,10 @@ public class PlayerStandingState : IState
     private PlayerBasicAnimations animations = null;
     private Coroutine animate = null;
 
-    public PlayerStandingState(PlayerStateController playerController, StateMachine stateMachine)
+    AnimationController.Animation runStarup;
+    AnimationController.Animation runLoop;
+
+    public PlayerRunningState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
         this.stateMachine = stateMachine;
@@ -19,24 +22,24 @@ public class PlayerStandingState : IState
         animationController = playerController.animationController;
         animations = (PlayerBasicAnimations)animationController.animationsList;
         animate = animationController.animate;
+
+        runStarup.sprites = new Sprite[] { animations.walk[1], animations.walk[2], animations.run[3],
+                                           animations.run[4], animations.run[5], animations.run[6], animations.run[7] };
+        runStarup.timings = new float[] { 0.1f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f} ;
+        runStarup.runNum = 1;
+
+        runLoop.sprites = animations.run;
+        runLoop.timings = PlayerBasicTimings.runTimes;
+        runLoop.runNum = 0;
     }
 
     public void Enter()
     {
-        //animationController.SetSprite(animations.idle[0]);
-        animationController.RunAnimation(animations.idle, PlayerBasicTimings.idleTimes,  ref animate, true);
+        animationController.RunCompoundAnimation(ref animate, new AnimationController.Animation[] { runStarup, runLoop });
 
-        BasicMovement.StopHorizontal(movementController);
-        AdvancedMovement.Stand(movementController);
+        //BasicMovement.StopHorizontal(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
-        
-        if (playerController.jumpInputBuffer)
-        {
-            playerController.jumpInputBuffer = false;
-            stateMachine.ChangeState(playerController.jumpingState);
-            return;
-        }
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
@@ -53,11 +56,7 @@ public class PlayerStandingState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
-        if (PlayerInputController.pressedInputs[1] || PlayerInputController.pressedInputs[2]) // right
-        {
-            stateMachine.ChangeState(playerController.walkingState);
-            return;
-        }
+        HandleMoveInput(PlayerBasicTimings.PLAYER_RUN_SPEED);
         //getting hit, and dying
     }
     public void Exit()
@@ -95,6 +94,22 @@ public class PlayerStandingState : IState
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 stateMachine.ChangeState(playerController.dashingState);
                 break;
+        }
+    }
+    private void HandleMoveInput(float speed)
+    {
+        // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
+        if (PlayerInputController.pressedInputs[1] == true) // right
+        {
+            BasicMovement.MoveWithTurn(movementController, speed);
+        }
+        else if (PlayerInputController.pressedInputs[2] == true) // left
+        {
+            BasicMovement.MoveWithTurn(movementController, -speed);
+        }
+        else // right and left both unpressed
+        {
+            stateMachine.ChangeState(playerController.standingState);
         }
     }
 }

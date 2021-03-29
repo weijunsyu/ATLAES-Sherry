@@ -7,6 +7,10 @@ public class PlayerFallingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
+    private PlayerBasicAnimations animations = null;
+
+    private double timeInSeconds = 0d;
+
     public PlayerFallingState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -14,19 +18,23 @@ public class PlayerFallingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
+        animations = (PlayerBasicAnimations)animationController.animationsList;
     }
 
     public void Enter()
     {
+        animationController.SetSprite(animations.fall[0]);
+
+        timeInSeconds = 0d;
+        //BasicMovement.StopHorizontal(movementController);
+        movementController.SetAirborne(true);
+
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
-
-        BasicMovement.StopHorizontal(movementController);
-        movementController.SetAirborne(true);
     }
     public void ExecuteLogic()
     {
-        
+        timeInSeconds += Time.deltaTime;
     }
     public void ExecutePhysics()
     {
@@ -35,11 +43,13 @@ public class PlayerFallingState : IState
         if (movementController.IsAirborne() == false) // if grounded
         {
             stateMachine.ChangeState(playerController.standingState); // Go to standing state
+            return;
         }
-        PlayerStateController.HandleMoveInput(movementController);
-        if (PlayerStateController.HandleSlideCheck(movementController))
+        playerController.HandleMoveInput(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
+        if (playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.slidingState);
+            return;
         }
     }
     public void Exit()
@@ -69,10 +79,21 @@ public class PlayerFallingState : IState
                 }
                 break;
             case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
-                if (playerController.canAirJump)
+                if (stateMachine.prevState == playerController.standingState)
+                {
+                    if (timeInSeconds < GameConstants.COYOTE_JUMP_DELAY)
+                    {
+                        stateMachine.ChangeState(playerController.jumpingState);
+                    }
+                }
+                else if (stateMachine.prevState == playerController.dashingState)
                 {
                     stateMachine.ChangeState(playerController.jumpingState);
-                    playerController.canAirJump = false;
+                }
+                else // Previous state was NOT standing state
+                {
+                    playerController.jumpBufferTimer = 0d; // Reset the timer
+                    playerController.jumpInputBuffer = true; // Buffer the jump command
                 }
                 break;
         }

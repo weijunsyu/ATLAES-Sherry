@@ -12,6 +12,7 @@ public class PlayerStateController : AbstractStateController
     // Player States
     // Movement
     [HideInInspector] public PlayerStandingState standingState;
+    [HideInInspector] public PlayerRunningState walkingState;
     [HideInInspector] public PlayerJumpingState jumpingState;
     [HideInInspector] public PlayerFallingState fallingState;
     [HideInInspector] public PlayerCrouchingState crouchingState;
@@ -35,9 +36,10 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerDeathAirState deathAirState;
 
     // Player Flags:
-    [HideInInspector] public bool canAirJump = true;
-    [HideInInspector] public bool canAirDash = true;
-
+    //[HideInInspector] public bool canAirJump = true; // enables double jumping
+    [HideInInspector] public bool canAirDash = true; // enables air dashing
+    [HideInInspector] public double jumpBufferTimer = 0d;
+    [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
     // Unity Events:
     protected override void Awake()
     {
@@ -46,10 +48,19 @@ public class PlayerStateController : AbstractStateController
     protected override void Start()
     {
         base.Start();
+        jumpBufferTimer = 0d;
+        jumpInputBuffer = false;
     }
     protected override void Update()
     {
+        //Debug.Log(stateMachine.state);
         base.Update();
+        jumpBufferTimer += Time.deltaTime; // increment timer
+        if (jumpBufferTimer > GameConstants.JUMP_BUFFER)
+        {
+            jumpInputBuffer = false; // if buffer timer passed, disable jump
+        }
+        //Debug.Log(stateMachine.state);
     }
     protected override void FixedUpdate()
     {
@@ -61,6 +72,7 @@ public class PlayerStateController : AbstractStateController
     {
         // Create States
         standingState = new PlayerStandingState(this, stateMachine);
+        walkingState = new PlayerRunningState(this, stateMachine);
         jumpingState = new PlayerJumpingState(this, stateMachine);
         fallingState = new PlayerFallingState(this, stateMachine);
         crouchingState = new PlayerCrouchingState(this, stateMachine);
@@ -87,16 +99,16 @@ public class PlayerStateController : AbstractStateController
         startState = standingState;
     }
 
-    public static void HandleMoveInput(MovementController movementController)
+    public void HandleMoveInput(float speed)
     {
         // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
         if (PlayerInputController.pressedInputs[1] == true) // right
         {
-            BasicMovement.MoveWithTurn(movementController, 5f);
+            BasicMovement.MoveWithTurn(movementController, speed);
         }
         else if (PlayerInputController.pressedInputs[2] == true) // left
         {
-            BasicMovement.MoveWithTurn(movementController, -5f);
+            BasicMovement.MoveWithTurn(movementController, -speed);
         }
         else // right and left both unpressed
         {
@@ -104,7 +116,7 @@ public class PlayerStateController : AbstractStateController
         }
     }
     // return true if sliding and false otherwise
-    public static bool HandleSlideCheck(MovementController movementController)
+    public bool HandleSlideCheck()
     {
         if (AdvancedMovement.checkFront(movementController)) // if wall in front of player
         {

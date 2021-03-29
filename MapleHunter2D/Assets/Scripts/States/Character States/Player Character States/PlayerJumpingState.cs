@@ -7,6 +7,8 @@ public class PlayerJumpingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
+    private PlayerBasicAnimations animations = null;
+
     public PlayerJumpingState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -14,20 +16,26 @@ public class PlayerJumpingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
+        animations = (PlayerBasicAnimations)animationController.animationsList;
     }
 
     public void Enter()
     {
+        animationController.SetSprite(animations.jump[0]);
+        
+        BasicMovement.Jump(movementController, PlayerBasicTimings.PLAYER_JUMP_VELOCITY);
+        //BasicMovement.StopHorizontal(movementController);
+        movementController.SetAirborne(true);
+
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
-
-        BasicMovement.Jump(movementController, 9f);
-        BasicMovement.StopHorizontal(movementController);
-        movementController.SetAirborne(true);
     }
     public void ExecuteLogic()
     {
-
+        if (movementController.GetVelocity().y <= 4.5f) // If half speed of init jump
+        {
+            animationController.SetSprite(animations.jump[1]);
+        }
     }
     public void ExecutePhysics()
     {
@@ -35,11 +43,13 @@ public class PlayerJumpingState : IState
         if (movementController.GetVelocity().y <= 0) // If falling
         {
             stateMachine.ChangeState(playerController.fallingState);
+            return;
         }
-        PlayerStateController.HandleMoveInput(movementController);
-        if (PlayerStateController.HandleSlideCheck(movementController))
+        playerController.HandleMoveInput(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
+        if (playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.slidingState);
+            return;
         }
     }
     public void Exit()
@@ -63,15 +73,8 @@ public class PlayerJumpingState : IState
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 if (playerController.canAirDash)
                 {
-                    stateMachine.ChangeState(playerController.dashingState);
                     playerController.canAirDash = false;
-                }
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
-                if (playerController.canAirJump)
-                {
-                    stateMachine.ChangeState(playerController.jumpingState);
-                    playerController.canAirJump = false;
+                    stateMachine.ChangeState(playerController.dashingState);
                 }
                 break;
         }

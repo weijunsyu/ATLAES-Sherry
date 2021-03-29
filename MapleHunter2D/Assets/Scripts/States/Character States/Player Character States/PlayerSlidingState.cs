@@ -7,6 +7,9 @@ public class PlayerSlidingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
+    private PlayerBasicAnimations animations = null;
+    private Coroutine animate = null;
+
     public PlayerSlidingState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -14,17 +17,20 @@ public class PlayerSlidingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
+        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animate = animationController.animate;
     }
 
     public void Enter()
     {
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
+        animationController.RunAnimation(animations.slide, PlayerBasicTimings.slideTimes, ref animate, true);
 
         BasicMovement.StopHorizontal(movementController);
         movementController.SetAirborne(false);
-        playerController.canAirJump = true;
         playerController.canAirDash = true;
+
+        // Enable player controller
+        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
@@ -33,16 +39,22 @@ public class PlayerSlidingState : IState
     public void ExecutePhysics()
     {
         AdvancedMovement.Slide(movementController, GameConstants.WALL_SLIDE_MAX_DROP_SPEED);
-        PlayerStateController.HandleMoveInput(movementController);
-        if (!PlayerStateController.HandleSlideCheck(movementController))
+        playerController.HandleMoveInput(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
+        if (!playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.fallingState);
+            return;
         } 
     }
     public void Exit()
     {
         // Disable player controller
         PlayerInputController.OnInputEvent -= HandleInput;
+
+        if (animate != null)
+        {
+            animationController.StopAnimation(ref animate);
+        }
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

@@ -16,9 +16,8 @@ public class MasterManager : MonoBehaviour
     public static InventoryData inventoryData = new InventoryData();
     public static NpcData npcData = new NpcData();
 
-    public static PlayerCharacterNonPersistData playerCharacterNonPersistData = new PlayerCharacterNonPersistData();
-
     public static double timeInSeconds = 0d;
+    public static double fps = 0d;
 
     // Unity Events:
     private void Awake()
@@ -29,6 +28,8 @@ public class MasterManager : MonoBehaviour
     public void Update()
     {
         timeInSeconds += Time.deltaTime;
+        fps = 1 / Time.deltaTime;
+        //Debug.Log(fps);
     }
 
     // Class Functions:
@@ -78,7 +79,6 @@ public class MasterManager : MonoBehaviour
         playerCharacterPersistentData.ResetAllPlayerCharacterPersistentData();
         inventoryData.ResetAllInventoryData();
         npcData.ResetAllNpcData();
-        playerCharacterNonPersistData.ResetAllPlayerCharacterNonPersistData();
     }
 
 
