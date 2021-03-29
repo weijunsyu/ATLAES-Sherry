@@ -7,7 +7,9 @@ public class PlayerSlidingJumpState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private double timerInSeconds = 0d;
+    private PlayerBasicAnimations animations = null;
+
+    private double timeInSeconds = 0d;
 
     public PlayerSlidingJumpState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -16,38 +18,52 @@ public class PlayerSlidingJumpState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
+        animations = (PlayerBasicAnimations)animationController.animationsList;
     }
 
     public void Enter()
     {
-        timerInSeconds = 0;
-        BasicMovement.StopHorizontal(movementController); if (movementController.IsFacingRight())
-        {
-            //jump left
-            BasicMovement.MoveWithTurn(movementController, -5f);
-        }
-        else
-        {
-            //jump right
-            BasicMovement.MoveWithTurn(movementController, 5f);
-        }
-        BasicMovement.Jump(movementController, 9f);
+        animationController.SetSprite(animations.slideJump[0]);
+
+        timeInSeconds = 0;
+        HandleHorizontalVelocity(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
+        BasicMovement.Jump(movementController, PlayerBasicTimings.PLAYER_SIDING_JUMP_VELOCITY);
         movementController.SetAirborne(true);
     }
     public void ExecuteLogic()
     {
-        timerInSeconds += Time.deltaTime;
+        timeInSeconds += Time.deltaTime;
     }
     public void ExecutePhysics()
     {
         // If falling or finished jump
-        if (movementController.GetVelocity().y <= 0 || timerInSeconds > 0.1d)
+        if (movementController.GetVelocity().y <= 0 || timeInSeconds >PlayerBasicTimings.PLAYER_SLIDE_JUMP_DURATION)
         {
             stateMachine.ChangeState(playerController.fallingState);
+            return;
+        }
+        movementController.UpdateAirborne();
+        if (!movementController.IsAirborne())
+        {
+            stateMachine.ChangeState(playerController.standingState);
         }
     }
     public void Exit()
     {
 
+    }
+
+    private void HandleHorizontalVelocity(float speed)
+    {
+        if (movementController.IsFacingRight())
+        {
+            //jump left
+            BasicMovement.MoveWithTurn(movementController, -speed);
+        }
+        else
+        {
+            //jump right
+            BasicMovement.MoveWithTurn(movementController, speed);
+        }
     }
 }

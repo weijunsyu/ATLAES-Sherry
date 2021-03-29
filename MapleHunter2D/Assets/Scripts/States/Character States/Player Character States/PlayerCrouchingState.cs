@@ -8,6 +8,9 @@ public class PlayerCrouchingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
+    private PlayerBasicAnimations animations = null;
+    private Coroutine animate = null;
+
     public PlayerCrouchingState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -15,18 +18,27 @@ public class PlayerCrouchingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
+        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animate = animationController.animate;
     }
 
     public void Enter()
     {
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
+        if (stateMachine.prevState == playerController.dashingState)
+        {
+            animationController.SetSprite(animations.crouch[1]);
+        }
+        else
+        {
+            animationController.RunAnimation(animations.crouch, PlayerBasicTimings.crouchTimes, ref animate);
+        }
 
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Crouch(movementController);
-
-        playerController.canAirJump = true;
         playerController.canAirDash = true;
+
+        // Enable player controller
+        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
@@ -47,6 +59,11 @@ public class PlayerCrouchingState : IState
     {
         // Disable player controller
         PlayerInputController.OnInputEvent -= HandleInput;
+        
+        if (animate != null)
+        {
+            animationController.StopAnimation(ref animate);
+        }
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
@@ -64,11 +81,8 @@ public class PlayerCrouchingState : IState
             case PlayerInputController.RawInput.GUARD_PRESS: // Guard
                 //stateMachine.ChangeState(playerController.crouchingGuardState);
                 break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                if (AdvancedMovement.CanStand(movementController))
-                {
-                    stateMachine.ChangeState(playerController.jumpingState);
-                }
+            case PlayerInputController.RawInput.DASH_PRESS: // Dash
+                stateMachine.ChangeState(playerController.dashingState);
                 break;
             case PlayerInputController.RawInput.CROUCH_RELEASE: // Stop Crouching
                 if (AdvancedMovement.CanStand(movementController))

@@ -1,55 +1,108 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class AnimationController : MonoBehaviour
 {
+    public struct Animation
+    {
+        public Sprite[] sprites;
+        public float[] timings;
+        public int runNum; // where 0 is loop indefinetly, 1 is run once, and so forth
+    }
+
     // Config Parameters
 
     // Cached References
-    private Animator animator;
+    private SpriteRenderer spriteRenderer = null;
+    public AbstractAnimations animationsList;
 
-    // State Parameters and Objects:
-    private int primaryState;
-    private int secondaryState;
-    private int overrideState;
-
+    //
+    [HideInInspector] public Coroutine animate = null;
 
     // Unity Events:
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
     // Class Functions:
-    public int GetPrimaryState()
+    public Sprite GetSprite()
     {
-        return primaryState;
+        return spriteRenderer.sprite;
     }
-    public int GetSecondaryState()
+    public void SetSprite(Sprite sprite)
     {
-        return secondaryState;
+        spriteRenderer.sprite = sprite;
     }
-    public int GetOverrideState()
+    //Does each
+    public void RunCompoundAnimation(ref Coroutine coroutine, params Animation[] animations)
     {
-        return overrideState;
+        coroutine = StartCoroutine(CompoundAnimate(animations));
     }
-    public void SetPrimaryState(int state)
+    public void RunAnimation(Sprite[] sprites, float[] timings, ref Coroutine coroutine, bool loop = false)
     {
-        primaryState = state;
+        if (loop)
+        {
+            coroutine = StartCoroutine(AnimateLoop(sprites, timings));
+        }
+        else
+        {
+            coroutine = StartCoroutine(AnimateOnce(sprites, timings));
+        }
     }
-    public void SetSecondaryState(int state)
+    public void StopAnimation(ref Coroutine coroutine)
     {
-        secondaryState = state;
+        StopCoroutine(coroutine);
     }
-    public void SetOverrideState(int state)
+    private IEnumerator CompoundAnimate(params Animation[] animations)
     {
-        overrideState = state;
+        foreach (Animation animation in animations)
+        {
+            if (animation.runNum == 0)
+            {
+                while (true)
+                {
+                    for (int i = 0; i < animation.sprites.Length; i++)
+                    {
+                        SetSprite(animation.sprites[i]);
+                        yield return new WaitForSeconds(animation.timings[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < animation.runNum; i++)
+                {
+                    for (int j = 0; j < animation.sprites.Length; j++)
+                    {
+                        SetSprite(animation.sprites[j]);
+                        yield return new WaitForSeconds(animation.timings[j]);
+                    }
+                }
+            }
+        }
     }
-    public void RunAnimationStates()
+    private IEnumerator AnimateLoop(Sprite[] sprites, float[] timings)
     {
-        animator.SetInteger("Primary State", GetPrimaryState());
-        animator.SetInteger("Secondary State", GetSecondaryState());
-        animator.SetInteger("Override State", GetOverrideState());
+        while (true)
+        {
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                SetSprite(sprites[i]);
+                yield return new WaitForSeconds(timings[i]);
+            }
+        }
+    }
+    private IEnumerator AnimateOnce(Sprite[] sprites, float[] timings)
+    {
+        int i = 0;
+        for (i = 0; i < sprites.Length - 1; i++)
+        {
+            SetSprite(sprites[i]);
+            yield return new WaitForSeconds(timings[i]);
+        }
+        SetSprite(sprites[i]);
     }
 }

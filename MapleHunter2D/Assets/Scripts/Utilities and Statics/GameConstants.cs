@@ -31,7 +31,7 @@ public static class GameConstants
     // Camera settings
     public const float TARGET_SCREEN_WIDTH_BY_RATIO = 16f; // The 16 part of 16:9 aspect ratio
     public const float TARGET_SCREEN_HEIGHT_BY_RATIO = 9f; // The 9 part of 16:9 aspect ratio
-    public const float DEFAULT_CAMERA_SIZE = 4.5f;
+    public const float DEFAULT_CAMERA_SIZE = 3.5f;
     public const float CAMERA_Y_OFFSET = 1.5f; // Specify the Y offset of the camera when player character present in scene
 
     // Scene Parameters
@@ -43,7 +43,8 @@ public static class GameConstants
     // Game Mechanics
     public const double INPUT_BUFFER_LIFESPAN = 2d; // Number of seconds allowed before input buffer resets
     public const float COLLISION_CHECK_SHRINK_OFFSET = -0.05f; // Offset to shrink collision checks to prevent false positives
-    public const float COLLISION_CHECK_DISTANCE_OFFSET = 0.01f; // Distance offset for extending overlap projection to act as buffer
+    public const float COLLISION_CHECK_DISTANCE_OFFSET = 0.02f; // Distance offset for extending overlap projection to act as buffer
+    public const float SLIDING_CHECK_DISTANCE_CAST = 0.02f;
     public const float FLOATING_BODY_GRAVITY_MODIFIER = 6f; // Factor to modify gravity by while floating
     public const float FLOATING_MAX_DROP_SPEED = -8f; // The max velocity a rigidbody can move at in the y plane while floating
     public const float WALL_SLIDE_MAX_DROP_SPEED = -4f;
@@ -52,15 +53,8 @@ public static class GameConstants
     public const float JOYSTICK_BOOL_DEADZONE = 0.7f; // Calibrate sensitivity of joysticks between 0-1 where 0 is most sensitive for boolean use
 
     // Player Constants
-    public const float COYOTE_JUMP_DELAY = 0.125f; // Amount of time after player leaves valid state for jump where player may still jump
-    public const float JUMP_BUFFER = 0.125f; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
-    public const float PLAYER_BASE_GROUND_JUMP_VELOCITY = 10f;
-    public const float PLAYER_BASE_AIR_JUMP_VELOCITY = 8f;
-    public const float PLAYER_BASE_WALK_MOVE_SPEED = 3.0f;
-    public const float PLAYER_BASE_DASH_SPEED = 15f;
-    public const float PLAYER_BASE_DASH_DURATION = 0.15f;
-    public const float PLAYER_CROUCH_MOVE_SPEED = 0f; // Currently player cannot crouch-move thus speed is 0 (allows for expansion in future for crouch-move/crawling)
-    public const int PLAYER_NUMBER_AIR_JUMP = 1; // Number of air jumps the player can perform
+    public const double COYOTE_JUMP_DELAY = 0.0625d; // Amount of time after player leaves valid state for jump where player may still jump
+    public const double JUMP_BUFFER = 0.0625d; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
     public const int PLAYER_INVENTORY_SIZE = 10; // Size of the player inventory
     public const int PLAYER_BANK_SIZE = 100; // Size of the player bank
     public const int PLAYER_ITEM_INVENTORY_MAX_STACKS = 10;

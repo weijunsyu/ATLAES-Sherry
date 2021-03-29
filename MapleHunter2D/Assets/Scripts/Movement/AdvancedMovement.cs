@@ -40,22 +40,31 @@ public static bool CanStand(MovementController movementController)
 
     public static bool checkFront(MovementController movementController) //return true if object in front
     {
-        int facingDirection;
+        Bounds bounds= movementController.boxCollider.bounds;
+        Vector2 topRayOrigin = new Vector2(bounds.center.x, bounds.center.y + bounds.extents.y);
+        Vector2 bottomRayOrigin = new Vector2(bounds.center.x, bounds.center.y - bounds.extents.y);
+        Vector2 rayDirection;
+        float rayDistance = GameConstants.SLIDING_CHECK_DISTANCE_CAST;
         if (movementController.IsFacingRight())
         {
-            facingDirection = 1;
+            rayDirection = Vector2.right;
+            topRayOrigin.x += bounds.extents.x;
+            bottomRayOrigin.x += bounds.extents.x;
         }
         else
         {
-            facingDirection = -1;
+            rayDirection = Vector2.left;
+            topRayOrigin.x -= bounds.extents.x;
+            bottomRayOrigin.x -= bounds.extents.x;
         }
-        Vector2 overlapCenter = new Vector2((movementController.boxCollider.bounds.center.x + (facingDirection * movementController.boxCollider.bounds.extents.x)),
-                                            movementController.boxCollider.bounds.center.y);
-        Vector2 overlapSize = new Vector2(GameConstants.COLLISION_CHECK_DISTANCE_OFFSET,
-                                          ((movementController.boxCollider.bounds.extents.y * 2) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
-        Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, movementController.groundLayer);
 
-        return (colliderHit != null);
+        //Debug.DrawRay((Vector3)(topRayOrigin), (Vector3)(rayDirection * rayDistance), Color.green);
+        //Debug.DrawRay((Vector3)(bottomRayOrigin), (Vector3)(rayDirection * rayDistance), Color.green);
+
+        RaycastHit2D topColliderHit = Physics2D.Raycast(topRayOrigin, rayDirection, rayDistance, movementController.groundLayer);
+        RaycastHit2D bottomColliderHit = Physics2D.Raycast(bottomRayOrigin, rayDirection, rayDistance, movementController.groundLayer);
+
+        return (topColliderHit.collider != null && bottomColliderHit.collider != null);
     }
 
     public static void Slide(MovementController movementController, float slideSpeed)
