@@ -7,8 +7,6 @@ public class PlayerCharacterPersistentData
     private WeaponType primaryWeapon, secondaryWeapon = WeaponType.NONE;
     private int locationSceneIndex = GameConstants.TUTORIAL_LEVEL_INDEX;
 
-
-
     // Class Functions:
     public void ResetAllPlayerCharacterPersistentData()
     {

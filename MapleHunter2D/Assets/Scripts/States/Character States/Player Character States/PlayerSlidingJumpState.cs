@@ -7,7 +7,7 @@ public class PlayerSlidingJumpState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private PlayerBasicAnimations animations = null;
+    private PlayerAnimations animations = null;
 
     private double timeInSeconds = 0d;
 
@@ -18,7 +18,7 @@ public class PlayerSlidingJumpState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
-        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animations = (PlayerAnimations)animationController.animationsList;
     }
 
     public void Enter()
@@ -26,8 +26,8 @@ public class PlayerSlidingJumpState : IState
         animationController.SetSprite(animations.slideJump[0]);
 
         timeInSeconds = 0;
-        HandleHorizontalVelocity(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
-        BasicMovement.Jump(movementController, PlayerBasicTimings.PLAYER_SIDING_JUMP_VELOCITY);
+        HandleHorizontalVelocity(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+        BasicMovement.Jump(movementController, PlayerTimings.PLAYER_SIDING_JUMP_VELOCITY);
         movementController.SetAirborne(true);
     }
     public void ExecuteLogic()
@@ -37,7 +37,7 @@ public class PlayerSlidingJumpState : IState
     public void ExecutePhysics()
     {
         // If falling or finished jump
-        if (movementController.GetVelocity().y <= 0 || timeInSeconds >PlayerBasicTimings.PLAYER_SLIDE_JUMP_DURATION)
+        if (movementController.GetVelocity().y <= 0 || timeInSeconds >PlayerTimings.PLAYER_SLIDE_JUMP_DURATION)
         {
             stateMachine.ChangeState(playerController.fallingState);
             return;

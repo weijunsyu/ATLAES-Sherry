@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerStandingState : IState
+public class PlayerStrafingBackwardsState : IState
 {
     private PlayerStateController playerController = null;
     private StateMachine stateMachine = null;
@@ -9,8 +9,9 @@ public class PlayerStandingState : IState
 
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
+    private float moveSpeed = PlayerTimings.PLAYER_WALK_SPEED;
 
-    public PlayerStandingState(PlayerStateController playerController, StateMachine stateMachine)
+    public PlayerStrafingBackwardsState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
         this.stateMachine = stateMachine;
@@ -23,19 +24,11 @@ public class PlayerStandingState : IState
 
     public void Enter()
     {
-        animationController.RunAnimation(animations.idle, PlayerTimings.IDLE_TIMES,  ref animate, true);
+        RunAnimation();
 
-        BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
-        
-        if (playerController.jumpInputBuffer)
-        {
-            playerController.jumpInputBuffer = false;
-            stateMachine.ChangeState(playerController.jumpingState);
-            return;
-        }
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
@@ -52,11 +45,12 @@ public class PlayerStandingState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
-        if (PlayerInputController.pressedInputs[1] || PlayerInputController.pressedInputs[2]) // right or left
+        if (PlayerInputController.pressedInputs[5] == false) // guard release
         {
-            stateMachine.ChangeState(playerController.movingState);
+            stateMachine.ChangeState(playerController.standingState);
             return;
         }
+        HandleMoveInput(moveSpeed);
         //getting hit, and dying
     }
     public void Exit()
@@ -82,18 +76,46 @@ public class PlayerStandingState : IState
             case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
                 //stateMachine.ChangeState(playerController.heavyState);
                 break;
-            case PlayerInputController.RawInput.GUARD_PRESS: // Guard
-                stateMachine.ChangeState(playerController.standingGuardState);
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                stateMachine.ChangeState(playerController.jumpingState);
-                break;
             case PlayerInputController.RawInput.CROUCH_PRESS: // Crouch
-                stateMachine.ChangeState(playerController.crouchingState);
+                stateMachine.ChangeState(playerController.crouchingGuardState);
                 break;
-            case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                stateMachine.ChangeState(playerController.dashingState);
-                break;
+        }
+    }
+    private void HandleMoveInput(float speed)
+    {
+        if (movementController.IsFacingRight()) // facing right
+        {
+            if (PlayerInputController.pressedInputs[2] == true) // left
+            {
+                BasicMovement.Strafe(movementController, -speed);
+            }
+            else
+            {
+                stateMachine.ChangeState(playerController.standingGuardState);
+            }
+        }
+        else // facing left
+        {
+            if (PlayerInputController.pressedInputs[1] == true) // right
+            {
+                BasicMovement.Strafe(movementController, speed);
+            }
+            else
+            {
+                stateMachine.ChangeState(playerController.standingGuardState);
+            }
+        }
+    }
+
+    private void RunAnimation()
+    {
+        if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.NONE)
+        {
+            animationController.RunAnimation(animations.walkBackwards, PlayerTimings.WALK_TIMES, ref animate, true);
+        }
+        if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.UNARMED)
+        {
+            animationController.RunAnimation(animations.u_strafe, PlayerTimings.U_STRAFE_TIMES, ref animate, true);
         }
     }
 }

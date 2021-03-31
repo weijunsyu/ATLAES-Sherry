@@ -8,7 +8,7 @@ public class PlayerCrouchingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private PlayerBasicAnimations animations = null;
+    private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
     public PlayerCrouchingState(PlayerStateController playerController, StateMachine stateMachine)
@@ -18,7 +18,7 @@ public class PlayerCrouchingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
-        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animations = (PlayerAnimations)animationController.animationsList;
         animate = animationController.animate;
     }
 
@@ -30,18 +30,22 @@ public class PlayerCrouchingState : IState
         }
         else
         {
-            animationController.RunAnimation(animations.crouch, PlayerBasicTimings.crouchTimes, ref animate);
+            animationController.RunAnimation(animations.crouch, PlayerTimings.CROUCH_TIMES, ref animate);
         }
 
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Crouch(movementController);
-        playerController.canAirDash = true;
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
+
+    }
+    public void ExecutePhysics()
+    {
+        movementController.UpdateAirborne(); // Check if still grounded
         if (PlayerInputController.pressedInputs[1] == true) // Turn right
         {
             movementController.FaceRight();
@@ -50,10 +54,26 @@ public class PlayerCrouchingState : IState
         {
             movementController.FaceLeft();
         }
-    }
-    public void ExecutePhysics()
-    {
-        //handle falling, getting hit, and dying
+        if (PlayerInputController.pressedInputs[3] == false) // crouch release
+        {
+            if (AdvancedMovement.CanStand(movementController))
+            {
+                stateMachine.ChangeState(playerController.standingState);
+                return;
+            }
+        }
+        if (movementController.IsAirborne() == true) // if airborne
+        {
+            if (AdvancedMovement.CanStand(movementController))
+            {
+                stateMachine.ChangeState(playerController.fallingState); // Go to falling state
+                return;
+            }
+        }
+        else
+        {
+            playerController.canAirDash = true;
+        }
     }
     public void Exit()
     {
@@ -79,16 +99,10 @@ public class PlayerCrouchingState : IState
                 //stateMachine.ChangeState(playerController.heavyState);
                 break;
             case PlayerInputController.RawInput.GUARD_PRESS: // Guard
-                //stateMachine.ChangeState(playerController.crouchingGuardState);
+                stateMachine.ChangeState(playerController.crouchingGuardState);
                 break;
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 stateMachine.ChangeState(playerController.dashingState);
-                break;
-            case PlayerInputController.RawInput.CROUCH_RELEASE: // Stop Crouching
-                if (AdvancedMovement.CanStand(movementController))
-                {
-                    stateMachine.ChangeState(playerController.standingState);
-                }
                 break;
         }
     }

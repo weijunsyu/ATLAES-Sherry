@@ -7,7 +7,7 @@ public class PlayerFallingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private PlayerBasicAnimations animations = null;
+    private PlayerAnimations animations = null;
 
     private double timeInSeconds = 0d;
 
@@ -18,7 +18,7 @@ public class PlayerFallingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
-        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animations = (PlayerAnimations)animationController.animationsList;
     }
 
     public void Enter()
@@ -26,7 +26,6 @@ public class PlayerFallingState : IState
         animationController.SetSprite(animations.fall[0]);
 
         timeInSeconds = 0d;
-        //BasicMovement.StopHorizontal(movementController);
         movementController.SetAirborne(true);
 
         // Enable player controller
@@ -45,7 +44,7 @@ public class PlayerFallingState : IState
             stateMachine.ChangeState(playerController.standingState); // Go to standing state
             return;
         }
-        playerController.HandleMoveInput(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
+        playerController.HandleMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
         if (playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.slidingState);
@@ -74,8 +73,8 @@ public class PlayerFallingState : IState
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 if (playerController.canAirDash)
                 {
-                    stateMachine.ChangeState(playerController.dashingState);
                     playerController.canAirDash = false;
+                    stateMachine.ChangeState(playerController.dashingState);
                 }
                 break;
             case PlayerInputController.RawInput.JUMP_PRESS: // Air jump

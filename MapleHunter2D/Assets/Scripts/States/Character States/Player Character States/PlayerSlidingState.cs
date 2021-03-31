@@ -7,7 +7,7 @@ public class PlayerSlidingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private PlayerBasicAnimations animations = null;
+    private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
     public PlayerSlidingState(PlayerStateController playerController, StateMachine stateMachine)
@@ -17,16 +17,15 @@ public class PlayerSlidingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
-        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animations = (PlayerAnimations)animationController.animationsList;
         animate = animationController.animate;
     }
 
     public void Enter()
     {
-        animationController.RunAnimation(animations.slide, PlayerBasicTimings.slideTimes, ref animate, true);
+        animationController.RunAnimation(animations.slide, PlayerTimings.SLIDE_TIMES, ref animate, true);
 
         BasicMovement.StopHorizontal(movementController);
-        movementController.SetAirborne(false);
         playerController.canAirDash = true;
 
         // Enable player controller
@@ -39,12 +38,20 @@ public class PlayerSlidingState : IState
     public void ExecutePhysics()
     {
         AdvancedMovement.Slide(movementController, GameConstants.WALL_SLIDE_MAX_DROP_SPEED);
-        playerController.HandleMoveInput(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
-        if (!playerController.HandleSlideCheck())
+        playerController.HandleMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+        if (playerController.HandleSlideCheck()) // is sliding
+        {
+            movementController.UpdateAirborne();
+            if (!movementController.IsAirborne())
+            {
+                stateMachine.ChangeState(playerController.standingState);
+            }
+        }
+        else // is not sliding
         {
             stateMachine.ChangeState(playerController.fallingState);
             return;
-        } 
+        }
     }
     public void Exit()
     {
