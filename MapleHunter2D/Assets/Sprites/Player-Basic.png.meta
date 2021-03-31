@@ -1,148 +1,169 @@
 fileFormatVersion: 2
-guid: d0b6fdbc43fdc67479442d1c597c9070
+guid: 09cd82ec0bb414c4ebc20a39c310d4bb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2047894127809522943
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_0
+      213: -1464906612045444768
+    second: Player-Basic_0 Idle i
   - first:
-      213: 1949896220716373806
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_1
+      213: -6269857961715359181
+    second: Player-Basic_1 Idle f
   - first:
-      213: -5456125409212728628
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_2
+      213: -7539795212770171423
+    second: Player-Basic_2 walk_f i
   - first:
-      213: 5298463976586483166
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_3
+      213: -3296122594942829362
+    second: Player-Basic_3
   - first:
-      213: 8973980480357461979
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_4
+      213: -355277401855800906
+    second: Player-Basic_4
   - first:
-      213: -8705802052340165031
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_5
+      213: -9093900369954841739
+    second: Player-Basic_5
   - first:
-      213: -3011796118663528017
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_6
+      213: -6660750601221390695
+    second: Player-Basic_6
   - first:
-      213: -5907344633246167441
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_7
+      213: -3279381899632487500
+    second: Player-Basic_7
   - first:
-      213: -6786425415097940051
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_8
+      213: -8518312848388925737
+    second: Player-Basic_8
   - first:
-      213: -8881408086610110649
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_9
+      213: -4197444871041204339
+    second: Player-Basic_9 walk_f f
   - first:
-      213: -7306333453765556646
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_10
+      213: 3036466971640134356
+    second: Player-Basic_10 walk_b i
   - first:
-      213: -7164056170835763294
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_11
+      213: 942842186467159454
+    second: Player-Basic_11
   - first:
-      213: -7610140737664874504
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_12
+      213: 717676030516102660
+    second: Player-Basic_12
   - first:
-      213: -1481213922065759364
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_13
+      213: -3881397631083242988
+    second: Player-Basic_13
   - first:
-      213: -3190109716835944897
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_14
+      213: -8387436746474758389
+    second: Player-Basic_14
   - first:
-      213: -8915924831624931985
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_15
+      213: -7157174351295789093
+    second: Player-Basic_15
   - first:
-      213: -3164902000629317202
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_16
+      213: 6877291454187660850
+    second: Player-Basic_16
   - first:
-      213: -3758066744258131152
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_17
+      213: -5797440299737220079
+    second: Player-Basic_17 walk_b f
   - first:
-      213: 947490650238990148
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_18
+      213: -2773716278151489001
+    second: Player-Basic_18 run i
   - first:
-      213: 7049549744013139435
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_19
+      213: -3967408992927179921
+    second: Player-Basic_19
   - first:
-      213: 1304905817889566280
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_20
+      213: -664508221908938664
+    second: Player-Basic_20
   - first:
-      213: -4884879491723390447
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_21
+      213: -7009703484706749297
+    second: Player-Basic_21
   - first:
-      213: 1499489495877389950
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_22
+      213: -216693255295839220
+    second: Player-Basic_22
   - first:
-      213: -875039315358523888
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_23
+      213: 9189345760231273807
+    second: Player-Basic_23
   - first:
-      213: -4212379150229313004
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_24
+      213: -1029092026439759679
+    second: Player-Basic_24
   - first:
-      213: 8550219544700493408
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_25
+      213: -6303763445367948949
+    second: Player-Basic_25 run f
   - first:
-      213: 3987699291865201069
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_26
+      213: -5758448522074676805
+    second: Player-Basic_26 crouch i
   - first:
-      213: -8618100949697081649
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_27
+      213: 1181796748286654078
+    second: Player-Basic_27 crouch f
   - first:
-      213: 34988270004879647
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_28
+      213: -1133718790215212410
+    second: Player-Basic_28 jump i
   - first:
-      213: 5912336631484638353
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_29
+      213: 8693942338893368845
+    second: Player-Basic_29 jump f
   - first:
-      213: 550661525434009576
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_30
+      213: -2196462971532242588
+    second: Player-Basic_30 fall
   - first:
-      213: -4445802263063684615
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_31
+      213: -1978712728979985204
+    second: Player-Basic_31 dash i
   - first:
-      213: 6948876973091263707
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_32
+      213: 7733088639637425904
+    second: Player-Basic_32
   - first:
-      213: 4128789603086556685
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_33
+      213: 5082012538402294037
+    second: Player-Basic_33
   - first:
-      213: 2556233997491126654
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_34
+      213: 7028829923177882462
+    second: Player-Basic_34
   - first:
-      213: -4139657326678323300
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_35
+      213: -3698239588381411617
+    second: Player-Basic_35
   - first:
-      213: 8890090721446659991
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_36
+      213: 1460873312865285916
+    second: Player-Basic_36 dash f
   - first:
-      213: -6550965559320162809
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_37
+      213: -6610919647408037867
+    second: Player-Basic_37 slide i
   - first:
-      213: -3218334761493052461
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_38
+      213: 9099169571360210217
+    second: Player-Basic_38 slide f
   - first:
-      213: 7575372488457813314
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_39
+      213: 8003695692131862743
+    second: Player-Basic_39 slide_jump
   - first:
-      213: -3070842161333948658
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_40
+      213: 2539497883923380653
+    second: Player-Basic_40 g_hit_h
   - first:
-      213: 5834143867419237330
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_41
+      213: -6112806994086474607
+    second: Player-Basic_41 g_hit
   - first:
-      213: -7251151658957475710
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_42
+      213: 6540605904689867973
+    second: Player-Basic_42 a_hit_h
   - first:
-      213: 8932692197199858480
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_43
+      213: 1972648386236767805
+    second: Player-Basic_43 a_hit
   - first:
-      213: 9173648294240946752
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_44
+      213: -269399034927196932
+    second: Player-Basic_44 c_hit_h
   - first:
-      213: 6076070114882464560
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_45
+      213: -1116246268881587588
+    second: Player-Basic_45 c_hit
   - first:
-      213: 5152779417183083673
-    second: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_46
+      213: 7500007499261728142
+    second: Player-Basic_46 death i
+  - first:
+      213: -5725738996108763739
+    second: Player-Basic_47
+  - first:
+      213: -3121289363244976989
+    second: Player-Basic_48
+  - first:
+      213: -6811460837383763297
+    second: Player-Basic_49
+  - first:
+      213: -1321455211766331301
+    second: Player-Basic_50
+  - first:
+      213: 897750181774674901
+    second: Player-Basic_51
+  - first:
+      213: 6013802079644438790
+    second: Player-Basic_52
+  - first:
+      213: 5326955794449438333
+    second: Player-Basic_53 death f
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -252,7 +273,49 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_0
+      name: Player-Basic_0 Idle i
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06909ef923b9babe0800000000000000
+      internalID: -1464906612045444768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_1 Idle f
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 768
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3322dc7276dfcf8a0800000000000000
+      internalID: -6269857961715359181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_2 walk_f i
       rect:
         serializedVersion: 2
         x: 0
@@ -266,14 +329,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1031e46142b6493e0800000000000000
-      internalID: -2047894127809522943
+      spriteID: 1e5a4a793344d5790800000000000000
+      internalID: -7539795212770171423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_1
+      name: Player-Basic_3
       rect:
         serializedVersion: 2
         x: 96
@@ -287,14 +350,140 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e271da0284c6f0b10800000000000000
-      internalID: 1949896220716373806
+      spriteID: ecc3b48a6f1d142d0800000000000000
+      internalID: -3296122594942829362
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_2
+      name: Player-Basic_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b949a9d51dc11bf0800000000000000
+      internalID: -355277401855800906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_5
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57b5c0a8bc9fbc180800000000000000
+      internalID: -9093900369954841739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99ebabc4e924093a0800000000000000
+      internalID: -6660750601221390695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_7
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b35f85898b4d72d0800000000000000
+      internalID: -3279381899632487500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_8
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d6d12aa89fd8c980800000000000000
+      internalID: -8518312848388925737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_9 walk_f f
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 672
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8fbd49f02eafb5c0800000000000000
+      internalID: -4197444871041204339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_10 walk_b i
       rect:
         serializedVersion: 2
         x: 0
@@ -308,14 +497,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cca74ed19d2f744b0800000000000000
-      internalID: -5456125409212728628
+      spriteID: 4daf0d07f92b32a20800000000000000
+      internalID: 3036466971640134356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_3
+      name: Player-Basic_11
       rect:
         serializedVersion: 2
         x: 96
@@ -329,14 +518,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed514ab0aece78940800000000000000
-      internalID: 5298463976586483166
+      spriteID: e9da0a329f5a51d00800000000000000
+      internalID: 942842186467159454
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_4
+      name: Player-Basic_12
       rect:
         serializedVersion: 2
         x: 192
@@ -350,14 +539,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdfeef063bbf98c70800000000000000
-      internalID: 8973980480357461979
+      spriteID: 40689be1c82b5f900800000000000000
+      internalID: 717676030516102660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_5
+      name: Player-Basic_13
       rect:
         serializedVersion: 2
         x: 288
@@ -371,14 +560,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 956d561a827ce2780800000000000000
-      internalID: -8705802052340165031
+      spriteID: 41a9d374b61822ac0800000000000000
+      internalID: -3881397631083242988
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_6
+      name: Player-Basic_14
       rect:
         serializedVersion: 2
         x: 384
@@ -392,14 +581,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa109232363f336d0800000000000000
-      internalID: -3011796118663528017
+      spriteID: b0f5056b7b6d99b80800000000000000
+      internalID: -8387436746474758389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_7
+      name: Player-Basic_15
       rect:
         serializedVersion: 2
         x: 480
@@ -413,14 +602,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6e4d81ca55e40ea0800000000000000
-      internalID: -5907344633246167441
+      spriteID: bd74a7b09db9cac90800000000000000
+      internalID: -7157174351295789093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_8
+      name: Player-Basic_16
       rect:
         serializedVersion: 2
         x: 576
@@ -434,14 +623,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da7876e7a06c1d1a0800000000000000
-      internalID: -6786425415097940051
+      spriteID: 2366fafd32c017f50800000000000000
+      internalID: 6877291454187660850
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_9
+      name: Player-Basic_17 walk_b f
       rect:
         serializedVersion: 2
         x: 672
@@ -455,14 +644,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7479254a666eeb480800000000000000
-      internalID: -8881408086610110649
+      spriteID: 11cf0a773ca5b8fa0800000000000000
+      internalID: -5797440299737220079
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_10
+      name: Player-Basic_18 run i
       rect:
         serializedVersion: 2
         x: 0
@@ -476,14 +665,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5640c53f60ba9a90800000000000000
-      internalID: -7306333453765556646
+      spriteID: 71adf05adb7c189d0800000000000000
+      internalID: -2773716278151489001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_11
+      name: Player-Basic_19
       rect:
         serializedVersion: 2
         x: 96
@@ -497,14 +686,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2af93629ed8249c90800000000000000
-      internalID: -7164056170835763294
+      spriteID: f6b92e98a8ee0f8c0800000000000000
+      internalID: -3967408992927179921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_12
+      name: Player-Basic_20
       rect:
         serializedVersion: 2
         x: 192
@@ -518,14 +707,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f781c0c159536690800000000000000
-      internalID: -7610140737664874504
+      spriteID: 8509acafa4137c6f0800000000000000
+      internalID: -664508221908938664
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_13
+      name: Player-Basic_21
       rect:
         serializedVersion: 2
         x: 288
@@ -539,14 +728,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7348e229cba17be0800000000000000
-      internalID: -1481213922065759364
+      spriteID: f848c35d1d788be90800000000000000
+      internalID: -7009703484706749297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_14
+      name: Player-Basic_22
       rect:
         serializedVersion: 2
         x: 384
@@ -560,14 +749,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f36b87d4d147ab3d0800000000000000
-      internalID: -3190109716835944897
+      spriteID: c045ed4e1a62efcf0800000000000000
+      internalID: -216693255295839220
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_15
+      name: Player-Basic_23
       rect:
         serializedVersion: 2
         x: 480
@@ -581,14 +770,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6559eeaa95444480800000000000000
-      internalID: -8915924831624931985
+      spriteID: f45b3dc184d178f70800000000000000
+      internalID: 9189345760231273807
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_16
+      name: Player-Basic_24
       rect:
         serializedVersion: 2
         x: 576
@@ -602,14 +791,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea1019716620414d0800000000000000
-      internalID: -3164902000629317202
+      spriteID: 1c80fda114ee7b1f0800000000000000
+      internalID: -1029092026439759679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_17
+      name: Player-Basic_25 run f
       rect:
         serializedVersion: 2
         x: 672
@@ -623,14 +812,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03b094a053aa8dbc0800000000000000
-      internalID: -3758066744258131152
+      spriteID: b6930c29b888488a0800000000000000
+      internalID: -6303763445367948949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_18
+      name: Player-Basic_26 crouch i
       rect:
         serializedVersion: 2
         x: 0
@@ -644,14 +833,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 447bf73f9b9262d00800000000000000
-      internalID: 947490650238990148
+      spriteID: bb1ad582491e510b0800000000000000
+      internalID: -5758448522074676805
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_19
+      name: Player-Basic_27 crouch f
       rect:
         serializedVersion: 2
         x: 96
@@ -665,14 +854,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bed595e542805d160800000000000000
-      internalID: 7049549744013139435
+      spriteID: e76765291e5966010800000000000000
+      internalID: 1181796748286654078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_20
+      name: Player-Basic_28 jump i
       rect:
         serializedVersion: 2
         x: 288
@@ -686,14 +875,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84ee5ac7de4fb1210800000000000000
-      internalID: 1304905817889566280
+      spriteID: 682690a54c83440f0800000000000000
+      internalID: -1133718790215212410
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_21
+      name: Player-Basic_29 jump f
       rect:
         serializedVersion: 2
         x: 384
@@ -707,17 +896,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1129c35cbfb653cb0800000000000000
-      internalID: -4884879491723390447
+      spriteID: d0ec777ae7617a870800000000000000
+      internalID: 8693942338893368845
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_22
+      name: Player-Basic_30 fall
       rect:
         serializedVersion: 2
-        x: 480
+        x: 576
         y: 384
         width: 96
         height: 96
@@ -728,14 +917,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7e833a70c14fc410800000000000000
-      internalID: 1499489495877389950
+      spriteID: 461958390989481e0800000000000000
+      internalID: -2196462971532242588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_23
+      name: Player-Basic_31 dash i
       rect:
         serializedVersion: 2
         x: 0
@@ -749,14 +938,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01edd8bf06c3bd3f0800000000000000
-      internalID: -875039315358523888
+      spriteID: cccaa94b1433a84e0800000000000000
+      internalID: -1978712728979985204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_24
+      name: Player-Basic_32
       rect:
         serializedVersion: 2
         x: 96
@@ -770,14 +959,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41ae1532b7f9a85c0800000000000000
-      internalID: -4212379150229313004
+      spriteID: 0fe82366523715b60800000000000000
+      internalID: 7733088639637425904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_25
+      name: Player-Basic_33
       rect:
         serializedVersion: 2
         x: 192
@@ -791,14 +980,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 06e9979ff5b78a670800000000000000
-      internalID: 8550219544700493408
+      spriteID: 519cc8f5a7fe68640800000000000000
+      internalID: 5082012538402294037
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_26
+      name: Player-Basic_34
       rect:
         serializedVersion: 2
         x: 288
@@ -812,14 +1001,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da9b3b2d067275730800000000000000
-      internalID: 3987699291865201069
+      spriteID: e5367a5239b6b8160800000000000000
+      internalID: 7028829923177882462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_27
+      name: Player-Basic_35
       rect:
         serializedVersion: 2
         x: 384
@@ -833,14 +1022,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fce49dec8da566880800000000000000
-      internalID: -8618100949697081649
+      spriteID: fd63d3040b63dacc0800000000000000
+      internalID: -3698239588381411617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_28
+      name: Player-Basic_36 dash f
       rect:
         serializedVersion: 2
         x: 480
@@ -854,35 +1043,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1142fc65ad4c7000800000000000000
-      internalID: 34988270004879647
+      spriteID: c17fe2bb980164410800000000000000
+      internalID: 1460873312865285916
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_29
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 288
-        width: 96
-        height: 96
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 194eb2867d6dc0250800000000000000
-      internalID: 5912336631484638353
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_30
+      name: Player-Basic_37 slide i
       rect:
         serializedVersion: 2
         x: 0
@@ -896,14 +1064,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e708f66db754a700800000000000000
-      internalID: 550661525434009576
+      spriteID: 510e7995b9b4144a0800000000000000
+      internalID: -6610919647408037867
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_31
+      name: Player-Basic_38 slide f
       rect:
         serializedVersion: 2
         x: 96
@@ -917,14 +1085,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f9167885665d42c0800000000000000
-      internalID: -4445802263063684615
+      spriteID: 92df7f3048eb64e70800000000000000
+      internalID: 9099169571360210217
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_32
+      name: Player-Basic_39 slide_jump
       rect:
         serializedVersion: 2
         x: 288
@@ -938,14 +1106,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd41ff05ace5f6060800000000000000
-      internalID: 6948876973091263707
+      spriteID: 7d808db93d6d21f60800000000000000
+      internalID: 8003695692131862743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_33
+      name: Player-Basic_40 g_hit_h
       rect:
         serializedVersion: 2
         x: 0
@@ -959,14 +1127,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0edc4cc4486c4930800000000000000
-      internalID: 4128789603086556685
+      spriteID: da9fb1fdedb1e3320800000000000000
+      internalID: 2539497883923380653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_34
+      name: Player-Basic_41 g_hit
       rect:
         serializedVersion: 2
         x: 96
@@ -980,14 +1148,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e714c37f641997320800000000000000
-      internalID: 2556233997491126654
+      spriteID: 19cc3f80d62fa2ba0800000000000000
+      internalID: -6112806994086474607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_35
+      name: Player-Basic_42 a_hit_h
       rect:
         serializedVersion: 2
         x: 288
@@ -1001,14 +1169,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9fce7f189bfc86c0800000000000000
-      internalID: -4139657326678323300
+      spriteID: 5ccacdcaa66e4ca50800000000000000
+      internalID: 6540605904689867973
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_36
+      name: Player-Basic_43 a_hit
       rect:
         serializedVersion: 2
         x: 384
@@ -1022,14 +1190,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79703d0d862ff5b70800000000000000
-      internalID: 8890090721446659991
+      spriteID: d3ed3687141406b10800000000000000
+      internalID: 1972648386236767805
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_37
+      name: Player-Basic_44 c_hit_h
       rect:
         serializedVersion: 2
         x: 576
@@ -1043,14 +1211,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70e47e4488b4615a0800000000000000
-      internalID: -6550965559320162809
+      spriteID: cf4d45c4107e24cf0800000000000000
+      internalID: -269399034927196932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_38
+      name: Player-Basic_45 c_hit
       rect:
         serializedVersion: 2
         x: 672
@@ -1064,14 +1232,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d34aecf59d2653d0800000000000000
-      internalID: -3218334761493052461
+      spriteID: c72357dbeeb4280f0800000000000000
+      internalID: -1116246268881587588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_39
+      name: Player-Basic_46 death i
       rect:
         serializedVersion: 2
         x: 0
@@ -1085,14 +1253,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24d7bc76421212960800000000000000
-      internalID: 7575372488457813314
+      spriteID: e85d2467511651860800000000000000
+      internalID: 7500007499261728142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_40
+      name: Player-Basic_47
       rect:
         serializedVersion: 2
         x: 96
@@ -1106,14 +1274,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0fa564035d2265d0800000000000000
-      internalID: -3070842161333948658
+      spriteID: 5add55428b61a80b0800000000000000
+      internalID: -5725738996108763739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_41
+      name: Player-Basic_48
       rect:
         serializedVersion: 2
         x: 192
@@ -1127,14 +1295,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2db1c02dfea07f050800000000000000
-      internalID: 5834143867419237330
+      spriteID: 3a4f3968cd3fea4d0800000000000000
+      internalID: -3121289363244976989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_42
+      name: Player-Basic_49
       rect:
         serializedVersion: 2
         x: 288
@@ -1148,14 +1316,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 280fa530cfbbe5b90800000000000000
-      internalID: -7251151658957475710
+      spriteID: f9a81420574d871a0800000000000000
+      internalID: -6811460837383763297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_43
+      name: Player-Basic_50
       rect:
         serializedVersion: 2
         x: 384
@@ -1169,14 +1337,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03b4006d93c47fb70800000000000000
-      internalID: 8932692197199858480
+      spriteID: b58441c7c7f39ade0800000000000000
+      internalID: -1321455211766331301
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_44
+      name: Player-Basic_51
       rect:
         serializedVersion: 2
         x: 480
@@ -1190,14 +1358,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04a899005885f4f70800000000000000
-      internalID: 9173648294240946752
+      spriteID: 5dbc8b9a803757c00800000000000000
+      internalID: 897750181774674901
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_45
+      name: Player-Basic_52
       rect:
         serializedVersion: 2
         x: 576
@@ -1211,14 +1379,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03bafebb399825450800000000000000
-      internalID: 6076070114882464560
+      spriteID: 60156b20121557350800000000000000
+      internalID: 6013802079644438790
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerCharacter-Basic_96px-Tile_Sprite-Sheet_46
+      name: Player-Basic_53 death f
       rect:
         serializedVersion: 2
         x: 672
@@ -1232,8 +1400,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99c542f4499528740800000000000000
-      internalID: 5152779417183083673
+      spriteID: d761e5652162de940800000000000000
+      internalID: 5326955794449438333
       vertices: []
       indices: 
       edges: []

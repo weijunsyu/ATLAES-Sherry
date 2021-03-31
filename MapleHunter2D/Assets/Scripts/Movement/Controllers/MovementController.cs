@@ -17,8 +17,20 @@ public class MovementController : MonoBehaviour
     [HideInInspector] public Vector2 standColliderOffset;
     [HideInInspector] public Vector2 crouchColliderSize;
     [HideInInspector] public Vector2 crouchColliderOffset;
+    [HideInInspector] public Vector2 jumpApexColliderSize;
+    [HideInInspector] public Vector2 jumpApexColliderOffset;
 
     // State Parameters and Objects:
+    private const float COLL_OFFSET_X = 0f;
+    private const float COLL_SIZE_X = 0.35f;
+    private const float STAND_COLL_OFFSET_Y = -0.15f;
+    private const float STAND_COLL_SIZE_Y = 1.2f;
+    private const float CROUCH_COLL_OFFSET_Y = -0.325f;
+    private const float CROUCH_COLL_SIZE_Y = 0.85f;
+    private const float JUMP_COLL_OFFSET_Y = 0f;
+    private const float JUMP_COLL_SIZE_Y = 0.9f;
+
+
     private bool isFacingRight = true;
     private bool isAirborne = false;
     
@@ -28,11 +40,16 @@ public class MovementController : MonoBehaviour
     {
         body = this.GetComponent<Rigidbody2D>();
         boxCollider = this.GetComponent<BoxCollider2D>();
-        standColliderSize = boxCollider.size;
-        standColliderOffset = boxCollider.offset;
+        
+        standColliderOffset = new Vector2(COLL_OFFSET_X, STAND_COLL_OFFSET_Y);
+        standColliderSize = new Vector2(COLL_SIZE_X, STAND_COLL_SIZE_Y);
+        crouchColliderOffset = new Vector2(COLL_OFFSET_X, CROUCH_COLL_OFFSET_Y);
+        crouchColliderSize = new Vector2(COLL_SIZE_X, CROUCH_COLL_SIZE_Y);
+        jumpApexColliderOffset = new Vector2(COLL_OFFSET_X, JUMP_COLL_OFFSET_Y);
+        jumpApexColliderSize = new Vector2(COLL_SIZE_X, JUMP_COLL_SIZE_Y);
 
-        crouchColliderSize = new Vector2(standColliderSize.x, (standColliderSize.y / 2));
-        crouchColliderOffset = new Vector2(standColliderOffset.x, (standColliderOffset.y * 3));
+        boxCollider.offset = standColliderOffset;
+        boxCollider.size = standColliderSize;
     }
 
     // Class Functions:

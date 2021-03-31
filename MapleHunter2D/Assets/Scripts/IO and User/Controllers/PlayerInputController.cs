@@ -30,6 +30,21 @@ public class PlayerInputController : MonoBehaviour
         HEAVY_RELEASE = -10,
         SWITCH_RELEASE = -11,
     }
+    public enum ComboInput
+    {
+        RIGHT = 1,
+        LEFT = 2,
+        CROUCH = 3,
+        UP = 4,
+        GUARD = 5,
+        JUMP = 6,
+        DASH = 7,
+        LIGHT = 8,
+        MEDIUM = 9,
+        HEAVY = 10,
+        FORWARD = 100,
+        BACKWARD = 200
+    }
 
     //Config Parameters:
 

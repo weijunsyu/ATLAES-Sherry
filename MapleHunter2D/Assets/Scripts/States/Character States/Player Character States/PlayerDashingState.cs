@@ -7,12 +7,10 @@ public class PlayerDashingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private PlayerBasicAnimations animations = null;
+    private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
     private double timeInSeconds = 0d;
-    private Sprite[] crouchDash;
-    private float[] crouchTime;
 
     public PlayerDashingState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -21,31 +19,17 @@ public class PlayerDashingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
-        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animations = (PlayerAnimations)animationController.animationsList;
         animate = animationController.animate;
-
-        crouchDash = new Sprite[] { animations.dash[1], animations.dash[2], animations.dash[3], 
-                                    animations.dash[4], animations.dash[5], animations.dash[6] };
-        crouchTime = new float[] { PlayerBasicTimings.dashTimes[1], PlayerBasicTimings.dashTimes[2] , 
-                                   PlayerBasicTimings.dashTimes[3], PlayerBasicTimings.dashTimes[4], 
-                                   PlayerBasicTimings.dashTimes[5] };
     }
 
     public void Enter()
     {
-        if (stateMachine.prevState == playerController.crouchingState) //omit first sprite when dashing from crouched position
-        {
-            animationController.RunAnimation(crouchDash, crouchTime, ref animate, false);
-        }
-        else
-        {
-            animationController.RunAnimation(animations.dash, PlayerBasicTimings.dashTimes, ref animate, false);
-        }
+        animationController.RunAnimation(animations.dash, PlayerTimings.DASH_TIMES, ref animate, false);
 
         timeInSeconds = 0;
-        movementController.UpdateAirborne(); // update airborne
         AdvancedMovement.Crouch(movementController);
-        SpecialMovement.DashMove(movementController, PlayerBasicTimings.PLAYER_DASH_SPEED);
+        SpecialMovement.DashMove(movementController, PlayerTimings.PLAYER_DASH_SPEED);
         
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
@@ -58,18 +42,34 @@ public class PlayerDashingState : IState
     {
         //handle falling, getting hit, and dying
         BasicMovement.StopVertical(movementController);
+        movementController.UpdateAirborne(); // update airborne
 
-        if (timeInSeconds >= PlayerBasicTimings.PLAYER_DASH_EXECUTE) // If dash is over
+        if (timeInSeconds >= PlayerTimings.PLAYER_DASH_EXECUTE) // If dash is over
         {
             if (movementController.IsAirborne()) // if in the air
             {
-                stateMachine.ChangeState(playerController.fallingState); // fall
+                if (AdvancedMovement.CanStand(movementController))
+                {
+                    stateMachine.ChangeState(playerController.fallingState); // fall
+                }
+                else
+                {
+                    stateMachine.ChangeState(playerController.crouchingState); // crouch
+                }
             }
             else if (AdvancedMovement.CanStand(movementController))// else if on the ground and can stand
             {
                 BasicMovement.StopHorizontal(movementController);
-                if (timeInSeconds >= PlayerBasicTimings.PLAYER_DASH_TOTAL) // if recovery is over
+                if (timeInSeconds >= PlayerTimings.PLAYER_DASH_TOTAL) // if recovery is over
                 {
+                    if (PlayerInputController.pressedInputs[1]) // if holding right, face right
+                    {
+                        movementController.FaceRight();
+                    }
+                    if (PlayerInputController.pressedInputs[2]) // if holding left, face left
+                    {
+                        movementController.FaceLeft();
+                    }
                     stateMachine.ChangeState(playerController.standingState); // stand
                 }
             }

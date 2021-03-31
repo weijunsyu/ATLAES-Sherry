@@ -7,7 +7,7 @@ public class PlayerJumpingState : IState
     private MovementController movementController = null;
     private AnimationController animationController = null;
 
-    private PlayerBasicAnimations animations = null;
+    private PlayerAnimations animations = null;
 
     public PlayerJumpingState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -16,14 +16,14 @@ public class PlayerJumpingState : IState
 
         movementController = playerController.movementController;
         animationController = playerController.animationController;
-        animations = (PlayerBasicAnimations)animationController.animationsList;
+        animations = (PlayerAnimations)animationController.animationsList;
     }
 
     public void Enter()
     {
         animationController.SetSprite(animations.jump[0]);
         
-        BasicMovement.Jump(movementController, PlayerBasicTimings.PLAYER_JUMP_VELOCITY);
+        BasicMovement.Jump(movementController, PlayerTimings.PLAYER_JUMP_VELOCITY);
         //BasicMovement.StopHorizontal(movementController);
         movementController.SetAirborne(true);
 
@@ -35,6 +35,7 @@ public class PlayerJumpingState : IState
         if (movementController.GetVelocity().y <= 4.5f) // If half speed of init jump
         {
             animationController.SetSprite(animations.jump[1]);
+            movementController.SetCollider(movementController.jumpApexColliderSize, movementController.jumpApexColliderOffset);
         }
     }
     public void ExecutePhysics()
@@ -45,7 +46,7 @@ public class PlayerJumpingState : IState
             stateMachine.ChangeState(playerController.fallingState);
             return;
         }
-        playerController.HandleMoveInput(PlayerBasicTimings.PLAYER_AIR_MOVE_SPEED);
+        playerController.HandleMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
         if (playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.slidingState);
@@ -56,6 +57,8 @@ public class PlayerJumpingState : IState
     {
         // Disable player controller
         PlayerInputController.OnInputEvent -= HandleInput;
+
+        movementController.SetCollider(movementController.standColliderSize, movementController.standColliderOffset);
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

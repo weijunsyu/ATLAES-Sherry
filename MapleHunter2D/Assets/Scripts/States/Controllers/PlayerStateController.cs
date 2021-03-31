@@ -12,7 +12,7 @@ public class PlayerStateController : AbstractStateController
     // Player States
     // Movement
     [HideInInspector] public PlayerStandingState standingState;
-    [HideInInspector] public PlayerRunningState walkingState;
+    [HideInInspector] public PlayerMovingState movingState;
     [HideInInspector] public PlayerJumpingState jumpingState;
     [HideInInspector] public PlayerFallingState fallingState;
     [HideInInspector] public PlayerCrouchingState crouchingState;
@@ -20,6 +20,8 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerSlidingState slidingState;
     [HideInInspector] public PlayerSlidingJumpState slidingJumpState;
     [HideInInspector] public PlayerStandingGuardState standingGuardState;
+    [HideInInspector] public PlayerStrafingForwardsState strafingForwardsState;
+    [HideInInspector] public PlayerStrafingBackwardsState strafingBackwardsState;
     [HideInInspector] public PlayerCrouchingGuardState crouchingGuardState;
     // Action
     [HideInInspector] public PlayerLightState lightState;
@@ -40,6 +42,7 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public bool canAirDash = true; // enables air dashing
     [HideInInspector] public double jumpBufferTimer = 0d;
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
+
     // Unity Events:
     protected override void Awake()
     {
@@ -50,10 +53,14 @@ public class PlayerStateController : AbstractStateController
         base.Start();
         jumpBufferTimer = 0d;
         jumpInputBuffer = false;
+
+        //MasterManager.playerCharacterPersistentData.SetPrimaryWeapon(WeaponType.UNARMED, true);
     }
     protected override void Update()
     {
-        //Debug.Log(stateMachine.state);
+        //Debug.Log(animationController.GetSprite());
+        //Debug.Log(movementController.transform.position.y - movementController.boxCollider.bounds.center.y);
+        
         base.Update();
         jumpBufferTimer += Time.deltaTime; // increment timer
         if (jumpBufferTimer > GameConstants.JUMP_BUFFER)
@@ -72,15 +79,17 @@ public class PlayerStateController : AbstractStateController
     {
         // Create States
         standingState = new PlayerStandingState(this, stateMachine);
-        walkingState = new PlayerRunningState(this, stateMachine);
+        movingState = new PlayerMovingState(this, stateMachine);
         jumpingState = new PlayerJumpingState(this, stateMachine);
         fallingState = new PlayerFallingState(this, stateMachine);
         crouchingState = new PlayerCrouchingState(this, stateMachine);
         dashingState = new PlayerDashingState(this, stateMachine);
         slidingState = new PlayerSlidingState(this, stateMachine);
         slidingJumpState = new PlayerSlidingJumpState(this, stateMachine);
-        //standingGuardState = new PlayerStandingGuardState(this, stateMachine);
-        //crouchingGuardState = new PlayerCrouchingGuardState(this, stateMachine);
+        standingGuardState = new PlayerStandingGuardState(this, stateMachine);
+        strafingForwardsState = new PlayerStrafingForwardsState(this, stateMachine);
+        strafingBackwardsState = new PlayerStrafingBackwardsState(this, stateMachine);
+        crouchingGuardState = new PlayerCrouchingGuardState(this, stateMachine);
 
         //lightState = new PlayerLightState(this, stateMachine);
         //mediumState = new PlayerMediumState(this, stateMachine);
@@ -118,7 +127,10 @@ public class PlayerStateController : AbstractStateController
     // return true if sliding and false otherwise
     public bool HandleSlideCheck()
     {
-        if (AdvancedMovement.checkFront(movementController)) // if wall in front of player
+        bool hitTop = false;
+        bool hitBottom = false;
+        AdvancedMovement.checkFront(movementController, out hitTop, out hitBottom);
+        if (hitBottom) // if wall in front of player
         {
             // If facing right and NOT pressing right button
             if (movementController.IsFacingRight() && !PlayerInputController.pressedInputs[1])

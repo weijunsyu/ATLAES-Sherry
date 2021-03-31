@@ -10,11 +10,11 @@ public class MasterManager : MonoBehaviour
     [SerializeField] private AudioMixer mixer = null;
 
     // State Parameters and Objects:
-    public static UserData userData = new UserData();
-    public static WorldData worldData = new WorldData();
-    public static PlayerCharacterPersistentData playerCharacterPersistentData = new PlayerCharacterPersistentData();
-    public static InventoryData inventoryData = new InventoryData();
-    public static NpcData npcData = new NpcData();
+    [HideInInspector] public static UserData userData = new UserData();
+    [HideInInspector] public static WorldData worldData = new WorldData();
+    [HideInInspector] public static PlayerCharacterPersistentData playerCharacterPersistentData = new PlayerCharacterPersistentData();
+    [HideInInspector] public static InventoryData inventoryData = new InventoryData();
+    [HideInInspector] public static NpcData npcData = new NpcData();
 
     public static double timeInSeconds = 0d;
     public static double fps = 0d;
