@@ -88,7 +88,7 @@ public class PlayerCrouchingGuardState : IState
     {
         if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.NONE)
         {
-            animationController.RunAnimation(animations.crouch, PlayerTimings.CROUCH_TIMES, ref animate);
+            animationController.SetSprite(animations.crouch[0]);
         }
         if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.UNARMED)
         {

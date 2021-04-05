@@ -1,8 +1,8 @@
 # MapleHunter2D
 2D platforming/dungeon crawler hybrid fighting game; Mono-chromatic, 2-bit black and white aesthetic with red "Blood" accents.
-      BLACK: 141414, WHITE: FCFCFC, RED: D00000
+      BLACK: 141414 (20,20,20,1), WHITE: FCFCFC (252,252,252,1), RED: D00000 (208,0,0,1)
   UI Colours:
-      BLACK: 141414, WHITE: FCFCFC, RED: D00000, BLUE: 00D1D1, YELLOW: F1D302
+      BLACK: 141414, WHITE: FCFCFC, RED: D00000, BLUE: 00D1D1 (0,209,209,1), YELLOW: F1D302 (241,211,2,1)
 
 Visual Guides: (Definitions can be found in the document "Visual Asset Guidelines and Framework" (VAGF) on Google Drive)
   UNITY UNIT (henceforth referred to as simply unit) shall be equal to 64 linear pixels of which 1 placed in a square will be used as 1 GRID UNIT
@@ -19,7 +19,7 @@ Visual Guides: (Definitions can be found in the document "Visual Asset Guideline
     Size in pixels: 1024 by 576
 
   Game Camera:
-    Size: 4.5 units
+    Size: 3.5 units
     Length (width): 16 units
     Height: 9 units
 

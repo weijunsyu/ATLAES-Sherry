@@ -35,58 +35,30 @@ public static bool CanStand(MovementController movementController)
             return false;
         }
     }
-    public static void checkFront(MovementController movementController, out bool topHit, out bool bottomHit)
-    {
-        topHit = checkFrontTop(movementController);
-        bottomHit = checkFrontBottom(movementController);
-    }
-
-    //return true if object in front of foot
-    public static bool checkFrontBottom(MovementController movementController)
+    //return true if object in front of lower leg
+    public static bool CheckFront(MovementController movementController)
     {
         Bounds bounds = movementController.boxCollider.bounds;
-        Vector2 bottomRayOrigin = new Vector2(bounds.center.x, bounds.center.y - bounds.extents.y);
+        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - (bounds.extents.y * 0.66f));
+        Vector2 size = new Vector2(GameConstants.SLIDING_CHECK_DISTANCE_CAST, (bounds.extents.y * 0.66f));
         Vector2 rayDirection;
-        float rayDistance = GameConstants.SLIDING_CHECK_DISTANCE_CAST;
         if (movementController.IsFacingRight())
         {
             rayDirection = Vector2.right;
-            bottomRayOrigin.x += bounds.extents.x;
+            origin.x += bounds.extents.x;
         }
         else
         {
             rayDirection = Vector2.left;
-            bottomRayOrigin.x -= bounds.extents.x;
+            origin.x -= bounds.extents.x;
         }
-        
-        //Debug.DrawRay((Vector3)(bottomRayOrigin), (Vector3)(rayDirection * rayDistance), Color.green);
-        RaycastHit2D bottomColliderHit = Physics2D.Raycast(bottomRayOrigin, rayDirection, rayDistance, movementController.groundLayer);
+        //Vector2 topV = new Vector2(origin.x, (origin.y + (size.y / 2)));
+        //Vector2 botV = new Vector2(origin.x, (origin.y - (size.y / 2)));
+        //Debug.DrawRay((Vector3)(topV), (Vector3)(rayDirection * 50f), Color.green);
+        //Debug.DrawRay((Vector3)(botV), (Vector3)(rayDirection * 50f), Color.green);
 
-        return (bottomColliderHit.collider != null);
-    }
-
-    //return true if object in front of head
-    public static bool checkFrontTop(MovementController movementController)
-    {
-        Bounds bounds= movementController.boxCollider.bounds;
-        Vector2 topRayOrigin = new Vector2(bounds.center.x, bounds.center.y + bounds.extents.y);
-        Vector2 rayDirection;
-        float rayDistance = GameConstants.SLIDING_CHECK_DISTANCE_CAST;
-        if (movementController.IsFacingRight())
-        {
-            rayDirection = Vector2.right;
-            topRayOrigin.x += bounds.extents.x;
-        }
-        else
-        {
-            rayDirection = Vector2.left;
-            topRayOrigin.x -= bounds.extents.x;
-        }
-
-        //Debug.DrawRay((Vector3)(topRayOrigin), (Vector3)(rayDirection * rayDistance), Color.green);
-        RaycastHit2D topColliderHit = Physics2D.Raycast(topRayOrigin, rayDirection, rayDistance, movementController.groundLayer);
-
-        return (topColliderHit.collider != null);
+        Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
+        return (colliderHit != null);
     }
 
     public static void Slide(MovementController movementController, float slideSpeed)

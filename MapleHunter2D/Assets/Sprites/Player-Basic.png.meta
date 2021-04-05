@@ -4,13 +4,13 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -1464906612045444768
-    second: Player-Basic_0 Idle i
+    second: Player-Basic_0
   - first:
       213: -6269857961715359181
-    second: Player-Basic_1 Idle f
+    second: Player-Basic_1
   - first:
       213: -7539795212770171423
-    second: Player-Basic_2 walk_f i
+    second: Player-Basic_2
   - first:
       213: -3296122594942829362
     second: Player-Basic_3
@@ -31,10 +31,10 @@ TextureImporter:
     second: Player-Basic_8
   - first:
       213: -4197444871041204339
-    second: Player-Basic_9 walk_f f
+    second: Player-Basic_9
   - first:
       213: 3036466971640134356
-    second: Player-Basic_10 walk_b i
+    second: Player-Basic_10
   - first:
       213: 942842186467159454
     second: Player-Basic_11
@@ -55,10 +55,10 @@ TextureImporter:
     second: Player-Basic_16
   - first:
       213: -5797440299737220079
-    second: Player-Basic_17 walk_b f
+    second: Player-Basic_17
   - first:
       213: -2773716278151489001
-    second: Player-Basic_18 run i
+    second: Player-Basic_18
   - first:
       213: -3967408992927179921
     second: Player-Basic_19
@@ -79,25 +79,25 @@ TextureImporter:
     second: Player-Basic_24
   - first:
       213: -6303763445367948949
-    second: Player-Basic_25 run f
+    second: Player-Basic_25
   - first:
       213: -5758448522074676805
-    second: Player-Basic_26 crouch i
+    second: Player-Basic_26
   - first:
       213: 1181796748286654078
-    second: Player-Basic_27 crouch f
+    second: Player-Basic_27
   - first:
       213: -1133718790215212410
-    second: Player-Basic_28 jump i
+    second: Player-Basic_28
   - first:
       213: 8693942338893368845
-    second: Player-Basic_29 jump f
+    second: Player-Basic_29
   - first:
       213: -2196462971532242588
-    second: Player-Basic_30 fall
+    second: Player-Basic_30
   - first:
       213: -1978712728979985204
-    second: Player-Basic_31 dash i
+    second: Player-Basic_31
   - first:
       213: 7733088639637425904
     second: Player-Basic_32
@@ -112,37 +112,37 @@ TextureImporter:
     second: Player-Basic_35
   - first:
       213: 1460873312865285916
-    second: Player-Basic_36 dash f
+    second: Player-Basic_36
   - first:
       213: -6610919647408037867
-    second: Player-Basic_37 slide i
+    second: Player-Basic_37
   - first:
       213: 9099169571360210217
-    second: Player-Basic_38 slide f
+    second: Player-Basic_38
   - first:
       213: 8003695692131862743
-    second: Player-Basic_39 slide_jump
+    second: Player-Basic_39
   - first:
       213: 2539497883923380653
-    second: Player-Basic_40 g_hit_h
+    second: Player-Basic_40
   - first:
       213: -6112806994086474607
-    second: Player-Basic_41 g_hit
+    second: Player-Basic_41
   - first:
       213: 6540605904689867973
-    second: Player-Basic_42 a_hit_h
+    second: Player-Basic_42
   - first:
       213: 1972648386236767805
-    second: Player-Basic_43 a_hit
+    second: Player-Basic_43
   - first:
       213: -269399034927196932
-    second: Player-Basic_44 c_hit_h
+    second: Player-Basic_44
   - first:
       213: -1116246268881587588
-    second: Player-Basic_45 c_hit
+    second: Player-Basic_45
   - first:
       213: 7500007499261728142
-    second: Player-Basic_46 death i
+    second: Player-Basic_46
   - first:
       213: -5725738996108763739
     second: Player-Basic_47
@@ -163,7 +163,31 @@ TextureImporter:
     second: Player-Basic_52
   - first:
       213: 5326955794449438333
-    second: Player-Basic_53 death f
+    second: Player-Basic_53
+  - first:
+      213: 5965464498170899295
+    second: Player-Basic_54
+  - first:
+      213: -3672399567840937389
+    second: Player-Basic_55
+  - first:
+      213: 5993273360432537077
+    second: Player-Basic_56
+  - first:
+      213: 7426389461997420376
+    second: Player-Basic_57
+  - first:
+      213: 4324681200147667904
+    second: Player-Basic_58
+  - first:
+      213: -5102526355936487657
+    second: Player-Basic_59
+  - first:
+      213: 9143396834003456139
+    second: Player-Basic_60
+  - first:
+      213: 4051548583553482908
+    second: Player-Basic_61
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -273,11 +297,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player-Basic_0 Idle i
+      name: Player-Basic_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 768
+        y: 864
         width: 96
         height: 96
       alignment: 0
@@ -294,11 +318,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_1 Idle f
+      name: Player-Basic_1
       rect:
         serializedVersion: 2
         x: 96
-        y: 768
+        y: 864
         width: 96
         height: 96
       alignment: 0
@@ -315,11 +339,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_2 walk_f i
+      name: Player-Basic_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -340,7 +364,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -361,7 +385,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -382,7 +406,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -403,7 +427,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -424,7 +448,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -445,7 +469,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 576
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -462,11 +486,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_9 walk_f f
+      name: Player-Basic_9
       rect:
         serializedVersion: 2
         x: 672
-        y: 672
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -483,11 +507,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_10 walk_b i
+      name: Player-Basic_10
       rect:
         serializedVersion: 2
         x: 0
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -508,7 +532,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -529,7 +553,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -550,7 +574,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -571,7 +595,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -592,7 +616,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -613,7 +637,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 576
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -630,11 +654,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_17 walk_b f
+      name: Player-Basic_17
       rect:
         serializedVersion: 2
         x: 672
-        y: 576
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -651,11 +675,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_18 run i
+      name: Player-Basic_18
       rect:
         serializedVersion: 2
         x: 0
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -676,7 +700,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -697,7 +721,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -718,7 +742,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -739,7 +763,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -760,7 +784,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -781,7 +805,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 576
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -798,11 +822,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_25 run f
+      name: Player-Basic_25
       rect:
         serializedVersion: 2
         x: 672
-        y: 480
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -819,11 +843,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_26 crouch i
+      name: Player-Basic_26
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -840,11 +864,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_27 crouch f
+      name: Player-Basic_27
       rect:
         serializedVersion: 2
-        x: 96
-        y: 384
+        x: 192
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -861,11 +885,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_28 jump i
+      name: Player-Basic_28
       rect:
         serializedVersion: 2
         x: 288
-        y: 384
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -882,11 +906,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_29 jump f
+      name: Player-Basic_29
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
+        x: 480
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -903,11 +927,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_30 fall
+      name: Player-Basic_30
       rect:
         serializedVersion: 2
         x: 576
-        y: 384
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -924,11 +948,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_31 dash i
+      name: Player-Basic_31
       rect:
         serializedVersion: 2
         x: 0
-        y: 288
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -949,7 +973,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 288
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -970,7 +994,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 288
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -991,7 +1015,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 288
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -1012,7 +1036,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 288
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -1029,11 +1053,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_36 dash f
+      name: Player-Basic_36
       rect:
         serializedVersion: 2
         x: 480
-        y: 288
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -1050,11 +1074,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_37 slide i
+      name: Player-Basic_37
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
+        y: 288
         width: 96
         height: 96
       alignment: 0
@@ -1071,11 +1095,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_38 slide f
+      name: Player-Basic_38
       rect:
         serializedVersion: 2
         x: 96
-        y: 192
+        y: 288
         width: 96
         height: 96
       alignment: 0
@@ -1092,11 +1116,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_39 slide_jump
+      name: Player-Basic_39
       rect:
         serializedVersion: 2
         x: 288
-        y: 192
+        y: 288
         width: 96
         height: 96
       alignment: 0
@@ -1113,11 +1137,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_40 g_hit_h
+      name: Player-Basic_40
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 192
         width: 96
         height: 96
       alignment: 0
@@ -1134,11 +1158,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_41 g_hit
+      name: Player-Basic_41
       rect:
         serializedVersion: 2
         x: 96
-        y: 96
+        y: 192
         width: 96
         height: 96
       alignment: 0
@@ -1155,11 +1179,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_42 a_hit_h
+      name: Player-Basic_42
       rect:
         serializedVersion: 2
         x: 288
-        y: 96
+        y: 192
         width: 96
         height: 96
       alignment: 0
@@ -1176,11 +1200,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_43 a_hit
+      name: Player-Basic_43
       rect:
         serializedVersion: 2
         x: 384
-        y: 96
+        y: 192
         width: 96
         height: 96
       alignment: 0
@@ -1197,11 +1221,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_44 c_hit_h
+      name: Player-Basic_44
       rect:
         serializedVersion: 2
         x: 576
-        y: 96
+        y: 192
         width: 96
         height: 96
       alignment: 0
@@ -1218,11 +1242,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_45 c_hit
+      name: Player-Basic_45
       rect:
         serializedVersion: 2
         x: 672
-        y: 96
+        y: 192
         width: 96
         height: 96
       alignment: 0
@@ -1239,11 +1263,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_46 death i
+      name: Player-Basic_46
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1264,7 +1288,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1285,7 +1309,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1306,7 +1330,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1327,7 +1351,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1348,7 +1372,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 480
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1369,7 +1393,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 576
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -1386,7 +1410,175 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player-Basic_53 death f
+      name: Player-Basic_53
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d761e5652162de940800000000000000
+      internalID: 5326955794449438333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5b2eadca5699c250800000000000000
+      internalID: 5965464498170899295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_55
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35afa8ddc04090dc0800000000000000
+      internalID: -3672399567840937389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_56
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fd946a1e526c2350800000000000000
+      internalID: 5993273360432537077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_57
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85f7f067ed5df0760800000000000000
+      internalID: 7426389461997420376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_58
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cb9c9d63aa540c30800000000000000
+      internalID: 4324681200147667904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_59
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7175659405f2039b0800000000000000
+      internalID: -5102526355936487657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_60
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b80153b0afed3ee70800000000000000
+      internalID: 9143396834003456139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Basic_61
       rect:
         serializedVersion: 2
         x: 672
@@ -1400,8 +1592,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d761e5652162de940800000000000000
-      internalID: 5326955794449438333
+      spriteID: c9041f088fdf93830800000000000000
+      internalID: 4051548583553482908
       vertices: []
       indices: 
       edges: []

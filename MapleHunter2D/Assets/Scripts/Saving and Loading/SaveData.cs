@@ -8,7 +8,7 @@
     public bool[] bossesDefeated;
     public double playTime;
     // Player Character Persistent Data:
-    public int currentHP, maxHP;
+    public int currentHP;
     public bool[] weapons;
     public WeaponType primaryWeapon, secondaryWeapon;
     public int locationSceneIndex;
@@ -31,7 +31,6 @@
         this.playTime = MasterManager.worldData.GetPlayTime();
         // Player Character Persistent Data
         this.currentHP = MasterManager.playerCharacterPersistentData.GetCurrentHP();
-        this.maxHP = MasterManager.playerCharacterPersistentData.GetMaxHP();
         this.weapons = MasterManager.playerCharacterPersistentData.GetWeapons();
         this.primaryWeapon = MasterManager.playerCharacterPersistentData.GetPrimaryWeapon();
         this.secondaryWeapon = MasterManager.playerCharacterPersistentData.GetSecondaryWeapon();

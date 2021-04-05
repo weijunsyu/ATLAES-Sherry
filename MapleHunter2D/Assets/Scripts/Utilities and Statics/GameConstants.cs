@@ -8,10 +8,12 @@ public enum WeaponType
 {
     NONE,
     UNARMED,
-    SABER,
-    GREATSWORD,
+    MAGIC,
     GUN,
+    KATANA,
     SWORD,
+    GREATSWORD,
+    SPEAR,
     NANOBlADES = -1,
 }
 /*
@@ -55,6 +57,7 @@ public static class GameConstants
     // Player Constants
     public const double COYOTE_JUMP_DELAY = 0.0625d; // Amount of time after player leaves valid state for jump where player may still jump
     public const double JUMP_BUFFER = 0.0625d; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
+    public const int PLAYER_MAX_HP = 100;
     public const int PLAYER_INVENTORY_SIZE = 10; // Size of the player inventory
     public const int PLAYER_BANK_SIZE = 100; // Size of the player bank
     public const int PLAYER_ITEM_INVENTORY_MAX_STACKS = 10;

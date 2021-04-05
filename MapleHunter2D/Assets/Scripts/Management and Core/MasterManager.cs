@@ -8,6 +8,7 @@ public class MasterManager : MonoBehaviour
 
     // Cached References
     [SerializeField] private AudioMixer mixer = null;
+    [SerializeField] private GameObject playerSpawnerObject = null;
 
     // State Parameters and Objects:
     [HideInInspector] public static UserData userData = new UserData();
@@ -24,12 +25,28 @@ public class MasterManager : MonoBehaviour
     {
         KeepPersistentStatus();
     }
+    private void Start()
+    {
+        playerSpawnerObject.GetComponent<PlayerSpawner>().SpawnCharacter();
+    }
+
+    private void OnEnable()
+    {
+        // Enable player controller
+        PlayerInputController.OnInputEvent += HandleInput;
+    }
 
     public void Update()
     {
         timeInSeconds += Time.deltaTime;
         fps = 1 / Time.deltaTime;
         //Debug.Log(fps);
+    }
+
+    private void OnDisable()
+    {
+        // Disable player controller
+        PlayerInputController.OnInputEvent -= HandleInput;
     }
 
     // Class Functions:
@@ -52,7 +69,6 @@ public class MasterManager : MonoBehaviour
             worldData.SetPlayTime(data.playTime);
             // Player Character Persistent Data
             playerCharacterPersistentData.SetCurrentHP(data.currentHP);
-            playerCharacterPersistentData.SetMaxHP(data.maxHP);
             playerCharacterPersistentData.SetWeapons(data.weapons);
             playerCharacterPersistentData.SetPrimaryWeapon(data.primaryWeapon);
             playerCharacterPersistentData.SetSecondaryWeapon(data.secondaryWeapon);
@@ -93,6 +109,15 @@ public class MasterManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
+        }
+    }
+    private void HandleInput(object sender, InputEventArgs inputEvent)
+    {
+        switch (inputEvent.input)
+        {
+            case PlayerInputController.RawInput.PAUSE:
+                Debug.Log("pause pressed, detected in Master Manager");
+                break;
         }
     }
 }

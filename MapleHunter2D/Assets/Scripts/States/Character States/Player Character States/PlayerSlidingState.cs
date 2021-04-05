@@ -9,6 +9,7 @@ public class PlayerSlidingState : IState
 
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
+    private bool animationIsPlaying = false;
 
     public PlayerSlidingState(PlayerStateController playerController, StateMachine stateMachine)
     {

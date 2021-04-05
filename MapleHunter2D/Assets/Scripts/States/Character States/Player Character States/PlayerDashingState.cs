@@ -98,13 +98,9 @@ public class PlayerDashingState : IState
         switch (inputEvent.input)
         {
             case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                if (AdvancedMovement.CanStand(movementController))
+                if (!movementController.IsAirborne() && AdvancedMovement.CanStand(movementController))
                 {
                     stateMachine.ChangeState(playerController.jumpingState);
-                }
-                else
-                {
-                    stateMachine.ChangeState(playerController.crouchingState);
                 }
                 break;
             case PlayerInputController.RawInput.CROUCH_PRESS: // Crouch

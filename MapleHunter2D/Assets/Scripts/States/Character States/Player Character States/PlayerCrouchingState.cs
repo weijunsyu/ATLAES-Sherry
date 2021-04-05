@@ -24,14 +24,7 @@ public class PlayerCrouchingState : IState
 
     public void Enter()
     {
-        if (stateMachine.prevState == playerController.dashingState)
-        {
-            animationController.SetSprite(animations.crouch[1]);
-        }
-        else
-        {
-            animationController.RunAnimation(animations.crouch, PlayerTimings.CROUCH_TIMES, ref animate);
-        }
+        animationController.SetSprite(animations.crouch[0]);
 
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Crouch(movementController);
