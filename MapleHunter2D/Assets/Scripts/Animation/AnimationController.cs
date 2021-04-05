@@ -41,20 +41,16 @@ public class AnimationController : MonoBehaviour
     {
         coroutine = StartCoroutine(CompoundAnimate(animations));
     }
-    public void RunAnimation(Sprite[] sprites, float[] timings, ref Coroutine coroutine, bool loop = false)
+    public void RunAnimation(Sprite[] sprites, float[] timings, ref Coroutine coroutine, bool loop = false, float scale = 1.0f)
     {
         if (loop)
         {
-            coroutine = StartCoroutine(AnimateLoop(sprites, timings));
+            coroutine = StartCoroutine(AnimateLoop(sprites, timings, scale));
         }
         else
         {
-            coroutine = StartCoroutine(AnimateOnce(sprites, timings));
+            coroutine = StartCoroutine(AnimateOnce(sprites, timings, scale));
         }
-    }
-    public void StopAnimation(ref Coroutine coroutine)
-    {
-        StopCoroutine(coroutine);
     }
     private IEnumerator CompoundAnimate(params Animation[] animations)
     {
@@ -84,25 +80,29 @@ public class AnimationController : MonoBehaviour
             }
         }
     }
-    private IEnumerator AnimateLoop(Sprite[] sprites, float[] timings)
+    private IEnumerator AnimateLoop(Sprite[] sprites, float[] timings, float scale)
     {
         while (true)
         {
             for (int i = 0; i < sprites.Length; i++)
             {
                 SetSprite(sprites[i]);
-                yield return new WaitForSeconds(timings[i]);
+                yield return new WaitForSeconds(timings[i] * scale);
             }
         }
     }
-    private IEnumerator AnimateOnce(Sprite[] sprites, float[] timings)
+    private IEnumerator AnimateOnce(Sprite[] sprites, float[] timings, float scale)
     {
         int i = 0;
         for (i = 0; i < sprites.Length - 1; i++)
         {
             SetSprite(sprites[i]);
-            yield return new WaitForSeconds(timings[i]);
+            yield return new WaitForSeconds(timings[i] * scale);
         }
         SetSprite(sprites[i]);
+    }
+    public void StopAnimation(ref Coroutine coroutine)
+    {
+        StopCoroutine(coroutine);
     }
 }

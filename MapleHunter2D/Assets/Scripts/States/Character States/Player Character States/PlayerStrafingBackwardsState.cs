@@ -9,7 +9,7 @@ public class PlayerStrafingBackwardsState : IState
 
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
-    private float moveSpeed = PlayerTimings.PLAYER_WALK_SPEED;
+    private float moveSpeed = 0;
 
     public PlayerStrafingBackwardsState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -24,7 +24,7 @@ public class PlayerStrafingBackwardsState : IState
 
     public void Enter()
     {
-        RunAnimation();
+        SetStateParams();
 
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
@@ -107,14 +107,16 @@ public class PlayerStrafingBackwardsState : IState
         }
     }
 
-    private void RunAnimation()
+    private void SetStateParams()
     {
         if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.NONE)
         {
-            animationController.RunAnimation(animations.walkBackwards, PlayerTimings.WALK_TIMES, ref animate, true);
+            moveSpeed = PlayerTimings.PLAYER_WALK_SPEED;
+            animationController.RunAnimation(animations.walkForwards, PlayerTimings.WALK_TIMES, ref animate, true);
         }
         if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.UNARMED)
         {
+            moveSpeed = PlayerTimings.U_STRAFE_SPEED;
             animationController.RunAnimation(animations.u_strafe, PlayerTimings.U_STRAFE_TIMES, ref animate, true);
         }
     }

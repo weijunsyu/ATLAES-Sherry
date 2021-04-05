@@ -7,6 +7,7 @@ public class PlayerInputController : MonoBehaviour
     public enum RawInput
     {
         PAUSE = 0,
+        SWITCH_WEAPON = 11,
         RIGHT_PRESS = 1,
         LEFT_PRESS = 2,
         CROUCH_PRESS = 3,
@@ -17,7 +18,6 @@ public class PlayerInputController : MonoBehaviour
         LIGHT_PRESS = 8,
         MEDIUM_PRESS = 9,
         HEAVY_PRESS = 10,
-        SWITCH_PRESS = 11, // Switch weapon
         RIGHT_RELEASE = -1,
         LEFT_RELEASE = -2,
         CROUCH_RELEASE = -3,
@@ -28,22 +28,6 @@ public class PlayerInputController : MonoBehaviour
         LIGHT_RELEASE = -8,
         MEDIUM_RELEASE = -9,
         HEAVY_RELEASE = -10,
-        SWITCH_RELEASE = -11,
-    }
-    public enum ComboInput
-    {
-        RIGHT = 1,
-        LEFT = 2,
-        CROUCH = 3,
-        UP = 4,
-        GUARD = 5,
-        JUMP = 6,
-        DASH = 7,
-        LIGHT = 8,
-        MEDIUM = 9,
-        HEAVY = 10,
-        FORWARD = 100,
-        BACKWARD = 200
     }
 
     //Config Parameters:
@@ -51,17 +35,16 @@ public class PlayerInputController : MonoBehaviour
     // Cached References:
     private PlayerControls playerControls;
 
-    // State Parameters and Objects:
-    [HideInInspector] public static int numInputs = 12; // MUST MATCH NUMBER OF INPUTS GIVEN IN ENUM
+    // Static Objects
+    [HideInInspector] public static int numInputs = 11; // MUST MATCH NUMBER OF INPUTS GIVEN IN ENUM
     [HideInInspector] public static bool[] pressedInputs = new bool[numInputs]; // where false is unpressed and index -> input
-    [HideInInspector] public Stack<(RawInput input, double time)> inputBuffer = new Stack<(RawInput input, double time)>();
+    [HideInInspector] public static Stack<(RawInput input, double time)> inputBuffer = new Stack<(RawInput input, double time)>();
 
+    // State Parameters and Objects:
     private double timeCounter = 0d;
-
-    private int[] socdRightLeft = new int[4] { 1, 2, 0, 0 }; // Simultaneous Opposing Cardinal Directions (To determine left or right precedence)
-                                                             // Where [0] = (int)Input of [2], [1] = (int)Input of [3],  [2] = Right, [3] = Left
-                                                             // Where the value: -1 = physically pressed but release in code, 0 = released, 1 = pressed
-    
+    private int[] socdRightLeft = new int[4] { 1, 2, 0, 0 }; /* Simultaneous Opposing Cardinal Directions (To determine left or right precedence)
+                                                                Where [0] = (int)Input of [2], [1] = (int)Input of [3],  [2] = Right, [3] = Left
+                                                                Where the value: -1 = physically pressed but release in code, 0 = released, 1 = pressed */
     private int[] socdDownUp = new int[4] { 3, 4, 0, 0 };    // Input order: Crouch , Up
 
     // Event System:
@@ -76,6 +59,10 @@ public class PlayerInputController : MonoBehaviour
         // Pause Game / Open Menu (event handler in master manager which then disables this script while in pause menu)
         playerControls.MouseAndKeyboard.PauseGame.performed += ctx => DoInput(RawInput.PAUSE);
         playerControls.GamepadController.PauseGame.performed += ctx => DoInput(RawInput.PAUSE);
+
+        // Switch weapon
+        playerControls.MouseAndKeyboard.SwitchWeapon.performed += ctx => DoInput(RawInput.SWITCH_WEAPON);
+        playerControls.GamepadController.SwitchWeapon.performed += ctx => DoInput(RawInput.SWITCH_WEAPON);
 
         // Move Right
         playerControls.MouseAndKeyboard.MoveRight.performed += ctx => EvaluateSOCD(socdRightLeft, RawInput.RIGHT_PRESS);
@@ -129,12 +116,6 @@ public class PlayerInputController : MonoBehaviour
         playerControls.MouseAndKeyboard.Heavy.canceled += ctx => DoInput(RawInput.HEAVY_RELEASE);
         playerControls.GamepadController.Heavy.performed += ctx => DoInput(RawInput.HEAVY_PRESS);
         playerControls.GamepadController.Heavy.canceled += ctx => DoInput(RawInput.HEAVY_RELEASE);
-
-        // Switch weapon
-        playerControls.MouseAndKeyboard.SwitchWeapon.performed += ctx => DoInput(RawInput.SWITCH_PRESS);
-        playerControls.MouseAndKeyboard.SwitchWeapon.canceled += ctx => DoInput(RawInput.SWITCH_RELEASE);
-        playerControls.GamepadController.SwitchWeapon.performed += ctx => DoInput(RawInput.SWITCH_PRESS);
-        playerControls.GamepadController.SwitchWeapon.canceled += ctx => DoInput(RawInput.SWITCH_RELEASE);
     }
 
     private void OnEnable()
@@ -180,12 +161,16 @@ public class PlayerInputController : MonoBehaviour
     {
         int value = (int)rawInput;  
 
-        if (value == 0) // input is PAUSE
+        if (rawInput == RawInput.PAUSE) // input is PAUSE
         {
             for (int i = 0; i < numInputs; i++)
             {
                 pressedInputs[i] = false; // reset the array to all unpressed
             }
+            return;
+        }
+        else if (rawInput == RawInput.SWITCH_WEAPON)
+        {
             return;
         }
         else if (value < 0) // input is a RELEASE

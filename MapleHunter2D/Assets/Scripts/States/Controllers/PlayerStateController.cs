@@ -1,11 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(PlayerWeapons))]
 public class PlayerStateController : AbstractStateController
 {
     //Config Parameters:
 
     // Cached References:
+    [HideInInspector] public PlayerWeapons weapons;
 
     // State Parameters and Objects:
 
@@ -38,15 +39,19 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerDeathAirState deathAirState;
 
     // Player Flags:
-    //[HideInInspector] public bool canAirJump = true; // enables double jumping
     [HideInInspector] public bool canAirDash = true; // enables air dashing
     [HideInInspector] public double jumpBufferTimer = 0d;
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
+
+    // Player Character Data
+    private int currentHP = GameConstants.PLAYER_MAX_HP; // Blood (Hit Points) (HP)
+    private WeaponType primaryWeapon, secondaryWeapon = WeaponType.NONE;
 
     // Unity Events:
     protected override void Awake()
     {
         base.Awake();
+        weapons = GetComponent<PlayerWeapons>();
     }
     protected override void Start()
     {
@@ -58,16 +63,12 @@ public class PlayerStateController : AbstractStateController
     }
     protected override void Update()
     {
-        //Debug.Log(animationController.GetSprite());
-        //Debug.Log(movementController.transform.position.y - movementController.boxCollider.bounds.center.y);
-        
         base.Update();
         jumpBufferTimer += Time.deltaTime; // increment timer
         if (jumpBufferTimer > GameConstants.JUMP_BUFFER)
         {
             jumpInputBuffer = false; // if buffer timer passed, disable jump
         }
-        //Debug.Log(stateMachine.state);
     }
     protected override void FixedUpdate()
     {
@@ -127,10 +128,7 @@ public class PlayerStateController : AbstractStateController
     // return true if sliding and false otherwise
     public bool HandleSlideCheck()
     {
-        bool hitTop = false;
-        bool hitBottom = false;
-        AdvancedMovement.checkFront(movementController, out hitTop, out hitBottom);
-        if (hitBottom) // if wall in front of player
+        if (AdvancedMovement.CheckFront(movementController)) // if wall in front of player
         {
             // If facing right and NOT pressing right button
             if (movementController.IsFacingRight() && !PlayerInputController.pressedInputs[1])
@@ -148,5 +146,43 @@ public class PlayerStateController : AbstractStateController
         {
             return false;
         }
+    }
+
+    public int GetCurrentHP()
+    {
+        return currentHP;
+    }
+    // Modify currentHP by value such that currentHP = max[0, min[(currentHP + value), maxHP]].
+    public void ModifyCurrentHP(int value)
+    {
+        currentHP = (int)StaticFunctions.ModifyResourceValue(currentHP, value, GameConstants.PLAYER_MAX_HP);
+    }
+    public void SetCurrentHP(int value)
+    {
+        if (value < 0)
+        {
+            value = 0;
+        }
+        else if (value > GameConstants.PLAYER_MAX_HP)
+        {
+            value = GameConstants.PLAYER_MAX_HP;
+        }
+        currentHP = value;
+    }
+    public WeaponType GetPrimaryWeapon()
+    {
+        return primaryWeapon;
+    }
+    public WeaponType GetSecondaryWeapon()
+    {
+        return secondaryWeapon;
+    }
+    public void SwitchWeapons()
+    {
+        WeaponType primary = GetPrimaryWeapon();
+        WeaponType secondary = GetSecondaryWeapon();
+
+        primaryWeapon = secondary;
+        secondaryWeapon = primary;
     }
 }
