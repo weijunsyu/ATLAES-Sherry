@@ -83,13 +83,22 @@ public class PlayerCrouchingState : IState
         switch (inputEvent.input)
         {
             case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                //stateMachine.ChangeState(playerController.lightState);
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
                 break;
             case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                //stateMachine.ChangeState(playerController.mediumState);
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
                 break;
             case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                //stateMachine.ChangeState(playerController.heavyState);
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
                 break;
             case PlayerInputController.RawInput.GUARD_PRESS: // Guard
                 stateMachine.ChangeState(playerController.crouchingGuardState);

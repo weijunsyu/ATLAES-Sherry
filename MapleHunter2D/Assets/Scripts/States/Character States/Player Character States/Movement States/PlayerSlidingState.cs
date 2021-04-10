@@ -25,6 +25,7 @@ public class PlayerSlidingState : IState
     public void Enter()
     {
         animationController.RunAnimation(animations.slide, PlayerTimings.SLIDE_TIMES, ref animate, true);
+        playerController.weapons.isSliding = true;
 
         BasicMovement.StopHorizontal(movementController);
         playerController.canAirDash = true;
@@ -63,6 +64,8 @@ public class PlayerSlidingState : IState
         {
             animationController.StopAnimation(ref animate);
         }
+
+        playerController.weapons.isSliding = false;
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

@@ -8,7 +8,6 @@ public class MasterManager : MonoBehaviour
 
     // Cached References
     [SerializeField] private AudioMixer mixer = null;
-    [SerializeField] private GameObject playerSpawnerObject = null;
 
     // State Parameters and Objects:
     [HideInInspector] public static UserData userData = new UserData();
@@ -27,7 +26,10 @@ public class MasterManager : MonoBehaviour
     }
     private void Start()
     {
-        playerSpawnerObject.GetComponent<PlayerSpawner>().SpawnCharacter();
+        /* DEBUGGING */
+        ResetGame();
+        playerCharacterPersistentData.SetPrimaryWeapon(WeaponType.NONE, true, true);
+        playerCharacterPersistentData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
     }
 
     private void OnEnable()

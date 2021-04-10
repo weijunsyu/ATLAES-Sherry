@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 480a0658032c0634cbb27806d1b6f1d3
+guid: 070551941949f054a9cc9f01a3c11c84
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -23,6 +23,15 @@ TextureImporter:
   - first:
       213: -3089973394550888190
     second: Player-Weapons_FFFFFF_6
+  - first:
+      213: 5578827967296618569
+    second: Player-Weapons_FFFFFF_7
+  - first:
+      213: 6588858709473207812
+    second: Player-Weapons_FFFFFF_8
+  - first:
+      213: -5558828711733460347
+    second: Player-Weapons_FFFFFF_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -136,7 +145,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 576
+        y: 864
         width: 96
         height: 96
       alignment: 0
@@ -157,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 480
+        y: 768
         width: 96
         height: 96
       alignment: 0
@@ -178,7 +187,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
+        y: 672
         width: 96
         height: 96
       alignment: 0
@@ -199,7 +208,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 288
+        y: 576
         width: 96
         height: 96
       alignment: 0
@@ -220,7 +229,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
+        y: 480
         width: 96
         height: 96
       alignment: 0
@@ -241,7 +250,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 384
         width: 96
         height: 96
       alignment: 0
@@ -262,7 +271,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 288
         width: 96
         height: 96
       alignment: 0
@@ -274,6 +283,69 @@ TextureImporter:
       bones: []
       spriteID: 209e26ca1953e15d0800000000000000
       internalID: -3089973394550888190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Weapons_FFFFFF_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 940cab57a7afb6d40800000000000000
+      internalID: 5578827967296618569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Weapons_FFFFFF_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 406a3654614507b50800000000000000
+      internalID: 6588858709473207812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player-Weapons_FFFFFF_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58282e51db21bd2b0800000000000000
+      internalID: -5558828711733460347
       vertices: []
       indices: 
       edges: []

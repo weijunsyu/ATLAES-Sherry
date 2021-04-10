@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerStandingState : IState
+public class PlayerMovingState : IState
 {
     private PlayerStateController playerController = null;
     private StateMachine stateMachine = null;
@@ -10,7 +10,10 @@ public class PlayerStandingState : IState
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
-    public PlayerStandingState(PlayerStateController playerController, StateMachine stateMachine)
+    AnimationController.Animation runStarup;
+    AnimationController.Animation runLoop;
+
+    public PlayerMovingState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
         this.stateMachine = stateMachine;
@@ -19,23 +22,23 @@ public class PlayerStandingState : IState
         animationController = playerController.animationController;
         animations = (PlayerAnimations)animationController.animationsList;
         animate = animationController.animate;
+
+        runStarup.sprites = new Sprite[] { animations.walkForwards[1], animations.walkForwards[2], animations.run[3],
+                                           animations.run[4], animations.run[5], animations.run[6], animations.run[7] };
+        runStarup.timings = new float[] { 0.1f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f} ;
+        runStarup.runNum = 1;
+
+        runLoop.sprites = animations.run;
+        runLoop.timings = PlayerTimings.RUN_TIMES;
+        runLoop.runNum = 0;
     }
 
     public void Enter()
     {
-        animationController.RunAnimation(animations.idle, PlayerTimings.IDLE_TIMES,  ref animate, true);
+        animationController.RunCompoundAnimation(ref animate, new AnimationController.Animation[] { runStarup, runLoop });
 
-        BasicMovement.StopHorizontal(movementController);
-        AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
-        
-        if (playerController.jumpInputBuffer)
-        {
-            playerController.jumpInputBuffer = false;
-            stateMachine.ChangeState(playerController.jumpingState);
-            return;
-        }
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
@@ -52,11 +55,7 @@ public class PlayerStandingState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
-        if (PlayerInputController.pressedInputs[1] || PlayerInputController.pressedInputs[2]) // right or left
-        {
-            stateMachine.ChangeState(playerController.movingState);
-            return;
-        }
+        HandleMoveInput(PlayerTimings.PLAYER_RUN_SPEED);
         //getting hit, and dying
     }
     public void Exit()
@@ -74,13 +73,22 @@ public class PlayerStandingState : IState
         switch (inputEvent.input)
         {
             case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                //stateMachine.ChangeState(playerController.lightState);
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
                 break;
             case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                //stateMachine.ChangeState(playerController.mediumState);
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
                 break;
             case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                //stateMachine.ChangeState(playerController.heavyState);
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
                 break;
             case PlayerInputController.RawInput.GUARD_PRESS: // Guard
                 stateMachine.ChangeState(playerController.standingGuardState);
@@ -94,6 +102,22 @@ public class PlayerStandingState : IState
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 stateMachine.ChangeState(playerController.dashingState);
                 break;
+        }
+    }
+    private void HandleMoveInput(float speed)
+    {
+        // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
+        if (PlayerInputController.pressedInputs[1] == true) // right
+        {
+            BasicMovement.MoveWithTurn(movementController, speed);
+        }
+        else if (PlayerInputController.pressedInputs[2] == true) // left
+        {
+            BasicMovement.MoveWithTurn(movementController, -speed);
+        }
+        else // right and left both unpressed
+        {
+            stateMachine.ChangeState(playerController.standingState);
         }
     }
 }

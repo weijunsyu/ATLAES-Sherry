@@ -97,6 +97,24 @@ public class PlayerDashingState : IState
     {
         switch (inputEvent.input)
         {
+            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
+                break;
+            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
+                break;
+            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
+                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                {
+                    stateMachine.ChangeState(playerController.inActionState);
+                }
+                break;
             case PlayerInputController.RawInput.JUMP_PRESS: // Jump
                 if (!movementController.IsAirborne() && AdvancedMovement.CanStand(movementController))
                 {
