@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class MovementController : MonoBehaviour
 {
     // Config Parameters:
@@ -11,6 +12,7 @@ public class MovementController : MonoBehaviour
     
     [HideInInspector] public Rigidbody2D body;
     [HideInInspector] public BoxCollider2D boxCollider;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
 
     // Public Variables:
     [HideInInspector] public Vector2 standColliderSize;
@@ -30,7 +32,6 @@ public class MovementController : MonoBehaviour
     private const float JUMP_COLL_OFFSET_Y = 0f;
     private const float JUMP_COLL_SIZE_Y = 0.9f;
 
-
     private bool isFacingRight = true;
     private bool isAirborne = false;
     
@@ -40,6 +41,7 @@ public class MovementController : MonoBehaviour
     {
         body = this.GetComponent<Rigidbody2D>();
         boxCollider = this.GetComponent<BoxCollider2D>();
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
         
         standColliderOffset = new Vector2(COLL_OFFSET_X, STAND_COLL_OFFSET_Y);
         standColliderSize = new Vector2(COLL_SIZE_X, STAND_COLL_SIZE_Y);
@@ -128,7 +130,7 @@ public class MovementController : MonoBehaviour
     }
     public void Turn()
     {
-        this.transform.Rotate(0f, 180f, 0);
+        spriteRenderer.flipX = !spriteRenderer.flipX;
         isFacingRight = !isFacingRight;
     }
 }

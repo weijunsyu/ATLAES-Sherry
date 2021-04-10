@@ -3,8 +3,8 @@
     // Basic Timings
     public static readonly float[] IDLE_TIMES = { 0.8f, 0.8f };
     
-    public const float             PLAYER_WALK_SPEED = 2.25f;
-    public static readonly float[] WALK_TIMES = { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+    public const float             PLAYER_WALK_SPEED = 1.7f;
+    public static readonly float[] WALK_TIMES = { 0.115f, 0.115f, 0.115f, 0.115f, 0.115f, 0.115f, 0.115f, 0.115f };
     
     public const float             PLAYER_RUN_SPEED = 6.0f;
     public static readonly float[] RUN_TIMES = { 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f };
@@ -33,7 +33,8 @@
     public const float             U_STRAFE_SPEED = 0.55f;
     public static readonly float[] U_STRAFE_TIMES = { 0.4f, 0.4f };
 
-    public const float             U_STAND_LIGHT_EXECUTE = 0.5f;
+    public static readonly float[] U_STAND_LIGHT_TIMES = { 0.04f, 0.06f }; // { startup (s), execute (e), recovery (r) }
+    public const double            U_STAND_LIGHT_DURATION = 0.1d; // Total duration of attack (s + e + r)
     public const float             U_STAND_LIGHT_HIT = 0f; // Amount of stun imparted to enemy if hit
     public const float             U_STAND_LIGHT_BLOCK = 0f; // Amount of stun imparted to enemy if blocked
 

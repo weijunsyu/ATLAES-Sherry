@@ -1,16 +1,15 @@
-﻿
-public class PlayerCharacterPersistentData
+﻿public class PlayerCharacterPersistentData
 {
     // Player Character Data
     private int currentHP = GameConstants.PLAYER_MAX_HP; // Blood (Hit Points) (HP)
-    private bool[] weapons = new bool[(System.Enum.GetNames(typeof(WeaponType)).Length) - 1];
+    private bool[] weapons = new bool[(System.Enum.GetNames(typeof(WeaponType)).Length)];
     private WeaponType primaryWeapon, secondaryWeapon = WeaponType.NONE;
     private int locationSceneIndex = GameConstants.TUTORIAL_LEVEL_INDEX;
 
     // Class Functions:
     public void ResetAllPlayerCharacterPersistentData()
     {
-        SetCurrentHP(100);
+        SetCurrentHP(GameConstants.PLAYER_MAX_HP);
         ResetWeapons();
         SetPrimaryWeapon(WeaponType.NONE);
         SetSecondaryWeapon(WeaponType.NONE);
@@ -20,17 +19,38 @@ public class PlayerCharacterPersistentData
     {
         return currentHP;
     }
+    // Modify currentHP by value such that currentHP = max[0, min[(currentHP + value), maxHP]].
+    public void ModifyCurrentHP(int value)
+    {
+        currentHP = (int)StaticFunctions.ModifyResourceValue(currentHP, value, GameConstants.PLAYER_MAX_HP);
+    }
     public void SetCurrentHP(int value)
     {
+        if (value < 0)
+        {
+            value = 0;
+        }
+        else if (value > GameConstants.PLAYER_MAX_HP)
+        {
+            value = GameConstants.PLAYER_MAX_HP;
+        }
         currentHP = value;
     }
     public bool[] GetWeapons()
     {
         return weapons;
     }
+    public void AddWeapons(params WeaponType[] weapons)
+    {
+        foreach (WeaponType weapon in weapons)
+        {
+            this.weapons[(int)weapon] = true;
+        }
+    }
     public void ResetWeapons()
     {
         System.Array.Clear(weapons, 0, weapons.Length);
+        weapons[0] = true;
     }
     public bool SetWeapons(bool[] array)
     {
@@ -40,6 +60,14 @@ public class PlayerCharacterPersistentData
             return true;
         }
         return false;
+    }
+    public void SwapWeapons()
+    {
+        WeaponType oldPrimary = GetPrimaryWeapon();
+        WeaponType oldSecondary = GetSecondaryWeapon();
+
+        SetPrimaryWeapon(oldSecondary);
+        SetSecondaryWeapon(oldPrimary);
     }
     public WeaponType GetPrimaryWeapon()
     {

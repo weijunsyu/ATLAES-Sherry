@@ -13,8 +13,10 @@ public enum WeaponType
     KATANA,
     SWORD,
     GREATSWORD,
+    DAGGER,
     SPEAR,
-    NANOBlADES = -1,
+    NAGINATA,
+    CUBE
 }
 /*
  * List of named NPC that have conversations/etc with player character and need to be saved
@@ -65,4 +67,8 @@ public static class GameConstants
     public const int TOTAL_NUMBER_UNIQUE_ITEMS = 0;
     public const int TOTAL_NUMBER_BOSSES = 0;
     public const int TOTAL_NUMBER_WARP_LOCATIONS = 0;
+
+    // Animation Constants
+    public const float PLAYER_WEAPON_FLOAT_RANGE = 0.1f; // Range of the floating animation for player weapons
+    public const float PLAYER_SECONDARY_FLOAT_OFFSET = 0.3f; // Time offset from primary weapon floating animation
 }

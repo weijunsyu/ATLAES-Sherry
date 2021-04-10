@@ -24,28 +24,23 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerStrafingForwardsState strafingForwardsState;
     [HideInInspector] public PlayerStrafingBackwardsState strafingBackwardsState;
     [HideInInspector] public PlayerCrouchingGuardState crouchingGuardState;
-    // Action
-    [HideInInspector] public PlayerLightState lightState;
-    [HideInInspector] public PlayerMediumState mediumState;
-    [HideInInspector] public PlayerHeavyState heavyState;
-    // Hit
+    [HideInInspector] public PlayerInActionState inActionState;
+    // Reaction
     [HideInInspector] public PlayerHitHighState hitHighState;
     [HideInInspector] public PlayerHitMedState hitMedState;
     [HideInInspector] public PlayerHitLowState hitLowState;
     [HideInInspector] public PlayerHitAirState hitAirState;
-    // Death
     [HideInInspector] public PlayerDeathStandingState deathStandingState;
     [HideInInspector] public PlayerDeathCrouchingState deathCrouchingState;
     [HideInInspector] public PlayerDeathAirState deathAirState;
+
+    // Action
+    [HideInInspector] public PlayerNoActionState noActionState;
 
     // Player Flags:
     [HideInInspector] public bool canAirDash = true; // enables air dashing
     [HideInInspector] public double jumpBufferTimer = 0d;
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
-
-    // Player Character Data
-    private int currentHP = GameConstants.PLAYER_MAX_HP; // Blood (Hit Points) (HP)
-    private WeaponType primaryWeapon, secondaryWeapon = WeaponType.NONE;
 
     // Unity Events:
     protected override void Awake()
@@ -58,8 +53,13 @@ public class PlayerStateController : AbstractStateController
         base.Start();
         jumpBufferTimer = 0d;
         jumpInputBuffer = false;
-
-        //MasterManager.playerCharacterPersistentData.SetPrimaryWeapon(WeaponType.UNARMED, true);
+        weapons.SetPrimaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetPrimaryWeapon());
+        weapons.SetSecondaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetSecondaryWeapon());
+    }
+    private void OnEnable()
+    {
+        // Enable player controller
+        PlayerInputController.OnInputEvent += HandleInput;
     }
     protected override void Update()
     {
@@ -74,11 +74,17 @@ public class PlayerStateController : AbstractStateController
     {
         base.FixedUpdate();
     }
+    private void OnDisable()
+    {
+        // Disable player controller
+        PlayerInputController.OnInputEvent -= HandleInput;
+    }
 
     // Class Functions:
     protected override void InitializeStates()
     {
         // Create States
+        // Movement States
         standingState = new PlayerStandingState(this, stateMachine);
         movingState = new PlayerMovingState(this, stateMachine);
         jumpingState = new PlayerJumpingState(this, stateMachine);
@@ -91,24 +97,23 @@ public class PlayerStateController : AbstractStateController
         strafingForwardsState = new PlayerStrafingForwardsState(this, stateMachine);
         strafingBackwardsState = new PlayerStrafingBackwardsState(this, stateMachine);
         crouchingGuardState = new PlayerCrouchingGuardState(this, stateMachine);
-
-        //lightState = new PlayerLightState(this, stateMachine);
-        //mediumState = new PlayerMediumState(this, stateMachine);
-        //heavyState = new PlayerHeavyState(this, stateMachine);
-
+        inActionState = new PlayerInActionState(this, stateMachine);
+        // Reaction States
         //hitHighState = new PlayerHitHighState(this, stateMachine);
         //hitMedState = new PlayerHitMedState(this, stateMachine);
         //hitLowState = new PlayerHitLowState(this, stateMachine);
         //hitAirState = new PlayerHitAirState(this, stateMachine);
-
         //deathStandingState = new PlayerDeathStandingState(this, stateMachine);
         //deathCrouchingState = new PlayerDeathCrouchingState(this, stateMachine);
         //deathAirState = new PlayerDeathAirState(this, stateMachine);
+        
+        // Action States
+        noActionState = new PlayerNoActionState(this, actionStateMachine);
 
-        // Initialize the starting state
+        // Initialize the starting states
         startState = standingState;
+        actionStartState = noActionState;
     }
-
     public void HandleMoveInput(float speed)
     {
         // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
@@ -147,42 +152,14 @@ public class PlayerStateController : AbstractStateController
             return false;
         }
     }
-
-    public int GetCurrentHP()
+    private void HandleInput(object sender, InputEventArgs inputEvent)
     {
-        return currentHP;
-    }
-    // Modify currentHP by value such that currentHP = max[0, min[(currentHP + value), maxHP]].
-    public void ModifyCurrentHP(int value)
-    {
-        currentHP = (int)StaticFunctions.ModifyResourceValue(currentHP, value, GameConstants.PLAYER_MAX_HP);
-    }
-    public void SetCurrentHP(int value)
-    {
-        if (value < 0)
+        switch (inputEvent.input)
         {
-            value = 0;
+            case PlayerInputController.RawInput.SWITCH_WEAPON:
+                MasterManager.playerCharacterPersistentData.SwapWeapons();
+                weapons.UpdateWeaponSprite();
+                break;
         }
-        else if (value > GameConstants.PLAYER_MAX_HP)
-        {
-            value = GameConstants.PLAYER_MAX_HP;
-        }
-        currentHP = value;
-    }
-    public WeaponType GetPrimaryWeapon()
-    {
-        return primaryWeapon;
-    }
-    public WeaponType GetSecondaryWeapon()
-    {
-        return secondaryWeapon;
-    }
-    public void SwitchWeapons()
-    {
-        WeaponType primary = GetPrimaryWeapon();
-        WeaponType secondary = GetSecondaryWeapon();
-
-        primaryWeapon = secondary;
-        secondaryWeapon = primary;
     }
 }

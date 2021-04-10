@@ -107,6 +107,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Burst"",
+                    ""type"": ""Button"",
+                    ""id"": ""89d19db0-35b5-4835-85ca-baabdf9f59fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Pause Game"",
                     ""type"": ""Button"",
                     ""id"": ""83af9e11-ec3c-4e27-8aab-c777ece51fc5"",
@@ -130,7 +138,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""21c7a3dd-d560-4dc3-a552-ccb62e66fc82"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -240,7 +248,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e00b9d08-b626-4514-bdd4-96cd069df1c2"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
@@ -284,7 +292,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ee8800a7-f428-4279-b082-92937fd6e96f"",
-                    ""path"": ""<Keyboard>/j"",
+                    ""path"": ""<Keyboard>/h"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
@@ -322,6 +330,39 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Switch Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3580775-d0e1-4555-969b-5c6b8f4c2d14"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Switch Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a25fcb6f-23b2-4def-baa1-d6551ae0381d"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard+Mouse"",
+                    ""action"": ""Burst"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e185f5f1-6608-4801-9ea1-03f5ce2b5d4f"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Burst"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -420,6 +461,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Burst"",
+                    ""type"": ""Button"",
+                    ""id"": ""257a4f89-b51c-4029-9a72-49a902f3ade3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Pause Game"",
                     ""type"": ""Button"",
                     ""id"": ""23eafbdd-e1cf-49a6-b2ef-0affa98f5200"",
@@ -432,7 +481,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fe6579b0-1a6c-494d-bc18-4a724b4ab10e"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""path"": ""<XInputController>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -443,7 +492,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9c6728c6-8d52-4e7a-b38e-32ae99d2918e"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""path"": ""<XInputController>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -454,7 +503,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8929602f-f171-4219-8819-520c33379a5a"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""path"": ""<XInputController>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -465,7 +514,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fd110122-0c4e-4b8b-afdb-b9799cb75e5d"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""path"": ""<XInputController>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -476,7 +525,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7b1c13f3-4cb6-494a-ae07-d2d14b24b0bb"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -487,7 +536,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ecb7c0d2-8a83-4fb0-9f08-f91f6c62af91"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""path"": ""<XInputController>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -498,7 +547,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""12ddeacc-e288-4fed-9a10-e7c8f705f5ae"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""path"": ""<XInputController>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -509,7 +558,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fd6d286e-122a-4320-a106-c4ba9a856222"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<XInputController>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -520,7 +569,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bd281ff8-77cb-4cc1-953c-317f753fa518"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""path"": ""<XInputController>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -531,7 +580,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""609272f5-03b0-4ac9-81c3-ac7872b4c984"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<XInputController>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -542,7 +591,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4ee65ee9-7e44-4231-9097-dcf6e3239edd"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<XInputController>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -553,7 +602,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cfd889d7-4f2b-4d60-8623-39c0165da38f"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<XInputController>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -564,7 +613,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a53c83eb-8d5d-46fd-8463-4dcc9ab9e71d"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<XInputController>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -575,7 +624,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0aaf38e0-4ed4-4a6a-bc96-770eca2ef733"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<XInputController>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -586,7 +635,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""73c06646-9881-4e0e-963c-83849c6fa9ba"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<XInputController>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -597,10 +646,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0470fc17-c823-46ac-bc97-f4df3207fe40"",
-                    ""path"": ""<Gamepad>/select"",
+                    ""path"": ""<XInputController>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Switch Weapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -608,7 +657,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a864a3c5-6339-4b16-ac4f-14bcda603cb9"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<XInputController>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -619,11 +668,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8797a1fb-55e9-45a0-bb4c-37b1f31e9ee3"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<XInputController>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Switch Weapon"",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Burst"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -711,6 +760,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_MouseAndKeyboard_Medium = m_MouseAndKeyboard.FindAction("Medium", throwIfNotFound: true);
         m_MouseAndKeyboard_Heavy = m_MouseAndKeyboard.FindAction("Heavy", throwIfNotFound: true);
         m_MouseAndKeyboard_SwitchWeapon = m_MouseAndKeyboard.FindAction("Switch Weapon", throwIfNotFound: true);
+        m_MouseAndKeyboard_Burst = m_MouseAndKeyboard.FindAction("Burst", throwIfNotFound: true);
         m_MouseAndKeyboard_PauseGame = m_MouseAndKeyboard.FindAction("Pause Game", throwIfNotFound: true);
         // Gamepad Controller
         m_GamepadController = asset.FindActionMap("Gamepad Controller", throwIfNotFound: true);
@@ -725,6 +775,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_GamepadController_Medium = m_GamepadController.FindAction("Medium", throwIfNotFound: true);
         m_GamepadController_Heavy = m_GamepadController.FindAction("Heavy", throwIfNotFound: true);
         m_GamepadController_SwitchWeapon = m_GamepadController.FindAction("Switch Weapon", throwIfNotFound: true);
+        m_GamepadController_Burst = m_GamepadController.FindAction("Burst", throwIfNotFound: true);
         m_GamepadController_PauseGame = m_GamepadController.FindAction("Pause Game", throwIfNotFound: true);
         // Pause Menu
         m_PauseMenu = asset.FindActionMap("Pause Menu", throwIfNotFound: true);
@@ -789,6 +840,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_MouseAndKeyboard_Medium;
     private readonly InputAction m_MouseAndKeyboard_Heavy;
     private readonly InputAction m_MouseAndKeyboard_SwitchWeapon;
+    private readonly InputAction m_MouseAndKeyboard_Burst;
     private readonly InputAction m_MouseAndKeyboard_PauseGame;
     public struct MouseAndKeyboardActions
     {
@@ -805,6 +857,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Medium => m_Wrapper.m_MouseAndKeyboard_Medium;
         public InputAction @Heavy => m_Wrapper.m_MouseAndKeyboard_Heavy;
         public InputAction @SwitchWeapon => m_Wrapper.m_MouseAndKeyboard_SwitchWeapon;
+        public InputAction @Burst => m_Wrapper.m_MouseAndKeyboard_Burst;
         public InputAction @PauseGame => m_Wrapper.m_MouseAndKeyboard_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_MouseAndKeyboard; }
         public void Enable() { Get().Enable(); }
@@ -848,6 +901,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnSwitchWeapon;
+                @Burst.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnBurst;
+                @Burst.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnBurst;
+                @Burst.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnBurst;
                 @PauseGame.started -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
                 @PauseGame.performed -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
                 @PauseGame.canceled -= m_Wrapper.m_MouseAndKeyboardActionsCallbackInterface.OnPauseGame;
@@ -888,6 +944,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Burst.started += instance.OnBurst;
+                @Burst.performed += instance.OnBurst;
+                @Burst.canceled += instance.OnBurst;
                 @PauseGame.started += instance.OnPauseGame;
                 @PauseGame.performed += instance.OnPauseGame;
                 @PauseGame.canceled += instance.OnPauseGame;
@@ -910,6 +969,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_GamepadController_Medium;
     private readonly InputAction m_GamepadController_Heavy;
     private readonly InputAction m_GamepadController_SwitchWeapon;
+    private readonly InputAction m_GamepadController_Burst;
     private readonly InputAction m_GamepadController_PauseGame;
     public struct GamepadControllerActions
     {
@@ -926,6 +986,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Medium => m_Wrapper.m_GamepadController_Medium;
         public InputAction @Heavy => m_Wrapper.m_GamepadController_Heavy;
         public InputAction @SwitchWeapon => m_Wrapper.m_GamepadController_SwitchWeapon;
+        public InputAction @Burst => m_Wrapper.m_GamepadController_Burst;
         public InputAction @PauseGame => m_Wrapper.m_GamepadController_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_GamepadController; }
         public void Enable() { Get().Enable(); }
@@ -969,6 +1030,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnSwitchWeapon;
+                @Burst.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnBurst;
+                @Burst.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnBurst;
+                @Burst.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnBurst;
                 @PauseGame.started -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
                 @PauseGame.performed -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
                 @PauseGame.canceled -= m_Wrapper.m_GamepadControllerActionsCallbackInterface.OnPauseGame;
@@ -1009,6 +1073,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Burst.started += instance.OnBurst;
+                @Burst.performed += instance.OnBurst;
+                @Burst.canceled += instance.OnBurst;
                 @PauseGame.started += instance.OnPauseGame;
                 @PauseGame.performed += instance.OnPauseGame;
                 @PauseGame.canceled += instance.OnPauseGame;
@@ -1080,6 +1147,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMedium(InputAction.CallbackContext context);
         void OnHeavy(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnBurst(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IGamepadControllerActions
@@ -1095,6 +1163,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMedium(InputAction.CallbackContext context);
         void OnHeavy(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnBurst(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IPauseMenuActions
