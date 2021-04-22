@@ -114,6 +114,10 @@ public class MovementController : MonoBehaviour
         Vector2 newVelocity = new Vector2(currentVelocity.x, (currentVelocity.y + yVelocity));
         body.velocity = newVelocity;
     }
+    public void ImpartForce(Vector2 force)
+    {
+        body.AddForce(force);
+    }
     public void FaceRight()
     {
         if (!isFacingRight)

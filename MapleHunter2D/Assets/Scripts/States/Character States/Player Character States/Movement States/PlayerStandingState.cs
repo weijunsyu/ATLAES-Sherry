@@ -23,8 +23,14 @@ public class PlayerStandingState : IState
 
     public void Enter()
     {
-        animationController.RunAnimation(animations.idle, PlayerTimings.IDLE_TIMES,  ref animate, true);
+        if (playerController.isInCombat)
+        {
+            stateMachine.ChangeState(playerController.combatIdleState);
+            return;
+        }
 
+        animationController.RunAnimation(animations.idle, PlayerTimings.IDLE_TIMES,  ref animate, true);
+        
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);

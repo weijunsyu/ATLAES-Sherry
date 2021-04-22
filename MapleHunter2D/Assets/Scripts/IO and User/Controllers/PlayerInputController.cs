@@ -8,6 +8,7 @@ public class PlayerInputController : MonoBehaviour
     {
         PAUSE = 0,
         SWITCH_WEAPON = 11,
+        BURST = 12,
         RIGHT_PRESS = 1,
         LEFT_PRESS = 2,
         CROUCH_PRESS = 3,
@@ -38,10 +39,8 @@ public class PlayerInputController : MonoBehaviour
     // Static Objects
     [HideInInspector] public static int numInputs = 11; // MUST MATCH NUMBER OF INPUTS GIVEN IN ENUM
     [HideInInspector] public static bool[] pressedInputs = new bool[numInputs]; // where false is unpressed and index -> input
-    [HideInInspector] public static Stack<(RawInput input, double time)> inputBuffer = new Stack<(RawInput input, double time)>();
 
     // State Parameters and Objects:
-    private double timeCounter = 0d;
     private int[] socdRightLeft = new int[4] { 1, 2, 0, 0 }; /* Simultaneous Opposing Cardinal Directions (To determine left or right precedence)
                                                                 Where [0] = (int)Input of [2], [1] = (int)Input of [3],  [2] = Right, [3] = Left
                                                                 Where the value: -1 = physically pressed but release in code, 0 = released, 1 = pressed */
@@ -59,10 +58,12 @@ public class PlayerInputController : MonoBehaviour
         // Pause Game / Open Menu (event handler in master manager which then disables this script while in pause menu)
         playerControls.MouseAndKeyboard.PauseGame.performed += ctx => DoInput(RawInput.PAUSE);
         playerControls.GamepadController.PauseGame.performed += ctx => DoInput(RawInput.PAUSE);
-
         // Switch weapon
         playerControls.MouseAndKeyboard.SwitchWeapon.performed += ctx => DoInput(RawInput.SWITCH_WEAPON);
         playerControls.GamepadController.SwitchWeapon.performed += ctx => DoInput(RawInput.SWITCH_WEAPON);
+        // Burst
+        playerControls.MouseAndKeyboard.Burst.performed += ctx => DoInput(RawInput.BURST);
+        playerControls.GamepadController.Burst.performed += ctx => DoInput(RawInput.BURST);
 
         // Move Right
         playerControls.MouseAndKeyboard.MoveRight.performed += ctx => EvaluateSOCD(socdRightLeft, RawInput.RIGHT_PRESS);
@@ -100,7 +101,7 @@ public class PlayerInputController : MonoBehaviour
         playerControls.MouseAndKeyboard.Dash.canceled += ctx => DoInput(RawInput.DASH_RELEASE);
         playerControls.GamepadController.Dash.performed += ctx => DoInput(RawInput.DASH_PRESS);
         playerControls.GamepadController.Dash.canceled += ctx => DoInput(RawInput.DASH_RELEASE);
-        
+
         // Light attack
         playerControls.MouseAndKeyboard.Light.performed += ctx => DoInput(RawInput.LIGHT_PRESS);
         playerControls.MouseAndKeyboard.Light.canceled += ctx => DoInput(RawInput.LIGHT_RELEASE);
@@ -124,11 +125,6 @@ public class PlayerInputController : MonoBehaviour
         playerControls.Enable();
     }
 
-    private void Update()
-    {
-        timeCounter += Time.deltaTime;
-    }
-
     private void OnDisable()
     {
         // Disable virtual controller:
@@ -136,14 +132,8 @@ public class PlayerInputController : MonoBehaviour
     }
 
     // Class Functions:
-    public void resetInputBuffer()
-    {
-        inputBuffer.Clear();
-    }
-
     private void DoInput(RawInput input)
     {
-        AddToBuffer(input);
         AddToInputArray(input);
 
         InputEventArgs inputEvent = new InputEventArgs();
@@ -161,7 +151,7 @@ public class PlayerInputController : MonoBehaviour
     {
         int value = (int)rawInput;  
 
-        if (rawInput == RawInput.PAUSE) // input is PAUSE
+        if (rawInput == RawInput.PAUSE) // Input is PAUSE
         {
             for (int i = 0; i < numInputs; i++)
             {
@@ -169,11 +159,11 @@ public class PlayerInputController : MonoBehaviour
             }
             return;
         }
-        else if (rawInput == RawInput.SWITCH_WEAPON)
+        else if (value > 10) // Input is switch weapon or burst
         {
             return;
         }
-        else if (value < 0) // input is a RELEASE
+        else if (value < 0) // Input is a RELEASE
         {
             pressedInputs[Math.Abs(value)] = false;
         }
@@ -242,26 +232,6 @@ public class PlayerInputController : MonoBehaviour
                 DoInput(input); // Unpress Left
             }
             //if (socd[2] == 1) { }
-        }
-    }
-
-    private void AddToBuffer(RawInput input)
-    {
-        double currentTime = timeCounter;
-
-        if (inputBuffer.Count > 0)
-        {
-            // If the time delta is larger than the max allowed time delta for input buffer
-            if ((currentTime - inputBuffer.Peek().time) > GameConstants.INPUT_BUFFER_LIFESPAN)
-            {
-                inputBuffer.Clear(); // Reset the stack
-                timeCounter = 0; // Reset the time counter
-            }
-        }
-        if ((int)input > 0) // Input is a PRESS (0 = PAUSE)
-        {
-            inputBuffer.Push((input, currentTime)); // Push newest input onto the buffer stack
-            //Debug.Log("Input Buffer: " + input);
         }
     }
 }

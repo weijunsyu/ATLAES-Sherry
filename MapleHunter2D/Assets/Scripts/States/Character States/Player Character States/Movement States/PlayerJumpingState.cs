@@ -24,7 +24,6 @@ public class PlayerJumpingState : IState
         animationController.SetSprite(animations.jump[0]);
         
         BasicMovement.Jump(movementController, PlayerTimings.PLAYER_JUMP_VELOCITY);
-        //BasicMovement.StopHorizontal(movementController);
         movementController.SetAirborne(true);
 
         // Enable player controller
