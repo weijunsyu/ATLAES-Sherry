@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerWeapons))]
+[RequireComponent(typeof(PlayerActionController))]
 public class PlayerStateController : AbstractStateController
 {
     //Config Parameters:
 
     // Cached References:
     [HideInInspector] public PlayerWeapons weapons;
+    [HideInInspector] public PlayerActionController actionController;
 
     // State Parameters and Objects:
 
     // Player States
     // Movement
     [HideInInspector] public PlayerStandingState standingState;
+    [HideInInspector] public PlayerCombatIdleState combatIdleState;
     [HideInInspector] public PlayerMovingState movingState;
     [HideInInspector] public PlayerJumpingState jumpingState;
     [HideInInspector] public PlayerFallingState fallingState;
@@ -26,14 +29,17 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerCrouchingGuardState crouchingGuardState;
     [HideInInspector] public PlayerInActionState inActionState;
     // Reaction
+    [HideInInspector] public PlayerBurstState burstState;
     [HideInInspector] public PlayerHitHighState hitHighState;
     [HideInInspector] public PlayerHitMedState hitMedState;
     [HideInInspector] public PlayerHitLowState hitLowState;
     [HideInInspector] public PlayerHitAirState hitAirState;
-    [HideInInspector] public PlayerDeathStandingState deathStandingState;
-    [HideInInspector] public PlayerDeathCrouchingState deathCrouchingState;
-    [HideInInspector] public PlayerDeathAirState deathAirState;
+    [HideInInspector] public PlayerRecoveryState recoveryState;
+    [HideInInspector] public PlayerKnockbackState knockbackState;
+    [HideInInspector] public PlayerKnockdownState knockdownState;
+    [HideInInspector] public PlayerDeathState deathState;
 
+    // Player Action States
     // Action
     [HideInInspector] public PlayerNoActionState noActionState;
 
@@ -41,20 +47,26 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public bool canAirDash = true; // enables air dashing
     [HideInInspector] public double jumpBufferTimer = 0d;
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
+    [HideInInspector] public bool isInCombat = false;
+    [HideInInspector] public double combatTimer = 0d;
 
     // Unity Events:
     protected override void Awake()
     {
         base.Awake();
         weapons = GetComponent<PlayerWeapons>();
+        actionController = GetComponent<PlayerActionController>();
     }
     protected override void Start()
     {
         base.Start();
         jumpBufferTimer = 0d;
         jumpInputBuffer = false;
+        combatTimer = 0d;
+        isInCombat = false;
         weapons.SetPrimaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetPrimaryWeapon());
         weapons.SetSecondaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetSecondaryWeapon());
+        actionController.resetInputBuffer();
     }
     private void OnEnable()
     {
@@ -68,6 +80,12 @@ public class PlayerStateController : AbstractStateController
         if (jumpBufferTimer > GameConstants.JUMP_BUFFER)
         {
             jumpInputBuffer = false; // if buffer timer passed, disable jump
+        }
+
+        combatTimer += Time.deltaTime;
+        if (combatTimer > GameConstants.COMBAT_COOLDOWN)
+        {
+            isInCombat = false;
         }
     }
     protected override void FixedUpdate()
@@ -86,6 +104,7 @@ public class PlayerStateController : AbstractStateController
         // Create States
         // Movement States
         standingState = new PlayerStandingState(this, stateMachine);
+        combatIdleState = new PlayerCombatIdleState(this, stateMachine);
         movingState = new PlayerMovingState(this, stateMachine);
         jumpingState = new PlayerJumpingState(this, stateMachine);
         fallingState = new PlayerFallingState(this, stateMachine);
@@ -103,7 +122,7 @@ public class PlayerStateController : AbstractStateController
         //hitMedState = new PlayerHitMedState(this, stateMachine);
         //hitLowState = new PlayerHitLowState(this, stateMachine);
         //hitAirState = new PlayerHitAirState(this, stateMachine);
-        //deathStandingState = new PlayerDeathStandingState(this, stateMachine);
+        //deathState = new PlayerDeathState(this, stateMachine);
         //deathCrouchingState = new PlayerDeathCrouchingState(this, stateMachine);
         //deathAirState = new PlayerDeathAirState(this, stateMachine);
         

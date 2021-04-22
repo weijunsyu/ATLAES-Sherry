@@ -4,8 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerWeapons : MonoBehaviour
 {
-    public Sprite[] weapons;
+    [Header("Player-Weapons")]
+    public Sprite unarmedSprite;
+    public Sprite magicSprite;
+    public Sprite gunSprite;
+    public Sprite katanaSprite;
+    public Sprite swordSprite;
+    public Sprite greatswordSprite;
+    public Sprite daggerSprite;
+    public Sprite spearSprite;
+    public Sprite naginataSprite;
+    public Sprite cubeSprite;
 
+    [Header("Weapon Game Objects")]
     public GameObject primaryWeapon = null;
     public GameObject secondaryWeapon = null;
 
@@ -50,11 +61,11 @@ public class PlayerWeapons : MonoBehaviour
     }
     public void SetPrimaryWeaponSprite(WeaponType weapon)
     {
-        primarySprite.sprite = weapons[(int)weapon];
+        primarySprite.sprite = DetermineWeaponSprite(weapon);
     }
     public void SetSecondaryWeaponSprite(WeaponType weapon)
     {
-        secondarySprite.sprite = weapons[(int)weapon];
+        secondarySprite.sprite = DetermineWeaponSprite(weapon);
     }
     private Vector2 GetOrigin(Vector2 offset)
     {
@@ -90,5 +101,34 @@ public class PlayerWeapons : MonoBehaviour
         weapon.transform.position = new Vector3(origin.x,
                                                 origin.y + ((float)Math.Sin(0.75f * Time.time + offset) * floatRange),
                                                 weapon.transform.position.z);
+    }
+
+    private Sprite DetermineWeaponSprite(WeaponType weapon)
+    {
+        switch (weapon)
+        {
+            case WeaponType.UNARMED:
+                return unarmedSprite;
+            case WeaponType.MAGIC:
+                return magicSprite;
+            case WeaponType.GUN:
+                return gunSprite;
+            case WeaponType.KATANA:
+                return katanaSprite;
+            case WeaponType.SWORD:
+                return swordSprite;
+            case WeaponType.GREATSWORD:
+                return greatswordSprite;
+            case WeaponType.DAGGER:
+                return daggerSprite;
+            case WeaponType.SPEAR:
+                return spearSprite;
+            case WeaponType.NAGINATA:
+                return naginataSprite;
+            case WeaponType.CUBE:
+                return cubeSprite;
+            default:
+                return null;
+        }
     }
 }

@@ -16,7 +16,7 @@ public enum WeaponType
     DAGGER,
     SPEAR,
     NAGINATA,
-    CUBE
+    CUBE //Takes up both the primary and secondary slots
 }
 /*
  * List of named NPC that have conversations/etc with player character and need to be saved
@@ -59,6 +59,8 @@ public static class GameConstants
     // Player Constants
     public const double COYOTE_JUMP_DELAY = 0.0625d; // Amount of time after player leaves valid state for jump where player may still jump
     public const double JUMP_BUFFER = 0.0625d; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
+    public const double COMBAT_COOLDOWN = 5d; // Time in seconds after doing an attack before character "ends" combat.
+    public const int NUMBER_NORMALS = 9; // Number of normal attacks (3 standing buttons, 3 airborne, 3 crouching)
     public const int PLAYER_MAX_HP = 100;
     public const int PLAYER_INVENTORY_SIZE = 10; // Size of the player inventory
     public const int PLAYER_BANK_SIZE = 100; // Size of the player bank
