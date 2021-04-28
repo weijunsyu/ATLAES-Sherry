@@ -5,7 +5,6 @@ public class MasterManager : MonoBehaviour
 {
     // Config Parameters
 
-
     // Cached References
     [SerializeField] private AudioMixer mixer = null;
 
@@ -42,7 +41,14 @@ public class MasterManager : MonoBehaviour
     {
         timeInSeconds += Time.deltaTime;
         fps = 1 / Time.deltaTime;
-        //Debug.Log(fps);
+
+        /* DEBUGGING */
+        /*
+        if (fps < 120)
+        {
+            Debug.Log(fps);
+        }
+        */
     }
 
     private void OnDisable()

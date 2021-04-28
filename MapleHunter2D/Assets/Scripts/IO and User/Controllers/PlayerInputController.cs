@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerActionController))]
 public class PlayerInputController : MonoBehaviour
 {
     public enum RawInput
@@ -35,6 +35,7 @@ public class PlayerInputController : MonoBehaviour
 
     // Cached References:
     private PlayerControls playerControls;
+    private PlayerActionController actionController;
 
     // Static Objects
     [HideInInspector] public static int numInputs = 11; // MUST MATCH NUMBER OF INPUTS GIVEN IN ENUM
@@ -53,6 +54,8 @@ public class PlayerInputController : MonoBehaviour
     // Unity Events:
     private void Awake()
     {
+        actionController = GetComponent<PlayerActionController>();
+
         playerControls = new PlayerControls();
 
         // Pause Game / Open Menu (event handler in master manager which then disables this script while in pause menu)
@@ -134,6 +137,7 @@ public class PlayerInputController : MonoBehaviour
     // Class Functions:
     private void DoInput(RawInput input)
     {
+        AddToInputBuffer(input);
         AddToInputArray(input);
 
         InputEventArgs inputEvent = new InputEventArgs();
@@ -146,7 +150,14 @@ public class PlayerInputController : MonoBehaviour
             //Debug.Log("Input recived EVENT: " + input.ToString());
         }
     }
-
+    private void AddToInputBuffer(RawInput rawInput)
+    {
+        int value = (int)rawInput;
+        if (value != 0 && value < 11)
+        {
+            actionController.AddToBuffer(rawInput);
+        }
+    }
     private void AddToInputArray(RawInput rawInput)
     {
         int value = (int)rawInput;  

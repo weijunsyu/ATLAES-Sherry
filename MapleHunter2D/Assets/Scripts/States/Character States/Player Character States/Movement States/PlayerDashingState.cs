@@ -25,6 +25,15 @@ public class PlayerDashingState : IState
 
     public void Enter()
     {
+        if (PlayerInputController.pressedInputs[1] == true) // Turn right
+        {
+            movementController.FaceRight();
+        }
+        if (PlayerInputController.pressedInputs[2] == true) // Turn left
+        {
+            movementController.FaceLeft();
+        }
+
         animationController.RunAnimation(animations.dash, PlayerTimings.DASH_TIMES, ref animate, false);
 
         timeInSeconds = 0;
