@@ -1,4 +1,4 @@
-# MapleHunter2D
+# ATLAES: Sherry
 2D platforming/dungeon crawler hybrid fighting game; Mono-chromatic, 2-bit black and white aesthetic with red "Blood" accents. [COLOUR: Hex (R, G, B, Alpha)]
       BLACK: 141414 (20,20,20,1), WHITE: FCFCFC (252,252,252,1), RED: D00000 (208,0,0,1)
   UI Colours:
