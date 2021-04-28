@@ -45,14 +45,19 @@ public static class GameConstants
     public const int TUTORIAL_LEVEL_INDEX = 6; // First level of game
 
     // Game Mechanics
-    public const double INPUT_BUFFER_LIFESPAN = 2d; // Number of seconds allowed before input buffer resets
+    public const double INPUT_BUFFER_LIFESPAN = 0.15d; // Number of seconds allowed before input buffer resets
+    public const int INPUT_BUFFER_MAX_LENGTH = 20; // Number of inputs to check at maximum in buffer
     public const float COLLISION_CHECK_SHRINK_OFFSET = -0.05f; // Offset to shrink collision checks to prevent false positives
     public const float COLLISION_CHECK_DISTANCE_OFFSET = 0.02f; // Distance offset for extending overlap projection to act as buffer
     public const float SLIDING_CHECK_DISTANCE_CAST = 0.02f;
     public const float FLOATING_BODY_GRAVITY_MODIFIER = 6f; // Factor to modify gravity by while floating
     public const float FLOATING_MAX_DROP_SPEED = -8f; // The max velocity a rigidbody can move at in the y plane while floating
     public const float WALL_SLIDE_MAX_DROP_SPEED = -4f;
-    
+    public const double PURE_CHARGE_UP_TIME = 2d; // Number of seconds for an action to start holding a charge
+    public const double PURE_CHARGE_DOWN_TIME = 2d; // Number of seconds before a charge is lost
+    public const double INPUT_CHARGE_UP_TIME = 1d; // Number of seconds for an input to start holding a charge
+    public const double INPUT_CHARGE_DOWN_TIME = 0.25d; // Number of seconds before an input charge is lost
+
     // Input Settings
     public const float JOYSTICK_BOOL_DEADZONE = 0.7f; // Calibrate sensitivity of joysticks between 0-1 where 0 is most sensitive for boolean use
 

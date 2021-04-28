@@ -10,6 +10,8 @@ public class PlayerStandingGuardState : IState
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
+    private double timeInSeconds = 0d;
+
     public PlayerStandingGuardState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -29,13 +31,19 @@ public class PlayerStandingGuardState : IState
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
+        timeInSeconds = 0;
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
-
+        timeInSeconds += Time.deltaTime;
+        if (timeInSeconds >= GameConstants.PURE_CHARGE_UP_TIME)
+        {
+            playerController.isChargedStanding = true;
+            playerController.standingChargeTimer = 0d;
+        }
     }
     public void ExecutePhysics()
     {

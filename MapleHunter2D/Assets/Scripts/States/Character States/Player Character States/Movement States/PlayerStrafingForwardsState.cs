@@ -11,6 +11,8 @@ public class PlayerStrafingForwardsState : IState
     private Coroutine animate = null;
     private float moveSpeed = 0;
 
+    private double timeInSeconds = 0d;
+
     public PlayerStrafingForwardsState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -29,13 +31,19 @@ public class PlayerStrafingForwardsState : IState
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
+        timeInSeconds = 0;
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
-
+        timeInSeconds += Time.deltaTime;
+        if (timeInSeconds >= GameConstants.PURE_CHARGE_UP_TIME)
+        {
+            playerController.isChargedStrafingFront = true;
+            playerController.strafingFrontChargeTimer = 0d;
+        }
     }
     public void ExecutePhysics()
     {

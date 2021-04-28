@@ -12,7 +12,7 @@ public class MovementController : MonoBehaviour
     
     [HideInInspector] public Rigidbody2D body;
     [HideInInspector] public BoxCollider2D boxCollider;
-    [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] private SpriteRenderer spriteRenderer;
 
     // Public Variables:
     [HideInInspector] public Vector2 standColliderSize;
@@ -117,6 +117,10 @@ public class MovementController : MonoBehaviour
     public void ImpartForce(Vector2 force)
     {
         body.AddForce(force);
+    }
+    public void ImpartImpulse(Vector2 force)
+    {
+        body.AddForce(force, ForceMode2D.Impulse);
     }
     public void FaceRight()
     {

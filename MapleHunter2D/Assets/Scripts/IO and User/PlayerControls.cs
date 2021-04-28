@@ -306,7 +306,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""path"": ""<Mouse>/forwardButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard+Mouse"",
                     ""action"": ""Heavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

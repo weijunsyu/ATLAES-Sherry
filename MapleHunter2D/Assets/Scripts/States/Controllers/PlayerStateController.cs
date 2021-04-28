@@ -27,6 +27,7 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerStrafingForwardsState strafingForwardsState;
     [HideInInspector] public PlayerStrafingBackwardsState strafingBackwardsState;
     [HideInInspector] public PlayerCrouchingGuardState crouchingGuardState;
+    // Action
     [HideInInspector] public PlayerInActionState inActionState;
     // Reaction
     [HideInInspector] public PlayerBurstState burstState;
@@ -39,23 +40,36 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerKnockdownState knockdownState;
     [HideInInspector] public PlayerDeathState deathState;
 
-    // Player Action States
-    // Action
-    [HideInInspector] public PlayerNoActionState noActionState;
-
     // Player Flags:
     [HideInInspector] public bool canAirDash = true; // enables air dashing
     [HideInInspector] public double jumpBufferTimer = 0d;
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
     [HideInInspector] public bool isInCombat = false;
     [HideInInspector] public double combatTimer = 0d;
+    
+    [HideInInspector] public bool isChargedCrouching = false; // used to determine if the player has held a crouching charge
+    [HideInInspector] public double crouchingChargeTimer = 0d;
+    
+    [HideInInspector] public bool isChargedStanding = false;
+    [HideInInspector] public double standingChargeTimer = 0d;
+
+    [HideInInspector] public bool isChargedStrafingBack = false;
+    [HideInInspector] public double strafingBackChargeTimer = 0d;
+
+    [HideInInspector] public bool isChargedStrafingFront = false;
+    [HideInInspector] public double strafingFrontChargeTimer = 0d;
+
 
     // Unity Events:
     protected override void Awake()
     {
+        // Anything needed to be passed into the States need to be done BEFORE base.Awake()
+        actionController = GetComponent<PlayerActionController>(); 
+        
         base.Awake();
+        
+        // Anything that is NOT used by States can be done after
         weapons = GetComponent<PlayerWeapons>();
-        actionController = GetComponent<PlayerActionController>();
     }
     protected override void Start()
     {
@@ -64,12 +78,21 @@ public class PlayerStateController : AbstractStateController
         jumpInputBuffer = false;
         combatTimer = 0d;
         isInCombat = false;
+        isChargedCrouching = false;
+        crouchingChargeTimer = 0d;
+        isChargedStanding = false;
+        standingChargeTimer = 0d;
+        isChargedStrafingBack = false;
+        strafingBackChargeTimer = 0d;
+        isChargedStrafingFront = false;
+        strafingFrontChargeTimer = 0d;
         weapons.SetPrimaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetPrimaryWeapon());
         weapons.SetSecondaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetSecondaryWeapon());
-        actionController.resetInputBuffer();
+        actionController.ResetInputBuffer();
     }
     private void OnEnable()
     {
+        actionController.ResetInputBuffer();
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
     }
@@ -87,6 +110,30 @@ public class PlayerStateController : AbstractStateController
         {
             isInCombat = false;
         }
+
+        crouchingChargeTimer += Time.deltaTime;
+        if (crouchingChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
+        {
+            isChargedCrouching = false;
+        }
+
+        standingChargeTimer += Time.deltaTime;
+        if (standingChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
+        {
+            isChargedStanding = false;
+        }
+
+        strafingBackChargeTimer += Time.deltaTime;
+        if (strafingBackChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
+        {
+            isChargedStrafingBack = false;
+        }
+
+        strafingFrontChargeTimer += Time.deltaTime;
+        if (strafingFrontChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
+        {
+            isChargedStrafingFront = false;
+        }
     }
     protected override void FixedUpdate()
     {
@@ -94,6 +141,7 @@ public class PlayerStateController : AbstractStateController
     }
     private void OnDisable()
     {
+        actionController.ResetInputBuffer();
         // Disable player controller
         PlayerInputController.OnInputEvent -= HandleInput;
     }
@@ -116,6 +164,7 @@ public class PlayerStateController : AbstractStateController
         strafingForwardsState = new PlayerStrafingForwardsState(this, stateMachine);
         strafingBackwardsState = new PlayerStrafingBackwardsState(this, stateMachine);
         crouchingGuardState = new PlayerCrouchingGuardState(this, stateMachine);
+        // Action States
         inActionState = new PlayerInActionState(this, stateMachine);
         // Reaction States
         //hitHighState = new PlayerHitHighState(this, stateMachine);
@@ -125,13 +174,9 @@ public class PlayerStateController : AbstractStateController
         //deathState = new PlayerDeathState(this, stateMachine);
         //deathCrouchingState = new PlayerDeathCrouchingState(this, stateMachine);
         //deathAirState = new PlayerDeathAirState(this, stateMachine);
-        
-        // Action States
-        noActionState = new PlayerNoActionState(this, actionStateMachine);
 
         // Initialize the starting states
         startState = standingState;
-        actionStartState = noActionState;
     }
     public void HandleMoveInput(float speed)
     {

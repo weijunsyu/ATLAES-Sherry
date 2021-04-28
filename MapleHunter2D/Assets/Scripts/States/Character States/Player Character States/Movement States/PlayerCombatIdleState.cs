@@ -115,6 +115,7 @@ public class PlayerCombatIdleState : IState
         {
             case WeaponType.NONE:
                 animationController.RunAnimation(animations.idle, PlayerTimings.IDLE_TIMES, ref animate, true);
+                Debug.LogError("Combat Idle in NONE weapon type");
                 break;
             case WeaponType.UNARMED:
                 animationController.RunAnimation(animations.uCombatIdle, PlayerTimings.U_COMBAT_IDLE_TIMES, ref animate, true);

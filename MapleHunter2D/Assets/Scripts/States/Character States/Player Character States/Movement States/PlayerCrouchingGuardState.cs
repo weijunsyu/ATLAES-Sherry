@@ -10,6 +10,8 @@ public class PlayerCrouchingGuardState : IState
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
+    private double timeInSeconds = 0d;
+
     public PlayerCrouchingGuardState(PlayerStateController playerController, StateMachine stateMachine)
     {
         this.playerController = playerController;
@@ -28,13 +30,19 @@ public class PlayerCrouchingGuardState : IState
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Crouch(movementController);
         playerController.canAirDash = true;
+        timeInSeconds = 0d;
 
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
-
+        timeInSeconds += Time.deltaTime;
+        if (stateMachine.prevState == playerController.crouchingState || timeInSeconds >= GameConstants.PURE_CHARGE_UP_TIME)
+        {
+            playerController.isChargedCrouching = true;
+            playerController.crouchingChargeTimer = 0d;
+        }
     }
     public void ExecutePhysics()
     {

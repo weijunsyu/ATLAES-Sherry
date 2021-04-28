@@ -93,10 +93,10 @@ GameObject:
   - component: {fileID: 6177288246659169077}
   - component: {fileID: 2192544108485027883}
   - component: {fileID: 6177288246659169073}
-  - component: {fileID: 9031277393260904489}
-  - component: {fileID: 8992741650430716943}
-  - component: {fileID: 4033643719795745564}
-  - component: {fileID: 5618886303130074612}
+  - component: {fileID: 2680909013734163283}
+  - component: {fileID: 7899808284054089925}
+  - component: {fileID: 8701067475818370284}
+  - component: {fileID: 8783567916763729192}
   - component: {fileID: 5465563479394131771}
   - component: {fileID: 7240183402300765222}
   - component: {fileID: 3734645940500132576}
@@ -221,7 +221,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &9031277393260904489
+--- !u!114 &2680909013734163283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,31 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e099cd6959454f4386d8726e3fd0287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8992741650430716943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6177288246659169076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556aa94953c041248941668494f89b30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  body: {fileID: 0}
-  boxCollider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  standColliderSize: {x: 0, y: 0}
-  standColliderOffset: {x: 0, y: 0}
-  crouchColliderSize: {x: 0, y: 0}
-  crouchColliderOffset: {x: 0, y: 0}
-  jumpApexColliderSize: {x: 0, y: 0}
-  jumpApexColliderOffset: {x: 0, y: 0}
---- !u!114 &4033643719795745564
+--- !u!114 &7899808284054089925
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be06184849626124dbf90a45f6afb00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5618886303130074612
+--- !u!114 &8701067475818370284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -297,6 +273,29 @@ MonoBehaviour:
   jumpInputBuffer: 0
   isInCombat: 0
   combatTimer: 0
+--- !u!114 &8783567916763729192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6177288246659169076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556aa94953c041248941668494f89b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  body: {fileID: 0}
+  boxCollider: {fileID: 0}
+  standColliderSize: {x: 0, y: 0}
+  standColliderOffset: {x: 0, y: 0}
+  crouchColliderSize: {x: 0, y: 0}
+  crouchColliderOffset: {x: 0, y: 0}
+  jumpApexColliderSize: {x: 0, y: 0}
+  jumpApexColliderOffset: {x: 0, y: 0}
 --- !u!114 &5465563479394131771
 MonoBehaviour:
   m_ObjectHideFlags: 0
