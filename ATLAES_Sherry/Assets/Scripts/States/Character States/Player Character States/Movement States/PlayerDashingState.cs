@@ -25,6 +25,7 @@ public class PlayerDashingState : IState
 
     public void Enter()
     {
+        playerController.canAirDash = false;
         if (PlayerInputController.pressedInputs[1] == true) // Turn right
         {
             movementController.FaceRight();
