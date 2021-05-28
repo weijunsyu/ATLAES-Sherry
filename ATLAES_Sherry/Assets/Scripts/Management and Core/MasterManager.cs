@@ -18,17 +18,21 @@ public class MasterManager : MonoBehaviour
     public static double timeInSeconds = 0d;
     public static double fps = 0d;
 
+
     // Unity Events:
     private void Awake()
     {
         KeepPersistentStatus();
+        // Clamp the min window size on Windows platform.
+        MinimumWindowSize.Set(GameConstants.MIN_WINDOW_WIDTH, GameConstants.MIN_WINDOW_HEIGHT);
     }
     private void Start()
     {
-        /* DEBUGGING */
+        /* START DEBUGGING */
         ResetGame();
         playerCharacterPersistentData.SetPrimaryWeapon(WeaponType.NONE, true, true);
         playerCharacterPersistentData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
+        /* END DEBUGGING */
     }
 
     private void OnEnable()
@@ -57,10 +61,16 @@ public class MasterManager : MonoBehaviour
         PlayerInputController.OnInputEvent -= HandleInput;
     }
 
-    // Class Functions:
+    private void OnApplicationQuit()
+    {
+        MinimumWindowSize.Reset();
+    }
 
-    // Saving and Loading Wrapper Fuctionality
-    public void SaveGame(int saveNumber)
+
+        // Class Functions:
+
+        // Saving and Loading Wrapper Fuctionality
+        public void SaveGame(int saveNumber)
     {
         SaveSystem.SavePlayerData(saveNumber);
     }

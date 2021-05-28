@@ -1,19 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class CameraLogic : MonoBehaviour
+public class UserInterfaceCameraLogic : MonoBehaviour
 {
-    //[SerializeField] GameObject playerCharacter = null;
-
-    private Camera mainCamera = null; 
+    [SerializeField] private Camera cam;
 
     private Vector2 resolution;
     private bool screenResized;
 
     private void Start()
     {
-        mainCamera = GetComponent<Camera>();
         // Adjust the screen size such that no matter what the physical screen size the game size will always be constant
-        AdjustCameraAspectRatio(GameConstants.TARGET_SCREEN_WIDTH_BY_RATIO, GameConstants.TARGET_SCREEN_HEIGHT_BY_RATIO);
+        AdjustCameraAspectRatio(GameConstants.PIXEL_PERFECT_REF_RES_X, GameConstants.PIXEL_PERFECT_REF_RES_Y);
         screenResized = true;
         resolution = new Vector2(Screen.width, Screen.height);
     }
@@ -34,7 +31,7 @@ public class CameraLogic : MonoBehaviour
         {
             if (!screenResized)
             {
-                AdjustCameraAspectRatio(GameConstants.TARGET_SCREEN_WIDTH_BY_RATIO, GameConstants.TARGET_SCREEN_HEIGHT_BY_RATIO);
+                AdjustCameraAspectRatio(GameConstants.PIXEL_PERFECT_REF_RES_X, GameConstants.PIXEL_PERFECT_REF_RES_Y);
                 screenResized = true;
             }
         }
@@ -48,30 +45,30 @@ public class CameraLogic : MonoBehaviour
 
         if (scaleHeight < 1.0f) //add letterboxes (horizontal lines on the top and bottom)
         {
-            Rect rect = mainCamera.rect;
+            Rect rect = cam.rect;
 
             rect.width = 1.0f;
             rect.height = scaleHeight;
             rect.x = 0;
             rect.y = (1.0f - scaleHeight) / 2.0f;
 
-            mainCamera.rect = rect;
+            cam.rect = rect;
         }
         else //add pillarboxes (vertical lines on the left and right)
         {
             float scaleWidth = 1.0f / scaleHeight;
 
-            Rect rect = mainCamera.rect;
+            Rect rect = cam.rect;
 
             rect.width = scaleWidth;
             rect.height = 1.0f;
             rect.x = (1.0f - scaleWidth) / 2.0f;
             rect.y = 0;
 
-            mainCamera.rect = rect;
+            cam.rect = rect;
         }
     }
-    
+
     private bool screenSizeChanged()
     {
         if (resolution.x != Screen.width || resolution.y != Screen.height)

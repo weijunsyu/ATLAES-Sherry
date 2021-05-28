@@ -9,7 +9,7 @@ Visual Guides: (Definitions can be found in the document "Visual Asset Guideline
   GRID UNIT (henceforth referred to as simply gridUnit) shall be equal to the unit that our artists will base work on (to enable a screen grid of 16x9)
   GAME UNIT (henceforth referred to as simply gameUnit) shall be equal to 0.25 the area of a gridUnit which is equal to 1 GAME TILE (defined in the VAGF)
 
-  CANVAS SIZE = CAMERA SIZE = 16units by 9units = 1024px by 576px
+  CANVAS SIZE = CAMERA SIZE = 16units by 9units = 796px by 448px (1024px by 576px)
   UNITY UNIT = GRID UNIT = GRID TILE = 64px by 64px
   GAME UNIT = GAME TILE = 32px by 32px
 
@@ -30,15 +30,14 @@ Artwork:
     Player character sprites have already been made, follow those examples and scale others accordingly.
     For reference the player character is a female adult.
     Player character will be made up of a WHITE foreground with RED accents and background.
-    NPC characters will be WHITE foreground and BLACK background.
+    NPC characters will be WHITE foreground and RED background.
 
   Special NPC/Bosses:
     Made on a NxN GAME TILE such that N can be any positive integer.
-    Similar to NPC designs, scale based on the player character sprite size and keep the colours WHITE and BLACK.
+    Similar to NPC designs, scale based on the player character sprite size and keep the colours WHITE and RED.
 
   NOTES ON COLOUR:
     All sprites should be made up of 2 colours only.
-    Testing with colour swaps may occur but to maintain style ALL sprites MUST ONLY have TWO colours.
 
 
   ALL UNITY BASED WORK WILL BE REFERENCED BY UNITY UNITS (as that's how unity works)
