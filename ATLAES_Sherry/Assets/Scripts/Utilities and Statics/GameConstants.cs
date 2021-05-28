@@ -32,11 +32,13 @@ public static class GameConstants
     public const string SAVEPATH = null; //specify the save path (currently NOT in use instead using: Application.persistentDataPath within SaveSystem.cs)
     public const string SAVEFILE = "savedata.save";
 
+    // Game Window settings
+    public const int MIN_WINDOW_WIDTH = 1280; // Min GAME resolution width 796 (Window > Game)
+    public const int MIN_WINDOW_HEIGHT = 720; // Min GAME resolution height 448 (Window > Game)
+
     // Camera settings
-    public const float TARGET_SCREEN_WIDTH_BY_RATIO = 16f; // The 16 part of 16:9 aspect ratio
-    public const float TARGET_SCREEN_HEIGHT_BY_RATIO = 9f; // The 9 part of 16:9 aspect ratio
-    public const float DEFAULT_CAMERA_SIZE = 3.5f;
-    public const float CAMERA_Y_OFFSET = 1.5f; // Specify the Y offset of the camera when player character present in scene
+    public const int PIXEL_PERFECT_REF_RES_X = 796;
+    public const int PIXEL_PERFECT_REF_RES_Y = 448;
 
     // Scene Parameters
     public const int NUMBER_OF_SCENES = 1;
