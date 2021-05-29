@@ -2,6 +2,7 @@
 [System.Serializable] public class SaveData
 {
     // User Data:
+    public bool isFullscreen;
 
     // World Data:
     public bool[] warpLocations;
@@ -25,6 +26,8 @@
     //constructor
     public SaveData()
     {
+        // User Data
+        this.isFullscreen = MasterManager.userData.GetIsFullscreen();
         // World Data
         this.warpLocations = MasterManager.worldData.GetWarpLocations();
         this.bossesDefeated = MasterManager.worldData.GetBossesDefeated();
