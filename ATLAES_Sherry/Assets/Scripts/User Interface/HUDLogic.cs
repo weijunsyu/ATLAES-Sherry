@@ -8,6 +8,6 @@ public class HUDLogic : MonoBehaviour
 
     private void Update()
     {
-        hudTimer.text = "FPS: " + MasterManager.fps.ToString("0");
+        hudTimer.text = MasterManager.timeInSeconds.ToString("0");
     }
 }

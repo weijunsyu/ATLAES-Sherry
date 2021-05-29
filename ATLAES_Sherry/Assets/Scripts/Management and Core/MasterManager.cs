@@ -23,13 +23,19 @@ public class MasterManager : MonoBehaviour
     private void Awake()
     {
         KeepPersistentStatus();
+        
         // Clamp the min window size on Windows platform.
         MinimumWindowSize.Set(GameConstants.MIN_WINDOW_WIDTH, GameConstants.MIN_WINDOW_HEIGHT);
     }
     private void Start()
     {
+        // Set the framerate to match the default framerate of target platform (monitor refresh rate)
+        QualitySettings.vSyncCount = 1;
+        // Set the max framerate to be unlimited
+        Application.targetFrameRate = -1;
+
         /* START DEBUGGING */
-        ResetGame();
+        ResetAll();
         playerCharacterPersistentData.SetPrimaryWeapon(WeaponType.NONE, true, true);
         playerCharacterPersistentData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
         /* END DEBUGGING */
@@ -45,14 +51,6 @@ public class MasterManager : MonoBehaviour
     {
         timeInSeconds += Time.deltaTime;
         fps = 1 / Time.deltaTime;
-
-        /* DEBUGGING */
-        /*
-        if (fps < 120)
-        {
-            Debug.Log(fps);
-        }
-        */
     }
 
     private void OnDisable()
@@ -81,6 +79,8 @@ public class MasterManager : MonoBehaviour
 
         if (data != null) //savefile exists
         {
+            // User Data
+            userData.SetIsFullscreen(data.isFullscreen);
             // World Data
             worldData.SetWarpLocations(data.warpLocations);
             worldData.SetBossesDefeated(data.bossesDefeated);
@@ -114,7 +114,15 @@ public class MasterManager : MonoBehaviour
         inventoryData.ResetAllInventoryData();
         npcData.ResetAllNpcData();
     }
-
+    public void ResetUser()
+    {
+        userData.ResetAllUserData();
+    }
+    public void ResetAll()
+    {
+        ResetGame();
+        ResetUser();
+    }
 
     private void KeepPersistentStatus()
     {
@@ -135,6 +143,10 @@ public class MasterManager : MonoBehaviour
         {
             case PlayerInputController.RawInput.PAUSE:
                 Debug.Log("pause pressed, detected in Master Manager");
+
+                //DEBUGGING:
+                userData.SetAndRunIsFullscreen(!userData.GetIsFullscreen());
+                
                 break;
         }
     }

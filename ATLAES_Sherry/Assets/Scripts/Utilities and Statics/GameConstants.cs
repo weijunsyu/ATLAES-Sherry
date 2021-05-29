@@ -35,6 +35,7 @@ public static class GameConstants
     // Game Window settings
     public const int MIN_WINDOW_WIDTH = 1280; // Min GAME resolution width 796 (Window > Game)
     public const int MIN_WINDOW_HEIGHT = 720; // Min GAME resolution height 448 (Window > Game)
+    public const bool DEFAULT_WINDOW_IS_FULLSCREEN = false; // By default the game runs in windowed mode
 
     // Camera settings
     public const int PIXEL_PERFECT_REF_RES_X = 796;
