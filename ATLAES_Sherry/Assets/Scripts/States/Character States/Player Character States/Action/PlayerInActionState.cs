@@ -66,7 +66,7 @@ public class PlayerInActionState : IState
     }
     private void SetStateParams()
     {
-        WeaponType weapon = MasterManager.playerCharacterPersistentData.GetPrimaryWeapon();
+        WeaponType weapon = MasterManager.playerData.GetPrimaryWeapon();
         IState prevState = stateMachine.prevState; // used for evaluating charged attacks and crouched attacks
 
         PlayerInputController.RawInput inputType = actionController.inputBuffer.Pop().input;

@@ -71,7 +71,7 @@ public class PlayerRecoveryState : IState
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
-        if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+        if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
         {
             switch (inputEvent.input)
             {
@@ -89,11 +89,11 @@ public class PlayerRecoveryState : IState
     }
     private void RunAnimation()
     {
-        if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.NONE)
+        if (MasterManager.playerData.GetPrimaryWeapon() == WeaponType.NONE)
         {
             animationController.SetSprite(animations.crouch[0]);
         }
-        if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.UNARMED)
+        if (MasterManager.playerData.GetPrimaryWeapon() == WeaponType.UNARMED)
         {
             animationController.SetSprite(animations.uCrouchGuard[0]);
         }

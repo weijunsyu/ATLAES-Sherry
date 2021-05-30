@@ -1,9 +1,6 @@
 ﻿
 [System.Serializable] public class SaveData
 {
-    // User Data:
-    public bool isFullscreen;
-
     // World Data:
     public bool[] warpLocations;
     public bool[] bossesDefeated;
@@ -26,18 +23,16 @@
     //constructor
     public SaveData()
     {
-        // User Data
-        this.isFullscreen = MasterManager.userData.GetIsFullscreen();
         // World Data
         this.warpLocations = MasterManager.worldData.GetWarpLocations();
         this.bossesDefeated = MasterManager.worldData.GetBossesDefeated();
         this.playTime = MasterManager.worldData.GetPlayTime();
         // Player Character Persistent Data
-        this.currentHP = MasterManager.playerCharacterPersistentData.GetCurrentHP();
-        this.weapons = MasterManager.playerCharacterPersistentData.GetWeapons();
-        this.primaryWeapon = MasterManager.playerCharacterPersistentData.GetPrimaryWeapon();
-        this.secondaryWeapon = MasterManager.playerCharacterPersistentData.GetSecondaryWeapon();
-        this.locationSceneIndex = MasterManager.playerCharacterPersistentData.GetLocationSceneIndex();
+        this.currentHP = MasterManager.playerData.GetCurrentHP();
+        this.weapons = MasterManager.playerData.GetWeapons();
+        this.primaryWeapon = MasterManager.playerData.GetPrimaryWeapon();
+        this.secondaryWeapon = MasterManager.playerData.GetSecondaryWeapon();
+        this.locationSceneIndex = MasterManager.playerData.GetLocationSceneIndex();
         // Inventory Data
         this.gold = MasterManager.inventoryData.GetGold();
         this.uniqueItems = MasterManager.inventoryData.GetUniqueItems();

@@ -86,8 +86,8 @@ public class PlayerStateController : AbstractStateController
         strafingBackChargeTimer = 0d;
         isChargedStrafingFront = false;
         strafingFrontChargeTimer = 0d;
-        weapons.SetPrimaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetPrimaryWeapon());
-        weapons.SetSecondaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetSecondaryWeapon());
+        weapons.SetPrimaryWeaponSprite(MasterManager.playerData.GetPrimaryWeapon());
+        weapons.SetSecondaryWeaponSprite(MasterManager.playerData.GetSecondaryWeapon());
         actionController.ResetInputBuffer();
     }
     private void OnEnable()
@@ -221,7 +221,7 @@ public class PlayerStateController : AbstractStateController
         switch (inputEvent.input)
         {
             case PlayerInputController.RawInput.SWITCH_WEAPON:
-                MasterManager.playerCharacterPersistentData.SwapWeapons();
+                MasterManager.playerData.SwapWeapons();
                 weapons.UpdateWeaponSprite();
                 break;
         }

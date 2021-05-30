@@ -73,19 +73,19 @@ public class PlayerMovingState : IState
         switch (inputEvent.input)
         {
             case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
                 {
                     stateMachine.ChangeState(playerController.inActionState);
                 }
                 break;
             case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
                 {
                     stateMachine.ChangeState(playerController.inActionState);
                 }
                 break;
             case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() != WeaponType.NONE)
+                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
                 {
                     stateMachine.ChangeState(playerController.inActionState);
                 }

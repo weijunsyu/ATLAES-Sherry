@@ -28,24 +28,29 @@ public enum NamedNPC
 
 public static class GameConstants
 {
-    // Save settings
+    // Save Settings
     public const string SAVEPATH = null; //specify the save path (currently NOT in use instead using: Application.persistentDataPath within SaveSystem.cs)
     public const string SAVEFILE = "savedata.save";
+    public const string SETTINGSFILE = "settingsdata.save";
 
-    // Game Window settings
+    // Game Window Settings
     public const int MIN_WINDOW_WIDTH = 1280; // Min GAME resolution width 796 (Window > Game)
     public const int MIN_WINDOW_HEIGHT = 720; // Min GAME resolution height 448 (Window > Game)
     public const bool DEFAULT_WINDOW_IS_FULLSCREEN = false; // By default the game runs in windowed mode
 
-    // Camera settings
-    public const int PIXEL_PERFECT_REF_RES_X = 796;
-    public const int PIXEL_PERFECT_REF_RES_Y = 448;
+    // Camera Settings
+    public const int TARGET_ASPECT_RATIO_X = 16;
+    public const int TARGET_ASPECT_RATIO_Y = 9;
 
     // Scene Parameters
     public const int NUMBER_OF_SCENES = 1;
     public const int NUMBER_OF_LEVELS = 0;
     public const int NUMBER_OF_MENUS = 1;
     public const int TUTORIAL_LEVEL_INDEX = 6; // First level of game
+
+    // User Interface Constants
+    public const int MAX_WHOLE_DIGITS_IN_TIMER = 7;
+    public const int MAX_E_VALUE_LENGTH_IN_TIMER = 8;
 
     // Game Mechanics
     public const double INPUT_BUFFER_LIFESPAN = 0.15d; // Number of seconds allowed before input buffer resets
@@ -64,12 +69,14 @@ public static class GameConstants
     // Input Settings
     public const float JOYSTICK_BOOL_DEADZONE = 0.7f; // Calibrate sensitivity of joysticks between 0-1 where 0 is most sensitive for boolean use
 
+    // General Game Constants
+    public const int MAX_HP = 100;
+
     // Player Constants
     public const double COYOTE_JUMP_DELAY = 0.0625d; // Amount of time after player leaves valid state for jump where player may still jump
     public const double JUMP_BUFFER = 0.0625d; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
     public const double COMBAT_COOLDOWN = 5d; // Time in seconds after doing an attack before character "ends" combat.
     public const int NUMBER_NORMALS = 9; // Number of normal attacks (3 standing buttons, 3 airborne, 3 crouching)
-    public const int PLAYER_MAX_HP = 100;
     public const int PLAYER_INVENTORY_SIZE = 10; // Size of the player inventory
     public const int PLAYER_BANK_SIZE = 100; // Size of the player bank
     public const int PLAYER_ITEM_INVENTORY_MAX_STACKS = 10;

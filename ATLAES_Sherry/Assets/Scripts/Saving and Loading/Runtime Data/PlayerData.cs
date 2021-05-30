@@ -1,7 +1,7 @@
-﻿public class PlayerCharacterPersistentData
+﻿public class PlayerData
 {
     // Player Character Data
-    private int currentHP = GameConstants.PLAYER_MAX_HP; // Blood (Hit Points) (HP)
+    private int currentHP = GameConstants.MAX_HP; // Blood (Hit Points) (HP)
     private bool[] weapons = new bool[(System.Enum.GetNames(typeof(WeaponType)).Length)];
     private WeaponType primaryWeapon, secondaryWeapon = WeaponType.NONE;
     private int locationSceneIndex = GameConstants.TUTORIAL_LEVEL_INDEX;
@@ -9,7 +9,7 @@
     // Class Functions:
     public void ResetAllPlayerCharacterPersistentData()
     {
-        SetCurrentHP(GameConstants.PLAYER_MAX_HP);
+        SetCurrentHP(GameConstants.MAX_HP);
         ResetWeapons();
         SetPrimaryWeapon(WeaponType.NONE);
         SetSecondaryWeapon(WeaponType.NONE);
@@ -22,7 +22,7 @@
     // Modify currentHP by value such that currentHP = max[0, min[(currentHP + value), maxHP]].
     public void ModifyCurrentHP(int value)
     {
-        currentHP = (int)StaticFunctions.ModifyResourceValue(currentHP, value, GameConstants.PLAYER_MAX_HP);
+        currentHP = (int)StaticFunctions.ModifyResourceValue(currentHP, value, GameConstants.MAX_HP);
     }
     public void SetCurrentHP(int value)
     {
@@ -30,9 +30,9 @@
         {
             value = 0;
         }
-        else if (value > GameConstants.PLAYER_MAX_HP)
+        else if (value > GameConstants.MAX_HP)
         {
-            value = GameConstants.PLAYER_MAX_HP;
+            value = GameConstants.MAX_HP;
         }
         currentHP = value;
     }

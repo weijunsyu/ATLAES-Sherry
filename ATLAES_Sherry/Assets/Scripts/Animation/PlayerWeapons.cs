@@ -56,8 +56,8 @@ public class PlayerWeapons : MonoBehaviour
     }
     public void UpdateWeaponSprite()
     {
-        SetPrimaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetPrimaryWeapon());
-        SetSecondaryWeaponSprite(MasterManager.playerCharacterPersistentData.GetSecondaryWeapon());
+        SetPrimaryWeaponSprite(MasterManager.playerData.GetPrimaryWeapon());
+        SetSecondaryWeaponSprite(MasterManager.playerData.GetSecondaryWeapon());
     }
     public void SetPrimaryWeaponSprite(WeaponType weapon)
     {

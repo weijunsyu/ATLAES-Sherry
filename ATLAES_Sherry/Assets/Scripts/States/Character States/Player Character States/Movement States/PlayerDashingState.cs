@@ -112,7 +112,7 @@ public class PlayerDashingState : IState
             case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
                 break;
             case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerCharacterPersistentData.GetPrimaryWeapon() == WeaponType.UNARMED)
+                if (MasterManager.playerData.GetPrimaryWeapon() == WeaponType.UNARMED)
                 {
                     stateMachine.ChangeState(playerController.inActionState);
                 }

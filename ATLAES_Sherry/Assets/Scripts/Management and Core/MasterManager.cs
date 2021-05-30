@@ -1,43 +1,58 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 
+public enum GameMode
+{
+    Singleplayer,
+    LocalMultiplayer,
+    OnlineMultiplayer
+}
+
+
 public class MasterManager : MonoBehaviour
 {
     // Config Parameters
 
     // Cached References
     [SerializeField] private AudioMixer mixer = null;
+    [SerializeField] private Canvas utilityOverlay = null;
 
     // State Parameters and Objects:
+    // Persistent Data
     [HideInInspector] public static UserData userData = new UserData();
     [HideInInspector] public static WorldData worldData = new WorldData();
-    [HideInInspector] public static PlayerCharacterPersistentData playerCharacterPersistentData = new PlayerCharacterPersistentData();
+    [HideInInspector] public static PlayerData playerData = new PlayerData();
     [HideInInspector] public static InventoryData inventoryData = new InventoryData();
     [HideInInspector] public static NpcData npcData = new NpcData();
+    // Non-Persistent Data
+    public static int playerHP = 0;
+    public static int playerRecoverableHP = 0;
+    public static int otherHP = 0;
+    public static int otherRecoverableHP = 0;
 
+    // General Game Parameters
     public static double timeInSeconds = 0d;
     public static double fps = 0d;
+    public static GameMode gameMode = GameMode.Singleplayer;
+    public static double ping = 0d; // ping in ms
 
 
     // Unity Events:
     private void Awake()
     {
         KeepPersistentStatus();
-        
         // Clamp the min window size on Windows platform.
         MinimumWindowSize.Set(GameConstants.MIN_WINDOW_WIDTH, GameConstants.MIN_WINDOW_HEIGHT);
     }
     private void Start()
     {
-        // Set the framerate to match the default framerate of target platform (monitor refresh rate)
-        QualitySettings.vSyncCount = 1;
-        // Set the max framerate to be unlimited
-        Application.targetFrameRate = -1;
-
+        LoadSettings();
+        
         /* START DEBUGGING */
-        ResetAll();
-        playerCharacterPersistentData.SetPrimaryWeapon(WeaponType.NONE, true, true);
-        playerCharacterPersistentData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
+        ResetGame();
+        playerData.SetPrimaryWeapon(WeaponType.NONE, true, true);
+        playerData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
+        userData.SetUtilityOverlayOn(true);
         /* END DEBUGGING */
     }
 
@@ -51,6 +66,15 @@ public class MasterManager : MonoBehaviour
     {
         timeInSeconds += Time.deltaTime;
         fps = 1 / Time.deltaTime;
+
+        if (gameMode == GameMode.Singleplayer)
+        {
+            HUDLogic.SetHudTimerText(timeInSeconds.ToString("0"));
+        }
+
+        /* START DEBUGGING */
+        
+        /* END DEBUGGING */
     }
 
     private void OnDisable()
@@ -61,14 +85,58 @@ public class MasterManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (!userData.GetIsFullscreen())
+        {
+            userData.SetWindowWidth(Screen.width);
+            userData.SetWindowHeight(Screen.height);
+        }
+        SaveSettings();
+
         MinimumWindowSize.Reset();
     }
+    // Class Functions:
 
+    public void ToggleUtilityOverlay(bool value)
+    {
+        userData.SetUtilityOverlayOn(value);
+        utilityOverlay.enabled = value;
+    }
 
-        // Class Functions:
+    // Saving and Loading of User data
+    // which remembers default users settings to be enabled during startup
+    public void SaveSettings()
+    {
+        SaveSystem.SaveSettingsData();
+    }
+    public bool LoadSettings()
+    {
+        SettingsData settings = SaveSystem.LoadSettingsData();
 
-        // Saving and Loading Wrapper Fuctionality
-        public void SaveGame(int saveNumber)
+        if (settings != null)
+        {
+            // User Data
+            userData.SetIsFullscreen(settings.isFullScreen);
+            userData.SetWindowWidth(settings.windowWidth);
+            userData.SetWindowHeight(settings.windowHeight);
+            userData.SetUtilityOverlayOn(settings.utilityOverlayOn);
+            userData.SetVSync(settings.vSync);
+            userData.SetTargetFPS(settings.targetFPS);
+
+            //Run the loaded settings immediate
+            userData.RunAllUserData();
+            ToggleUtilityOverlay(userData.GetUtilityOverlayOn());
+
+            return true;
+        }
+        else
+        {
+            SaveSettings();
+            return false;
+        }
+    }
+
+    // Saving and Loading Wrapper Fuctionality
+    public void SaveGame(int saveNumber)
     {
         SaveSystem.SavePlayerData(saveNumber);
     }
@@ -79,18 +147,16 @@ public class MasterManager : MonoBehaviour
 
         if (data != null) //savefile exists
         {
-            // User Data
-            userData.SetIsFullscreen(data.isFullscreen);
             // World Data
             worldData.SetWarpLocations(data.warpLocations);
             worldData.SetBossesDefeated(data.bossesDefeated);
             worldData.SetPlayTime(data.playTime);
-            // Player Character Persistent Data
-            playerCharacterPersistentData.SetCurrentHP(data.currentHP);
-            playerCharacterPersistentData.SetWeapons(data.weapons);
-            playerCharacterPersistentData.SetPrimaryWeapon(data.primaryWeapon);
-            playerCharacterPersistentData.SetSecondaryWeapon(data.secondaryWeapon);
-            playerCharacterPersistentData.SetLocationSceneIndex(data.locationSceneIndex);
+            // Player Data
+            playerData.SetCurrentHP(data.currentHP);
+            playerData.SetWeapons(data.weapons);
+            playerData.SetPrimaryWeapon(data.primaryWeapon);
+            playerData.SetSecondaryWeapon(data.secondaryWeapon);
+            playerData.SetLocationSceneIndex(data.locationSceneIndex);
             // Inventory Data
             inventoryData.SetGold(data.gold);
             inventoryData.SetUniqueItems(data.uniqueItems);
@@ -99,6 +165,10 @@ public class MasterManager : MonoBehaviour
             npcData.SetBank(data.bank);
             npcData.SetGoldInBank(data.goldInBank);
             npcData.SetNpcConvo(data.npcConvo);
+
+            // Load non-persistent from data
+            playerHP = playerData.GetCurrentHP();
+            playerRecoverableHP = playerHP;
 
             return true;
         }
@@ -110,7 +180,7 @@ public class MasterManager : MonoBehaviour
     public void ResetGame()
     {
         worldData.ResetAllWorldData();
-        playerCharacterPersistentData.ResetAllPlayerCharacterPersistentData();
+        playerData.ResetAllPlayerCharacterPersistentData();
         inventoryData.ResetAllInventoryData();
         npcData.ResetAllNpcData();
     }
@@ -145,7 +215,8 @@ public class MasterManager : MonoBehaviour
                 Debug.Log("pause pressed, detected in Master Manager");
 
                 //DEBUGGING:
-                userData.SetAndRunIsFullscreen(!userData.GetIsFullscreen());
+                userData.SetIsFullscreen(!userData.GetIsFullscreen());
+                userData.RunIsFullscreen();
                 
                 break;
         }

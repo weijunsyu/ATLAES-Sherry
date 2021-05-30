@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2a058345c7281ee41ad7af03b7cf448f
+guid: c60be19b4de63fa42bd1311c590a1c69
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,8 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Electronic Highway Sign
   fontNames:
-  - Electronic Highway Sign
+  - Grand Cru
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

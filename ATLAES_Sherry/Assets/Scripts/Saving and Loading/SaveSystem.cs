@@ -4,6 +4,35 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
+    public static void SaveSettingsData()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/" + GameConstants.SETTINGSFILE;
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        SettingsData data = new SettingsData();
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+    public static SettingsData LoadSettingsData()
+    {
+        string path = Application.persistentDataPath + "/" + GameConstants.SETTINGSFILE;
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            SettingsData settings = formatter.Deserialize(stream) as SettingsData;
+            stream.Close();
+
+            return settings;
+        }
+        else //settings does not exist!
+        {
+            return null;
+        }
+    }
     public static void SavePlayerData(int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();

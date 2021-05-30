@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UserInterfaceCameraLogic : MonoBehaviour
+public class CameraLogic : MonoBehaviour
 {
     [SerializeField] private Camera cam;
 
@@ -10,7 +10,7 @@ public class UserInterfaceCameraLogic : MonoBehaviour
     private void Start()
     {
         // Adjust the screen size such that no matter what the physical screen size the game size will always be constant
-        AdjustCameraAspectRatio(GameConstants.PIXEL_PERFECT_REF_RES_X, GameConstants.PIXEL_PERFECT_REF_RES_Y);
+        AdjustCameraAspectRatio(GameConstants.TARGET_ASPECT_RATIO_X, GameConstants.TARGET_ASPECT_RATIO_Y);
         screenResized = true;
         resolution = new Vector2(Screen.width, Screen.height);
     }
@@ -31,7 +31,7 @@ public class UserInterfaceCameraLogic : MonoBehaviour
         {
             if (!screenResized)
             {
-                AdjustCameraAspectRatio(GameConstants.PIXEL_PERFECT_REF_RES_X, GameConstants.PIXEL_PERFECT_REF_RES_Y);
+                AdjustCameraAspectRatio(GameConstants.TARGET_ASPECT_RATIO_X, GameConstants.TARGET_ASPECT_RATIO_Y);
                 screenResized = true;
             }
         }
