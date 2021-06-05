@@ -8,7 +8,13 @@ public class UserData
     private int windowHeight = GameConstants.MIN_WINDOW_HEIGHT;
     private bool utilityOverlayOn = false;
     private int vSync = 1; // 1 is on, 0 is off (0, 1, 2, 3, 4 are all valid values)
-    private int targetFPS = -1; // where -1 is unlimited (setting is ignored if vSync != 0)
+    private int targetFPS = -1; // Where -1 is unlimited (setting is ignored if vSync != 0)
+    private byte menuAlphaMask = 0; // Value between 0 and 255 denoting the alpha value
+    private bool isMinimalist = false; // Turns off all unnecessary graphics
+    private int menuProgression = 0;
+    private float masterVolume = GameConstants.DEFAULT_MASTER_VOLUME;
+    private float musicVolume = GameConstants.DEFAULT_MUSIC_VOLUME;
+    private float effectsVolume = GameConstants.DEFAULT_EFFECTS_VOLUME;
 
     // Class Functions:
 
@@ -20,6 +26,12 @@ public class UserData
         SetUtilityOverlayOn(false);
         SetVSync(true);
         SetTargetFPS(-1);
+        SetMenuAlphaMask(0);
+        SetIsMinimalist(false);
+        SetMenuProgression(0);
+        SetMasterVolume(GameConstants.DEFAULT_MASTER_VOLUME);
+        SetMusicVolume(GameConstants.DEFAULT_MUSIC_VOLUME);
+        SetEffectsVolume(GameConstants.DEFAULT_EFFECTS_VOLUME);
 
         Screen.SetResolution(windowWidth, windowHeight, GetIsFullscreen());
         QualitySettings.vSyncCount = vSync;
@@ -31,7 +43,54 @@ public class UserData
         RunTargetFPS();
         RunIsFullscreen();
     }
-
+    public float GetMasterVolume()
+    {
+        return masterVolume;
+    }
+    public void SetMasterVolume(float value)
+    {
+        masterVolume = value;
+    }
+    public float GetMusicVolume()
+    {
+        return musicVolume;
+    }
+    public void SetMusicVolume(float value)
+    {
+        musicVolume = value;
+    }
+    public float GetEffectsVolume()
+    {
+        return effectsVolume;
+    }
+    public void SetEffectsVolume(float value)
+    {
+        effectsVolume = value;
+    }
+    public int GetMenuProgression()
+    {
+        return menuProgression;
+    }
+    public void SetMenuProgression(int value)
+    {
+        menuProgression = value;
+    }
+    public byte GetMenuAlphaMask()
+    {
+        return menuAlphaMask;
+    }
+    public void SetMenuAlphaMask(byte value)
+    {
+        menuAlphaMask = value;
+    }
+    public bool GetIsMinimalist()
+    {
+        return isMinimalist;
+    }
+    public void SetIsMinimalist(bool value)
+    {
+        isMinimalist = value;
+    }
     public int GetWindowWidth()
     {
         return windowWidth;
