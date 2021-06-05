@@ -14,7 +14,8 @@ public class MasterManager : MonoBehaviour
     // Config Parameters
 
     // Cached References
-    [SerializeField] private AudioMixer mixer = null;
+    [SerializeField] public AudioMixer mixer = null;
+    
     [SerializeField] private Canvas utilityOverlay = null;
 
     // State Parameters and Objects:
@@ -38,7 +39,7 @@ public class MasterManager : MonoBehaviour
 
 
     // Unity Events:
-    private void Awake()
+    private void Awake() // Called on every new scene which has its own Master Manager
     {
         KeepPersistentStatus();
         // Clamp the min window size on Windows platform.
@@ -52,7 +53,6 @@ public class MasterManager : MonoBehaviour
         ResetGame();
         playerData.SetPrimaryWeapon(WeaponType.NONE, true, true);
         playerData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
-        userData.SetUtilityOverlayOn(true);
         /* END DEBUGGING */
     }
 
@@ -104,7 +104,7 @@ public class MasterManager : MonoBehaviour
 
     // Saving and Loading of User data
     // which remembers default users settings to be enabled during startup
-    public void SaveSettings()
+    public static void SaveSettings()
     {
         SaveSystem.SaveSettingsData();
     }
@@ -121,6 +121,9 @@ public class MasterManager : MonoBehaviour
             userData.SetUtilityOverlayOn(settings.utilityOverlayOn);
             userData.SetVSync(settings.vSync);
             userData.SetTargetFPS(settings.targetFPS);
+            userData.SetMenuAlphaMask(settings.menuAlphaMask);
+            userData.SetIsMinimalist(settings.isMinimalist);
+            userData.SetMenuProgression(settings.menuProgression);
 
             //Run the loaded settings immediate
             userData.RunAllUserData();
@@ -136,7 +139,7 @@ public class MasterManager : MonoBehaviour
     }
 
     // Saving and Loading Wrapper Fuctionality
-    public void SaveGame(int saveNumber)
+    public static void SaveGame(int saveNumber)
     {
         SaveSystem.SavePlayerData(saveNumber);
     }
@@ -187,6 +190,7 @@ public class MasterManager : MonoBehaviour
     public void ResetUser()
     {
         userData.ResetAllUserData();
+        utilityOverlay.enabled = userData.GetUtilityOverlayOn();
     }
     public void ResetAll()
     {

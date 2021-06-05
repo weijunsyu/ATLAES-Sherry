@@ -2,9 +2,34 @@
  * Class containing  static helper functions
  */
 using UnityEngine;
+using TMPro;
 
 public static class StaticFunctions
 {
+    // Converts a number between 0 and 1 as defined raw percentage to decibel numbers.
+    public static float ConvertPercentageRawToDecibels(float percentValue)
+    {
+        if (percentValue == 0)
+        {
+            return GameConstants.MUTE_IN_DB;
+        }
+        return Mathf.Clamp(Mathf.Log10(percentValue) * 20, 
+                           GameConstants.MUTE_IN_DB, 
+                           GameConstants.MAX_VOLUME_IN_DB);
+    }
+
+    public static void ToggleTextYesNo(TextMeshProUGUI textField, bool value)
+    {
+        if (value)
+        {
+            textField.text = "YES";
+        }
+        else
+        {
+            textField.text = "NO";
+        }
+    }
+
     // Vector functions:
     // Find the unit vector of a 2D vector
     public static Vector2 UnitVector(Vector2 vector)

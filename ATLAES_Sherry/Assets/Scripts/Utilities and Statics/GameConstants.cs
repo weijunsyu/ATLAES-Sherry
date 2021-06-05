@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 
 // Definitions:
 /*
@@ -38,6 +38,17 @@ public static class GameConstants
     public const int MIN_WINDOW_HEIGHT = 720; // Min GAME resolution height 448 (Window > Game)
     public const bool DEFAULT_WINDOW_IS_FULLSCREEN = false; // By default the game runs in windowed mode
 
+    // Video Settings
+    public const int MIN_FPS = 60;
+    public const int MAX_FPS = 1000;
+    public const int NUM_DISCRETE_FPS_VALUES = 6; // 60, 120, 144, 240, 360, unlimited
+    public const int FPS_0 = 60;
+    public const int FPS_1 = 120;
+    public const int FPS_2 = 144;
+    public const int FPS_3 = 240;
+    public const int FPS_4 = 360;
+    public const int FPS_5 = -1; // Unlimited FPS
+
     // Camera Settings
     public const int TARGET_ASPECT_RATIO_X = 16;
     public const int TARGET_ASPECT_RATIO_Y = 9;
@@ -48,9 +59,25 @@ public static class GameConstants
     public const int NUMBER_OF_MENUS = 1;
     public const int TUTORIAL_LEVEL_INDEX = 6; // First level of game
 
+    // Audio Constants
+    public const float MUTE_IN_DB = -80.0f;
+    public const float MAX_VOLUME_IN_DB = 20.0f;
+    public const string MASTER_VOLUME_GROUP_NAME = "MasterVolume";
+    public const string MUSIC_VOLUME_GROUP_NAME = "MusicVolume";
+    public const string EFFECTS_VOLUME_GROUP_NAME = "EffectsVolume";
+    public const float DEFAULT_MASTER_VOLUME = 1.0f;
+    public const float DEFAULT_MUSIC_VOLUME = 0.6f;
+    public const float DEFAULT_EFFECTS_VOLUME = 0.8f;
+    public const int NUM_DISCRETE_VOLUME_VALUES = 21; // 0%, 5%, 10%, ... , 95%, 100% volume
+
     // User Interface Constants
     public const int MAX_WHOLE_DIGITS_IN_TIMER = 7;
     public const int MAX_E_VALUE_LENGTH_IN_TIMER = 8;
+    public const byte MENU_ALPHA_DARKEN_VALUE = 150;
+    public static readonly Color32 DARK_GREY = new Color32(100, 100, 100, 255);
+    public static readonly Color32 BLACK = new Color32(20, 20, 20, 255);
+    public static readonly Color32 WHITE = new Color32(252, 252, 252, 255);
+    public static readonly Color32 RED = new Color32(208, 0, 0, 255);
 
     // Game Mechanics
     public const double INPUT_BUFFER_LIFESPAN = 0.15d; // Number of seconds allowed before input buffer resets
