@@ -38,14 +38,7 @@ public class GeneralOptionsLogic : MonoBehaviour
     public void ToggleMinimalistMode(bool value)
     {
         StaticFunctions.ToggleTextYesNo(minimalistModeToggleText, value);
-        if (value)
-        {
-            MasterManager.userData.SetIsMinimalist(true);
-        }
-        else
-        {
-            MasterManager.userData.SetIsMinimalist(false);
-        }
+        MasterManager.userData.SetIsMinimalist(value);
         MasterManager.SaveSettings();
     }
     public void ToggleUtilityOverlay(bool value)

@@ -7,6 +7,8 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private Canvas loadingScreen;
     [SerializeField] private Slider progressBar;
+    private double loadStartTime = 0d;
+    private double loadEndTime = 0d;
 
     private void Awake()
     {
@@ -96,6 +98,7 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator AsyncLoadRoutine(int index)
     {
+        loadStartTime = MasterManager.timeInSeconds;
         loadingScreen.enabled = true;
         AsyncOperation operation = SceneManager.LoadSceneAsync(index);
 
@@ -103,10 +106,18 @@ public class SceneLoader : MonoBehaviour
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
             progress = (progress * (705f - 38f)) + 38f;
-            Debug.Log(progress);
             progressBar.value = progress;
             yield return null;
         }
+        loadEndTime = MasterManager.timeInSeconds;
+        
+        if (MasterManager.userData.GetEqualLoadTimes())
+        {
+            double deltaTime = loadEndTime - loadStartTime;
+            double waitTime = GameConstants.EQUALIZED_LOAD_TIME_IN_SECONDS - deltaTime;
+            yield return new WaitForSeconds((float)waitTime);
+        }
+
         loadingScreen.enabled = false;
     }
 }

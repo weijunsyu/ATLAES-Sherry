@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class HUDLogic : MonoBehaviour
 {
@@ -44,14 +45,20 @@ public class HUDLogic : MonoBehaviour
         otherHealthText.text = MasterManager.otherHP.ToString();
     }
 
-
     public static string GetHudTimerText()
     {
         return hudTimerText;
     }
-    public static void SetHudTimerText(string text)
+    public static void SetHudTimerText(double time, bool countdown=true)
     {
-        hudTimerText = CorrectTimerValue(text);
+        if (countdown)
+        {
+            hudTimerText = CorrectCountdownValue(time);
+        }
+        else
+        {
+            hudTimerText = CorrectCountupValue(time);
+        }
     }
     // Return false if health falls to 0, true otherwise.
     public static bool ModHealth(ref int Health,ref int Recovery, int value, bool recoverableHP = false, bool force = false)
@@ -100,8 +107,10 @@ public class HUDLogic : MonoBehaviour
         Recovery = Health;
     }
 
-    private static string CorrectTimerValue(string value)
+    private static string CorrectCountdownValue(double time)
     {
+        string value = time.ToString("0");
+
         int numDigits = value.Length;
         if (numDigits > GameConstants.MAX_WHOLE_DIGITS_IN_TIMER)
         {
@@ -115,5 +124,25 @@ public class HUDLogic : MonoBehaviour
             return eValue;
         }
         return value;
+    }
+    private static string CorrectCountupValue(double time)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(time);
+        string formattedTime;
+        if (timeSpan.Days > 0)
+        {
+            int hours = (timeSpan.Days * 24) + timeSpan.Hours;
+            formattedTime = string.Format("{0:D2}:{1:D2}",
+                        hours,
+                        timeSpan.Minutes);
+        }
+        else
+        {
+            formattedTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                        timeSpan.Hours,
+                        timeSpan.Minutes,
+                        timeSpan.Seconds);
+        }
+        return formattedTime;
     }
 }

@@ -15,6 +15,9 @@ public class UserData
     private float masterVolume = GameConstants.DEFAULT_MASTER_VOLUME;
     private float musicVolume = GameConstants.DEFAULT_MUSIC_VOLUME;
     private float effectsVolume = GameConstants.DEFAULT_EFFECTS_VOLUME;
+    private bool gameTimer = false;
+    private bool skipCutscenes = false;
+    private bool equalLoadTimes = false;
 
     // Class Functions:
 
@@ -32,6 +35,9 @@ public class UserData
         SetMasterVolume(GameConstants.DEFAULT_MASTER_VOLUME);
         SetMusicVolume(GameConstants.DEFAULT_MUSIC_VOLUME);
         SetEffectsVolume(GameConstants.DEFAULT_EFFECTS_VOLUME);
+        SetGameTimer(false);
+        SetSkipCutscenes(false);
+        SetEqualLoadTimes(false);
 
         Screen.SetResolution(windowWidth, windowHeight, GetIsFullscreen());
         QualitySettings.vSyncCount = vSync;
@@ -42,6 +48,30 @@ public class UserData
         RunVSync();
         RunTargetFPS();
         RunIsFullscreen();
+    }
+    public bool GetGameTimer()
+    {
+        return gameTimer;
+    }
+    public void SetGameTimer(bool value)
+    {
+        gameTimer = value;
+    }
+    public bool GetSkipCutscenes()
+    {
+        return skipCutscenes;
+    }
+    public void SetSkipCutscenes(bool value)
+    {
+        skipCutscenes = value;
+    }
+    public bool GetEqualLoadTimes()
+    {
+        return equalLoadTimes;
+    }
+    public void SetEqualLoadTimes(bool value)
+    {
+        equalLoadTimes = value;
     }
     public float GetMasterVolume()
     {
