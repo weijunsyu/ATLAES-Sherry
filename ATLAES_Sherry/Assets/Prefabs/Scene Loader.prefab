@@ -25,10 +25,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4533150940509909229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8639476, y: -0.09104774, z: 18379.754}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7229798489285137444}
+  - {fileID: 3991963196252471536}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee1134efe22a4043ad26094b03d62b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingScreen: {fileID: 7229798489285137445}
-  progressBar: {fileID: 7229798489361663621}
---- !u!1001 &4533150941129589296
+  loadingScreen: {fileID: 3991963196252471537}
+  progressBar: {fileID: 3991963194800083537}
+--- !u!1001 &7916156927555475172
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -190,23 +190,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17025df37b2e0314197996392962b237, type: 3}
---- !u!224 &7229798489285137444 stripped
+--- !u!224 &3991963196252471536 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6538553383496635924, guid: 17025df37b2e0314197996392962b237,
     type: 3}
-  m_PrefabInstance: {fileID: 4533150941129589296}
+  m_PrefabInstance: {fileID: 7916156927555475172}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &7229798489285137445 stripped
+--- !u!223 &3991963196252471537 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 6538553383496635925, guid: 17025df37b2e0314197996392962b237,
     type: 3}
-  m_PrefabInstance: {fileID: 4533150941129589296}
+  m_PrefabInstance: {fileID: 7916156927555475172}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7229798489361663621 stripped
+--- !u!114 &3991963194800083537 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6538553382608503989, guid: 17025df37b2e0314197996392962b237,
     type: 3}
-  m_PrefabInstance: {fileID: 4533150941129589296}
+  m_PrefabInstance: {fileID: 7916156927555475172}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

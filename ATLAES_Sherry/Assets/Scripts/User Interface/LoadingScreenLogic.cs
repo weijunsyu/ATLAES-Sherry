@@ -25,8 +25,6 @@ public class LoadingScreenLogic : MonoBehaviour
         progressBar.minValue = MIN_SLIDER_VALUE;
         progressBar.maxValue = MAX_SLIDER_VALUE;
         progressBar.value = STARTING_SLIDER_VALUE;
-
-        
     }
 
     private void OnEnable()
@@ -40,13 +38,16 @@ public class LoadingScreenLogic : MonoBehaviour
     }
 
 
-    public void RunAnimation()
+    private void RunAnimation()
     {
         animate = StartCoroutine(AnimateRoutine(sprites));
     }
-    public void StopAnimation()
+    private void StopAnimation()
     {
-        StopCoroutine(animate);
+        if (animate != null)
+        {
+            StopCoroutine(animate);
+        }
     }
     private IEnumerator AnimateRoutine(Sprite[] sprites)
     {

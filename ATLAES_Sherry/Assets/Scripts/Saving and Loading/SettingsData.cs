@@ -15,6 +15,9 @@ public class SettingsData
     public float masterVolume;
     public float musicVolume;
     public float effectsVolume;
+    public bool gameTimer;
+    public bool skipCutscenes;
+    public bool equalLoadTimes;
 
 
     //constructor
@@ -32,5 +35,8 @@ public class SettingsData
         this.masterVolume = MasterManager.userData.GetMasterVolume();
         this.musicVolume = MasterManager.userData.GetMusicVolume();
         this.effectsVolume = MasterManager.userData.GetEffectsVolume();
+        this.gameTimer = MasterManager.userData.GetGameTimer();
+        this.skipCutscenes = MasterManager.userData.GetSkipCutscenes();
+        this.equalLoadTimes = MasterManager.userData.GetEqualLoadTimes();
     }
 }

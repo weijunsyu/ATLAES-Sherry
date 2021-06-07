@@ -11,7 +11,7 @@ public static class PlayerTimings
     public const float             PLAYER_RUN_SPEED = 6.0f;
     public static readonly float[] RUN_TIMES = { 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f, 0.08f };
 
-    public const float             PLAYER_JUMP_VELOCITY = 9f;
+    public const float             PLAYER_JUMP_VELOCITY = 9.5f;
     public const float             PLAYER_AIR_MOVE_SPEED = 5.0f;
 
     public static readonly float[] FALL_TIMES = { 0.1f, 0.1f };
@@ -24,7 +24,7 @@ public static class PlayerTimings
     
     public static readonly float[] SLIDE_TIMES = { 0.25f, 0.25f };
 
-    public const float             PLAYER_SIDING_JUMP_VELOCITY = 8.5f;
+    public const float             PLAYER_SIDING_JUMP_VELOCITY = 7.9225f; //7.93
     public const double            PLAYER_SLIDE_JUMP_DURATION = 0.1d;
 
 

@@ -25,11 +25,28 @@ public class MainMenuLogic : MonoBehaviour
     [SerializeField] private Sprite aemiliaInitial;
     [SerializeField] private Sprite sherryAemiliaFinal;
 
+    private MasterManager masterManager = null;
+    private SceneLoader sceneLoader = null;
+
     private void Awake()
     {
+        masterManager = FindObjectOfType<MasterManager>();
+        sceneLoader = masterManager.GetComponentInChildren<SceneLoader>();
         InitUserPreferences();
         InitMenuProgress();
     }
+
+
+    public void LoadScene(int sceneIndex)
+    {
+        sceneLoader.LoadSceneByIndex(sceneIndex);
+    }
+
+    public void QuitGame()
+    {
+        sceneLoader.QuitGame();
+    }
+
     private void InitMenuProgress()
     {
         sherry.sprite = sherryInitial;

@@ -71,6 +71,7 @@ public static class GameConstants
     public const int NUM_DISCRETE_VOLUME_VALUES = 21; // 0%, 5%, 10%, ... , 95%, 100% volume
 
     // User Interface Constants
+    public const double EQUALIZED_LOAD_TIME_IN_SECONDS = 5d;
     public const int MAX_WHOLE_DIGITS_IN_TIMER = 7;
     public const int MAX_E_VALUE_LENGTH_IN_TIMER = 8;
     public const byte MENU_ALPHA_DARKEN_VALUE = 150;
@@ -78,6 +79,12 @@ public static class GameConstants
     public static readonly Color32 BLACK = new Color32(20, 20, 20, 255);
     public static readonly Color32 WHITE = new Color32(252, 252, 252, 255);
     public static readonly Color32 RED = new Color32(208, 0, 0, 255);
+    public static readonly Color32 CYAN = new Color32(0, 209, 209, 255);
+    public static readonly Color32 OFF_WHITE = new Color32(197, 197, 197, 255);
+    public static readonly Color32 OFF_RED = new Color32(153, 0, 0, 255);
+    public static readonly Color32 OFF_CYAN = new Color32(0, 154, 154, 255);
+    public static readonly Color32 TRUE_WHITE = new Color32(255, 255, 255, 255);
+    public static readonly Color32 TRANSPARENT = new Color32(0, 0, 0, 0);
 
     // Game Mechanics
     public const double INPUT_BUFFER_LIFESPAN = 0.15d; // Number of seconds allowed before input buffer resets

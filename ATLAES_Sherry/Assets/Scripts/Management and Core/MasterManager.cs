@@ -33,6 +33,8 @@ public class MasterManager : MonoBehaviour
 
     // General Game Parameters
     public static double timeInSeconds = 0d;
+    public static double playTimeInSeconds = 0d;
+    public static bool startTimingGameplay = false;
     public static double fps = 0d;
     public static GameMode gameMode = GameMode.Singleplayer;
     public static double ping = 0d; // ping in ms
@@ -66,11 +68,20 @@ public class MasterManager : MonoBehaviour
     {
         timeInSeconds += Time.deltaTime;
         fps = 1 / Time.deltaTime;
+        
+        if (startTimingGameplay)
+        {
+            playTimeInSeconds += Time.deltaTime;
+        }
 
         if (gameMode == GameMode.Singleplayer)
         {
-            HUDLogic.SetHudTimerText(timeInSeconds.ToString("0"));
+            if (userData.GetGameTimer())
+            {
+                HUDLogic.SetHudTimerText(playTimeInSeconds, false);
+            }
         }
+        
 
         /* START DEBUGGING */
         
@@ -124,6 +135,12 @@ public class MasterManager : MonoBehaviour
             userData.SetMenuAlphaMask(settings.menuAlphaMask);
             userData.SetIsMinimalist(settings.isMinimalist);
             userData.SetMenuProgression(settings.menuProgression);
+            userData.SetMasterVolume(settings.masterVolume);
+            userData.SetMusicVolume(settings.musicVolume);
+            userData.SetEffectsVolume(settings.effectsVolume);
+            userData.SetGameTimer(settings.gameTimer);
+            userData.SetSkipCutscenes(settings.skipCutscenes);
+            userData.SetEqualLoadTimes(settings.equalLoadTimes);
 
             //Run the loaded settings immediate
             userData.RunAllUserData();
