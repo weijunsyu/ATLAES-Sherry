@@ -36,13 +36,15 @@ public class AnimationController : MonoBehaviour
     {
         spriteRenderer.sprite = sprite;
     }
-    //Does each
+    //Does each animation in order
     public void RunCompoundAnimation(ref Coroutine coroutine, params Animation[] animations)
     {
+        StopAnimation(ref coroutine);
         coroutine = StartCoroutine(CompoundAnimate(animations));
     }
     public void RunAnimation(Sprite[] sprites, float[] timings, ref Coroutine coroutine, bool loop = false, float scale = 1.0f)
     {
+        StopAnimation(ref coroutine);
         if (loop)
         {
             coroutine = StartCoroutine(AnimateLoop(sprites, timings, scale));
@@ -103,6 +105,9 @@ public class AnimationController : MonoBehaviour
     }
     public void StopAnimation(ref Coroutine coroutine)
     {
-        StopCoroutine(coroutine);
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
     }
 }

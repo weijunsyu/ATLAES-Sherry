@@ -10,8 +10,10 @@ public class PlayerMovingState : IState
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
-    AnimationController.Animation runStarup;
-    AnimationController.Animation runLoop;
+    private AnimationController.Animation runStarup;
+    private AnimationController.Animation runLoop;
+
+    private double timeInSeconds = 0d;
 
     public PlayerMovingState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -40,12 +42,24 @@ public class PlayerMovingState : IState
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
 
+        if (!playerController.isFlashCharging)
+        {
+            // If was not flash charging prior, reset timer
+            timeInSeconds = 0d;
+        }
+        WeaponType weapon = MasterManager.playerData.GetPrimaryWeapon();
+        if (weapon == WeaponType.NONE)
+        {
+            playerController.isFlashCharging = true; // Set flash charging to true
+        }
+        
         // Enable player controller
         PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
-
+        timeInSeconds += Time.deltaTime;
+        playerController.flashChargeGraceTimer = 0d;
     }
     public void ExecutePhysics()
     {
@@ -55,7 +69,29 @@ public class PlayerMovingState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
-        HandleMoveInput(PlayerTimings.PLAYER_RUN_SPEED);
+
+        if (timeInSeconds < GameConstants.FLASH_RUN_DELAY)
+        {
+            HandleMoveInput(PlayerTimings.PLAYER_RUN_SPEED);
+        }
+        else
+        {
+            playerController.isFlashing = true;
+            playerController.flashCooldownTimer = 0d;
+            HandleMoveInput(PlayerTimings.PLAYER_FLASH_SPEED);
+        }
+
+        if (AdvancedMovement.CheckFront(movementController))
+        {
+            playerController.isFlashCharging = false;
+            stateMachine.ChangeState(playerController.standingState);
+            return;
+        }
+
+        if (movementController.IsOnSlope())
+        {
+            timeInSeconds = 0d;
+        }
         //getting hit, and dying
     }
     public void Exit()

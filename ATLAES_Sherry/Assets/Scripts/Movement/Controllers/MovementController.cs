@@ -9,10 +9,12 @@ public class MovementController : MonoBehaviour
 
     // Cached References:
     [SerializeField] public LayerMask groundLayer;
+    [SerializeField] public PhysicsMaterial2D standardMaterial;
+    [SerializeField] public PhysicsMaterial2D slopeMaterial;
     
     [HideInInspector] public Rigidbody2D body;
     [HideInInspector] public BoxCollider2D boxCollider;
-    [HideInInspector] private SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     // Public Variables:
     [HideInInspector] public Vector2 standColliderSize;
@@ -21,6 +23,9 @@ public class MovementController : MonoBehaviour
     [HideInInspector] public Vector2 crouchColliderOffset;
     [HideInInspector] public Vector2 jumpApexColliderSize;
     [HideInInspector] public Vector2 jumpApexColliderOffset;
+
+    [HideInInspector] public Vector2 slopeTangent;
+    [HideInInspector] public Vector2 slopeNormal;
 
     // State Parameters and Objects:
     private const float COLL_OFFSET_X = 0f;
@@ -34,7 +39,8 @@ public class MovementController : MonoBehaviour
 
     private bool isFacingRight = true;
     private bool isAirborne = false;
-    
+    private bool isOnSlope = false;
+
 
     // Unity Events:
     private void Awake()
@@ -52,6 +58,8 @@ public class MovementController : MonoBehaviour
 
         boxCollider.offset = standColliderOffset;
         boxCollider.size = standColliderSize;
+
+        boxCollider.enabled = true;
     }
 
     // Class Functions:
@@ -68,15 +76,90 @@ public class MovementController : MonoBehaviour
     {
         return isAirborne;
     }
+    public bool IsOnSlope()
+    {
+        return isOnSlope;
+    }
     public Vector2 GetVelocity()
     {
         return body.velocity;
     }
+    public bool UpdateIsOnSlope()
+    {
+        Bounds bounds = boxCollider.bounds;
+        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - bounds.extents.y);
+        float rayLength = bounds.size.x + GameConstants.SLOPE_CHECK_RAY_LENGTH_OFFSET;
+        Vector2 frontPos = origin;
+        Vector2 backPos = origin;
+
+        float slopeAngleFromVerticalFront = 0;
+        float slopeAngleFromVerticalBack = 0;
+        Vector2 slopeTangentFront = new Vector2();
+        Vector2 slopeTangentBack = new Vector2();
+        bool onSlopeFront = false;
+        bool onSlopeBack = false;
+        float xOffset = bounds.extents.x;
+
+        if (IsFacingRight())
+        {
+            frontPos.x += xOffset;
+            backPos.x -= xOffset;
+        }
+        else
+        {
+            frontPos.x -= xOffset;
+            backPos.x += xOffset;
+        }
+
+        RaycastHit2D hitFront = SlopeCheck(frontPos, rayLength, ref slopeAngleFromVerticalFront,
+                                           ref slopeTangentFront, ref onSlopeFront, true);
+        RaycastHit2D hitBack = SlopeCheck(backPos, rayLength, ref slopeAngleFromVerticalBack,
+                                          ref slopeTangentBack, ref onSlopeBack, true);
+
+        Debug.DrawRay(frontPos, (Vector2.down * rayLength), Color.cyan);
+        Debug.DrawRay(backPos, (Vector2.down * rayLength), Color.red);
+
+        if (onSlopeFront && !onSlopeBack)
+        {
+            slopeTangent = slopeTangentFront;
+            isOnSlope = true;
+        }
+        else if (!onSlopeFront && onSlopeBack)
+        {
+            // hitBack MUST be true:
+            if (hitFront)
+            {
+                if (hitBack.point.y < hitFront.point.y)
+                {
+                    slopeTangent = Vector2.left;
+                }
+                else
+                {
+                    slopeTangent = slopeTangentBack;
+                }
+            }
+            else
+            {
+                slopeTangent = slopeTangentBack;
+            }
+            isOnSlope = true;
+        }
+        else if (onSlopeFront && onSlopeBack)
+        {
+            slopeTangent = (slopeTangentFront + slopeTangentBack) / 2;
+            isOnSlope = true;
+        }
+        else
+        {
+            isOnSlope = false;
+        }
+        return isOnSlope;
+    }
     public bool UpdateAirborne()
     {
         Vector2 overlapCenter = new Vector2(boxCollider.bounds.center.x, (boxCollider.bounds.center.y - boxCollider.bounds.extents.y));
-        Vector2 overlapSize = new Vector2((boxCollider.bounds.extents.x * 2) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET,
-                                          GameConstants.COLLISION_CHECK_DISTANCE_OFFSET);
+        Vector2 overlapSize = new Vector2((boxCollider.bounds.size.x) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET,
+                                          GameConstants.COLLISION_CHECK_DISTANCE_OFFSET - GameConstants.COLLISION_CHECK_SHRINK_OFFSET);
         Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
 
         isAirborne = (colliderHit == null);
@@ -140,5 +223,38 @@ public class MovementController : MonoBehaviour
     {
         spriteRenderer.flipX = !spriteRenderer.flipX;
         isFacingRight = !isFacingRight;
+    }
+    private RaycastHit2D SlopeCheck(Vector2 checkPosition, float checkLength, 
+                                        ref float slopeAngle, ref Vector2 slopeTangent, 
+                                        ref bool onSlope, bool test = false)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.down, checkLength, groundLayer);
+
+        if (hit)
+        {
+            slopeNormal = hit.normal;
+            slopeTangent = Vector2.Perpendicular(slopeNormal.normalized);
+            slopeAngle = Vector2.Angle(slopeNormal, Vector2.up);
+
+            if (slopeAngle == 0)
+            {
+                onSlope = false;
+            }
+            else
+            {
+                onSlope = true;
+            }
+
+            if (test)
+            {
+                Debug.DrawRay(hit.point, slopeTangent, Color.green);
+                Debug.DrawRay(hit.point, slopeNormal, Color.green);
+            }
+        }
+        else
+        {
+            onSlope = false;
+        }
+        return hit;
     }
 }

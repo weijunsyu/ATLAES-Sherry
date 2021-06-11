@@ -26,8 +26,11 @@ public class PlayerStandingGuardState : IState
     public void Enter()
     {
         RunAnimation();
-
-        BasicMovement.StopHorizontal(movementController);
+        if (movementController.IsOnSlope())
+        {
+            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
+        }
+        BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
@@ -57,13 +60,19 @@ public class PlayerStandingGuardState : IState
         {
             if (movementController.IsFacingRight())
             {
-                stateMachine.ChangeState(playerController.strafingForwardsState);
-                return;
+                if (!AdvancedMovement.CheckFront(movementController))
+                {
+                    stateMachine.ChangeState(playerController.strafingForwardsState);
+                    return;
+                } 
             }
             else
             {
-                stateMachine.ChangeState(playerController.strafingBackwardsState);
-                return;
+                if (!AdvancedMovement.CheckBack(movementController))
+                {
+                    stateMachine.ChangeState(playerController.strafingBackwardsState);
+                    return;
+                }
             }
             
         }
@@ -71,13 +80,19 @@ public class PlayerStandingGuardState : IState
         {
             if (movementController.IsFacingRight())
             {
-                stateMachine.ChangeState(playerController.strafingBackwardsState);
-                return;
+                if (!AdvancedMovement.CheckBack(movementController))
+                {
+                    stateMachine.ChangeState(playerController.strafingBackwardsState);
+                    return;
+                }
             }
             else
             {
-                stateMachine.ChangeState(playerController.strafingForwardsState);
-                return;
+                if (!AdvancedMovement.CheckFront(movementController))
+                {
+                    stateMachine.ChangeState(playerController.strafingForwardsState);
+                    return;
+                }
             }
         }
         if (PlayerInputController.pressedInputs[5] == false) // guard release
@@ -96,6 +111,7 @@ public class PlayerStandingGuardState : IState
         {
             animationController.StopAnimation(ref animate);
         }
+        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

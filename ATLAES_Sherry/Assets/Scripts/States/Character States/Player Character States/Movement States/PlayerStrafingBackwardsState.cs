@@ -53,6 +53,11 @@ public class PlayerStrafingBackwardsState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
+        if (AdvancedMovement.CheckBack(movementController))
+        {
+            stateMachine.ChangeState(playerController.standingGuardState);
+            return;
+        }
         if (PlayerInputController.pressedInputs[5] == false) // guard release
         {
             stateMachine.ChangeState(playerController.standingState);

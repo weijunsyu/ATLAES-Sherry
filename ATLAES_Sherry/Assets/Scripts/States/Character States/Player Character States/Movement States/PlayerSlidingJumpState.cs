@@ -10,6 +10,7 @@ public class PlayerSlidingJumpState : IState
     private PlayerAnimations animations = null;
 
     private double timeInSeconds = 0d;
+    private bool isFacingRight = false;
 
     public PlayerSlidingJumpState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -26,6 +27,7 @@ public class PlayerSlidingJumpState : IState
         animationController.SetSprite(animations.slideJump[0]);
 
         timeInSeconds = 0;
+        isFacingRight = movementController.IsFacingRight();
         HandleHorizontalVelocity(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
         BasicMovement.Jump(movementController, PlayerTimings.PLAYER_SIDING_JUMP_VELOCITY);
         movementController.SetAirborne(true);
@@ -55,15 +57,15 @@ public class PlayerSlidingJumpState : IState
 
     private void HandleHorizontalVelocity(float speed)
     {
-        if (movementController.IsFacingRight())
+        if (isFacingRight)
         {
             //jump left
-            BasicMovement.MoveWithTurn(movementController, -speed);
+            BasicMovement.Strafe(movementController, -speed);
         }
         else
         {
             //jump right
-            BasicMovement.MoveWithTurn(movementController, speed);
+            BasicMovement.Strafe(movementController, speed);
         }
     }
 }

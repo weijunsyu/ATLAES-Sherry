@@ -24,8 +24,11 @@ public class PlayerCombatIdleState : IState
     public void Enter()
     {
         RunAnimation();
-
-        BasicMovement.StopHorizontal(movementController);
+        if (movementController.IsOnSlope())
+        {
+            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
+        }
+        BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
@@ -71,6 +74,7 @@ public class PlayerCombatIdleState : IState
         {
             animationController.StopAnimation(ref animate);
         }
+        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5380484629651442636}
   - component: {fileID: 4260310465997908138}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Primary Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 5465563479394131771}
   - component: {fileID: 7240183402300765222}
   - component: {fileID: 3734645940500132576}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -275,6 +275,10 @@ MonoBehaviour:
   jumpInputBuffer: 0
   isInCombat: 0
   combatTimer: 0
+  isFlashCharging: 0
+  flashChargeGraceTimer: 0
+  isFlashing: 0
+  flashCooldownTimer: 0
   isChargedCrouching: 0
   crouchingChargeTimer: 0
   isChargedStanding: 0
@@ -298,6 +302,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  standardMaterial: {fileID: 6200000, guid: fc316aa159331a54dab49721a3775e8c, type: 2}
+  slopeMaterial: {fileID: 6200000, guid: 28bc140bca0ec9f4c85eaad4ea1d6b19, type: 2}
   body: {fileID: 0}
   boxCollider: {fileID: 0}
   standColliderSize: {x: 0, y: 0}
@@ -306,6 +312,7 @@ MonoBehaviour:
   crouchColliderOffset: {x: 0, y: 0}
   jumpApexColliderSize: {x: 0, y: 0}
   jumpApexColliderOffset: {x: 0, y: 0}
+  slopeTangent: {x: 0, y: 0}
 --- !u!114 &5465563479394131771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,7 +562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6177288247087641276}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +576,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6177288247087641267}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -588,7 +595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6177288247472782781}
   - component: {fileID: 6177288247472782780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Follow Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -603,7 +610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6177288247472782771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00000017881393, y: 1.0499998, z: -10}
+  m_LocalPosition: {x: 0, y: 1.0499992, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1714411931321700773}
@@ -655,7 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2975239784989065533}
   - component: {fileID: 1298064015356607310}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Secondary Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -738,7 +745,7 @@ GameObject:
   - component: {fileID: 1714411931321700773}
   - component: {fileID: 2013462484429150990}
   - component: {fileID: 4859254332216059770}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

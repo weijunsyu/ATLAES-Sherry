@@ -40,7 +40,7 @@ public class PlayerSlidingState : IState
     public void ExecutePhysics()
     {
         AdvancedMovement.Slide(movementController, GameConstants.WALL_SLIDE_MAX_DROP_SPEED);
-        playerController.HandleMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+        playerController.HandleAirborneMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
         if (playerController.HandleSlideCheck()) // is sliding
         {
             movementController.UpdateAirborne();

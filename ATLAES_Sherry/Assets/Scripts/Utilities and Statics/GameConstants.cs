@@ -28,6 +28,9 @@ public enum NamedNPC
 
 public static class GameConstants
 {
+    // Math and Meta Constants
+    public const float EPSILON = 0.005f;
+
     // Save Settings
     public const string SAVEPATH = null; //specify the save path (currently NOT in use instead using: Application.persistentDataPath within SaveSystem.cs)
     public const string SAVEFILE = "savedata.save";
@@ -91,7 +94,11 @@ public static class GameConstants
     public const int INPUT_BUFFER_MAX_LENGTH = 20; // Number of inputs to check at maximum in buffer
     public const float COLLISION_CHECK_SHRINK_OFFSET = -0.05f; // Offset to shrink collision checks to prevent false positives
     public const float COLLISION_CHECK_DISTANCE_OFFSET = 0.02f; // Distance offset for extending overlap projection to act as buffer
-    public const float SLIDING_CHECK_DISTANCE_CAST = 0.02f;
+    public const float FRONT_CHECK_DISTANCE_CAST = 0.02f;
+    public const float BACK_CHECK_DISTANCE_CAST = 0.02f;
+    public const float FRONT_CHECK_FAR_DISTANCE_CAST = 0.05f;
+    public const float SLOPE_CHECK_RAY_LENGTH_OFFSET = 0.06f;
+    public const float SLOPE_FRONT_RAY_LENGTH_SCALE = 3f;
     public const float FLOATING_BODY_GRAVITY_MODIFIER = 6f; // Factor to modify gravity by while floating
     public const float FLOATING_MAX_DROP_SPEED = -8f; // The max velocity a rigidbody can move at in the y plane while floating
     public const float WALL_SLIDE_MAX_DROP_SPEED = -4f;
@@ -107,8 +114,12 @@ public static class GameConstants
     public const int MAX_HP = 100;
 
     // Player Constants
-    public const double COYOTE_JUMP_DELAY = 0.0625d; // Amount of time after player leaves valid state for jump where player may still jump
+    public const double COYOTE_JUMP_DELAY = 0.05d; // Amount of time after player leaves valid state for jump where player may still jump
     public const double JUMP_BUFFER = 0.0625d; // If player jumps during invalid state, hold jump command for time JUMP_BUFFER and induce jump if valid state while buffer > 0
+    public const double SLIDE_JUMP_BUFFER = 0.05d; // If player jumps in the air and was sliding immediately prior this is the allowed time where they will still perform the sliding jump
+    public const double FLASH_RUN_DELAY = 3d; // Number of seconds before you start flash running.
+    public const double FLASH_RUN_GRACE = 0.08d; // Number of seconds where you can stop moving yet still charge the flash
+    public const double FLASH_CHARGE_HOLD_TIME = 0.5d; // Number of seconds after performing a flash where the flash charge can be held without holding crouch
     public const double COMBAT_COOLDOWN = 5d; // Time in seconds after doing an attack before character "ends" combat.
     public const int NUMBER_NORMALS = 9; // Number of normal attacks (3 standing buttons, 3 airborne, 3 crouching)
     public const int PLAYER_INVENTORY_SIZE = 10; // Size of the player inventory
