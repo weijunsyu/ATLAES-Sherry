@@ -17,13 +17,24 @@ public class PlayerJumpingState : IState
         movementController = playerController.movementController;
         animationController = playerController.animationController;
         animations = (PlayerAnimations)animationController.animationsList;
+
     }
 
     public void Enter()
     {
         animationController.SetSprite(animations.jump[0]);
         
-        BasicMovement.Jump(movementController, PlayerTimings.PLAYER_JUMP_VELOCITY);
+        if (playerController.isFlashing && stateMachine.prevState == playerController.crouchingState)
+        {
+            // If was crouching and flashing, then do flash vertical jump
+            BasicMovement.Jump(movementController, PlayerTimings.PLAYER_FLASH_VERTICAL_JUMP_VELOCITY);
+        }
+        else
+        {
+            BasicMovement.Jump(movementController, PlayerTimings.PLAYER_JUMP_VELOCITY);
+            //Debug.Log("jumping");
+        }
+        
         movementController.SetAirborne(true);
 
         // Enable player controller
@@ -45,7 +56,9 @@ public class PlayerJumpingState : IState
             stateMachine.ChangeState(playerController.fallingState);
             return;
         }
-        playerController.HandleMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+
+        playerController.HandleAirborneMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+
         if (playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.slidingState);
@@ -86,6 +99,13 @@ public class PlayerJumpingState : IState
                 {
                     playerController.canAirDash = false;
                     stateMachine.ChangeState(playerController.dashingState);
+                }
+                break;
+            case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
+                if (AdvancedMovement.CheckFront(movementController))
+                {
+                    // If near wall perform a wall jump (slide jump)
+                    stateMachine.ChangeState(playerController.slidingJumpState);
                 }
                 break;
         }

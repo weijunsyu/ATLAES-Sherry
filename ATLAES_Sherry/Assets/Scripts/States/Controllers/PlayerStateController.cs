@@ -46,7 +46,11 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
     [HideInInspector] public bool isInCombat = false;
     [HideInInspector] public double combatTimer = 0d;
-    
+    [HideInInspector] public bool isFlashCharging = false;
+    [HideInInspector] public double flashChargeGraceTimer = 0d;
+    [HideInInspector] public bool isFlashing = false;
+    [HideInInspector] public double flashCooldownTimer = 0d;
+
     [HideInInspector] public bool isChargedCrouching = false; // used to determine if the player has held a crouching charge
     [HideInInspector] public double crouchingChargeTimer = 0d;
     
@@ -78,6 +82,11 @@ public class PlayerStateController : AbstractStateController
         jumpInputBuffer = false;
         combatTimer = 0d;
         isInCombat = false;
+        isFlashCharging = false;
+        flashChargeGraceTimer = 0d;
+        isFlashing = false;
+        flashCooldownTimer = 0d;
+        
         isChargedCrouching = false;
         crouchingChargeTimer = 0d;
         isChargedStanding = false;
@@ -86,6 +95,7 @@ public class PlayerStateController : AbstractStateController
         strafingBackChargeTimer = 0d;
         isChargedStrafingFront = false;
         strafingFrontChargeTimer = 0d;
+        
         weapons.SetPrimaryWeaponSprite(MasterManager.playerData.GetPrimaryWeapon());
         weapons.SetSecondaryWeaponSprite(MasterManager.playerData.GetSecondaryWeapon());
         actionController.ResetInputBuffer();
@@ -109,6 +119,17 @@ public class PlayerStateController : AbstractStateController
         if (combatTimer > GameConstants.COMBAT_COOLDOWN)
         {
             isInCombat = false;
+        }
+        
+        flashChargeGraceTimer += Time.deltaTime;
+        if(flashChargeGraceTimer > GameConstants.FLASH_RUN_GRACE)
+        {
+            isFlashCharging = false;
+        }
+        flashCooldownTimer += Time.deltaTime;
+        if (flashCooldownTimer > GameConstants.FLASH_CHARGE_HOLD_TIME)
+        {
+            isFlashing = false;
         }
 
         crouchingChargeTimer += Time.deltaTime;
@@ -139,6 +160,7 @@ public class PlayerStateController : AbstractStateController
     {
         base.FixedUpdate();
     }
+
     private void OnDisable()
     {
         actionController.ResetInputBuffer();
@@ -178,16 +200,16 @@ public class PlayerStateController : AbstractStateController
         // Initialize the starting states
         startState = standingState;
     }
-    public void HandleMoveInput(float speed)
+    public void HandleAirborneMoveInput(float speed)
     {
         // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
         if (PlayerInputController.pressedInputs[1] == true) // right
         {
-            BasicMovement.MoveWithTurn(movementController, speed);
+            BasicMovement.MoveWithTurn(movementController, speed, 0, false);
         }
         else if (PlayerInputController.pressedInputs[2] == true) // left
         {
-            BasicMovement.MoveWithTurn(movementController, -speed);
+            BasicMovement.MoveWithTurn(movementController, -speed, 0, false);
         }
         else // right and left both unpressed
         {
@@ -197,25 +219,48 @@ public class PlayerStateController : AbstractStateController
     // return true if sliding and false otherwise
     public bool HandleSlideCheck()
     {
-        if (AdvancedMovement.CheckFront(movementController)) // if wall in front of player
+        if (AdvancedMovement.CheckSlide(movementController)) // if wall in front of player
         {
-            // If facing right and NOT pressing right button
-            if (movementController.IsFacingRight() && !PlayerInputController.pressedInputs[1])
+            if (movementController.GetVelocity().y > 0)
             {
-                return false;
+                if (AdvancedMovement.CheckDown(movementController))
+                {
+                    return false;
+                }
+                else
+                {
+                    return SlideCheckRoutine();
+                }
             }
-            // Else if facing left and NOT pressing left button
-            else if (!movementController.IsFacingRight() && !PlayerInputController.pressedInputs[2])
+            else
             {
-                return false;
+                return SlideCheckRoutine();
             }
-            return true;
         }
         else //Nothing in front
         {
             return false;
         }
     }
+
+    // Assuming there is a wall in front of player and sliding is valid,
+    // return true if the player is holding the correct input to initiate a slide
+    // otherwise, return false.
+    private bool SlideCheckRoutine()
+    {
+        // If facing right and NOT pressing right button
+        if (movementController.IsFacingRight() && !PlayerInputController.pressedInputs[1])
+        {
+            return false;
+        }
+        // Else if facing left and NOT pressing left button
+        else if (!movementController.IsFacingRight() && !PlayerInputController.pressedInputs[2])
+        {
+            return false;
+        }
+        return true;
+    }
+
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
         switch (inputEvent.input)

@@ -54,7 +54,7 @@ public class MasterManager : MonoBehaviour
         /* START DEBUGGING */
         ResetGame();
         playerData.SetPrimaryWeapon(WeaponType.NONE, true, true);
-        playerData.SetSecondaryWeapon(WeaponType.UNARMED, true, true);
+        playerData.SetSecondaryWeapon(WeaponType.NONE, true, true);
         /* END DEBUGGING */
     }
 
@@ -81,7 +81,7 @@ public class MasterManager : MonoBehaviour
                 HUDLogic.SetHudTimerText(playTimeInSeconds, false);
             }
         }
-        
+
 
         /* START DEBUGGING */
         

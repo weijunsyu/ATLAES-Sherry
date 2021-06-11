@@ -1,14 +1,23 @@
-﻿public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y only, both x and y)
+﻿using UnityEngine;
+
+public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y only, both x and y)
 {
     public static void Jump(MovementController movementController, float linearVelocity)
     {
         movementController.SetVertical(linearVelocity);
     }
-    public static void Strafe(MovementController movementController, float linearVelocity)
+    public static void Strafe(MovementController movementController, float linearVelocity, bool sliding = true)
     {
-        movementController.SetHorizontal(linearVelocity);
+        if (sliding && movementController.IsOnSlope())
+        {
+            MoveOnSlope(movementController, linearVelocity);
+        }
+        else
+        {
+            movementController.SetHorizontal(linearVelocity);
+        }
     }
-    public static void MoveWithTurn(MovementController movementController, float linearVelocity, int direction = 0)
+    public static void MoveWithTurn(MovementController movementController, float linearVelocity, int direction = 0, bool sliding = true)
     {
         if (linearVelocity > 0 || direction == 1) //move to the right
         {
@@ -24,11 +33,18 @@
                 movementController.Turn(); //turn to face left
             }
         }
-        //If linearVelocity == 0 then do nothing
-        movementController.SetHorizontal(linearVelocity);
+        if (sliding)
+        {
+            movementController.UpdateIsOnSlope();
+        }
+        Strafe(movementController, linearVelocity, sliding);
     }
-    public static void StopHorizontal(MovementController movementController)
+    public static void StopHorizontal(MovementController movementController, bool sliding = false)
     {
+        if(sliding && movementController.UpdateIsOnSlope())
+        {
+            StopVertical(movementController);
+        }
         movementController.SetHorizontal(0);
     }
     public static void StopVertical(MovementController movementController)
@@ -40,5 +56,16 @@
     {
         StopHorizontal(movementController);
         StopVertical(movementController);
+    }
+
+
+    private static void MoveOnSlope(MovementController movementController, float linearVelocity)
+    {
+        Vector2 slopeTangent = movementController.slopeTangent;
+        Vector2 newVelocity = new Vector2(-linearVelocity * slopeTangent.x,
+                                          -linearVelocity * slopeTangent.y);
+        
+        movementController.SetHorizontal(newVelocity.x);
+        movementController.SetVertical(newVelocity.y);
     }
 }

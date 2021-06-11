@@ -27,8 +27,11 @@ public class PlayerCrouchingState : IState
     public void Enter()
     {
         animationController.SetSprite(animations.crouch[0]);
-
-        BasicMovement.StopHorizontal(movementController);
+        if (movementController.IsOnSlope())
+        {
+            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
+        }
+        BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Crouch(movementController);
         timeInSeconds = 0d;
 
@@ -43,6 +46,8 @@ public class PlayerCrouchingState : IState
             playerController.isChargedCrouching = true;
             playerController.crouchingChargeTimer = 0d;
         }
+
+        playerController.flashCooldownTimer = 0d;
     }
     public void ExecutePhysics()
     {
@@ -85,6 +90,7 @@ public class PlayerCrouchingState : IState
         {
             animationController.StopAnimation(ref animate);
         }
+        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
@@ -113,6 +119,12 @@ public class PlayerCrouchingState : IState
                 break;
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 stateMachine.ChangeState(playerController.dashingState);
+                break;
+            case PlayerInputController.RawInput.JUMP_PRESS: // Jump
+                if (playerController.isFlashing) // Only allow jumping in flashing state
+                {
+                    stateMachine.ChangeState(playerController.jumpingState);
+                }
                 break;
         }
     }

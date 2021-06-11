@@ -46,7 +46,9 @@ public class PlayerFallingState : IState
             stateMachine.ChangeState(playerController.standingState); // Go to standing state
             return;
         }
-        playerController.HandleMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+
+        playerController.HandleAirborneMoveInput(PlayerTimings.PLAYER_AIR_MOVE_SPEED);
+
         if (playerController.HandleSlideCheck())
         {
             stateMachine.ChangeState(playerController.slidingState);
@@ -93,14 +95,36 @@ public class PlayerFallingState : IState
                 }
                 break;
             case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
-                if (stateMachine.prevState == playerController.movingState)
+                if (AdvancedMovement.CheckFront(movementController))
+                {
+                    // If near wall perform a wall jump (slide jump)
+                    stateMachine.ChangeState(playerController.slidingJumpState);
+                }
+                else if (stateMachine.prevState == playerController.slidingState)
+                {
+                    // coyote jump but with sliding
+                    if (timeInSeconds < GameConstants.SLIDE_JUMP_BUFFER)
+                    {
+                        if (AdvancedMovement.CheckSlideFar(movementController))
+                        {
+                            stateMachine.ChangeState(playerController.slidingJumpState);
+                        }
+                        else
+                        {
+                            movementController.Turn();
+                            stateMachine.ChangeState(playerController.slidingJumpState);
+                        }
+                        
+                    }
+                }
+                else if (stateMachine.prevState == playerController.movingState)
                 {
                     if (timeInSeconds < GameConstants.COYOTE_JUMP_DELAY)
                     {
                         stateMachine.ChangeState(playerController.jumpingState);
                     }
                 }
-                else // Previous state was NOT moving state
+                else // Previous state was NOT moving state or sliding state
                 {
                     playerController.jumpBufferTimer = 0d; // Reset the timer
                     playerController.jumpInputBuffer = true; // Buffer the jump command

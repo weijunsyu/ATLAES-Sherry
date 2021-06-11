@@ -26,8 +26,11 @@ public class PlayerCrouchingGuardState : IState
     public void Enter()
     {
         RunAnimation();
-
-        BasicMovement.StopHorizontal(movementController);
+        if (movementController.IsOnSlope())
+        {
+            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
+        }
+        BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Crouch(movementController);
         playerController.canAirDash = true;
         timeInSeconds = 0d;
@@ -76,6 +79,7 @@ public class PlayerCrouchingGuardState : IState
         {
             animationController.StopAnimation(ref animate);
         }
+        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

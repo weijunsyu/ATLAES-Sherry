@@ -8092,8 +8092,8 @@ MonoBehaviour:
   m_text: "<b>Director:</b> WeiJun Syu\n<b>Developer:</b> WeiJun Syu\n<b>Animation
     and Graphics:</b> WeiJun Syu\n<b>Music and Sound:</b> -\n<b>Quality Assurance:</b>
     Vincent Wallinger\n\n<b>Writing:</b> \n\t- WeiJun Syu\n\n<b>Special Thanks:</b>\nAdam
-    Li, Andrew Amistad, Daniel Guo, David \"Dav\" Zecchel, Erika Root, John Wong,
-    Thomas Tran, ZiHao Wang\n\n<b>Everything Else:</b> WeiJun Syu"
+    Li, Andrew Amistad, Daniel Guo, David \"Dav\" Zecchel, Erika Root, Eugene Kang,
+    John Wong, Thomas Tran, ZiHao Wang\n\n<b>Everything Else:</b> WeiJun Syu"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 614698039f9882a459b208e8e74d00eb, type: 2}
   m_sharedMaterial: {fileID: -2053273287147719728, guid: 614698039f9882a459b208e8e74d00eb,

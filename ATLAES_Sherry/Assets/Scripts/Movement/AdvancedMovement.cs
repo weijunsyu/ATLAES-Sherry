@@ -36,11 +36,11 @@ public static bool CanStand(MovementController movementController)
         }
     }
     //return true if object in front of lower leg
-    public static bool CheckFront(MovementController movementController)
+    public static bool CheckSlide(MovementController movementController)
     {
         Bounds bounds = movementController.boxCollider.bounds;
         Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - (bounds.extents.y * 0.66f));
-        Vector2 size = new Vector2(GameConstants.SLIDING_CHECK_DISTANCE_CAST, (bounds.extents.y * 0.66f));
+        Vector2 size = new Vector2(GameConstants.FRONT_CHECK_DISTANCE_CAST, (bounds.extents.y * 0.66f));
         Vector2 rayDirection;
         if (movementController.IsFacingRight())
         {
@@ -56,6 +56,92 @@ public static bool CanStand(MovementController movementController)
         //Vector2 botV = new Vector2(origin.x, (origin.y - (size.y / 2)));
         //Debug.DrawRay((Vector3)(topV), (Vector3)(rayDirection * 50f), Color.green);
         //Debug.DrawRay((Vector3)(botV), (Vector3)(rayDirection * 50f), Color.green);
+
+        Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
+        return (colliderHit != null);
+    }
+
+    //return true if object in front of lower leg
+    public static bool CheckFront(MovementController movementController)
+    {
+        Bounds bounds = movementController.boxCollider.bounds;
+        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y);
+        Vector2 size = new Vector2(GameConstants.FRONT_CHECK_DISTANCE_CAST, (bounds.size.y + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
+        Vector2 rayDirection;
+        if (movementController.IsFacingRight())
+        {
+            rayDirection = Vector2.right;
+            origin.x += bounds.extents.x;
+        }
+        else
+        {
+            rayDirection = Vector2.left;
+            origin.x -= bounds.extents.x;
+        }
+        //Vector2 topV = new Vector2(origin.x, (origin.y + (size.y / 2)));
+        //Vector2 botV = new Vector2(origin.x, (origin.y - (size.y / 2)));
+        //Debug.DrawRay((Vector3)(topV), (Vector3)(rayDirection * 50f), Color.green);
+        //Debug.DrawRay((Vector3)(botV), (Vector3)(rayDirection * 50f), Color.green);
+
+        Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
+        return (colliderHit != null);
+    }
+    //return true if object behind of lower leg
+    public static bool CheckBack(MovementController movementController)
+    {
+        Bounds bounds = movementController.boxCollider.bounds;
+        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y);
+        Vector2 size = new Vector2(GameConstants.BACK_CHECK_DISTANCE_CAST, (bounds.extents.y + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
+        Vector2 rayDirection;
+        if (movementController.IsFacingRight())
+        {
+            rayDirection = Vector2.left;
+            origin.x -= bounds.extents.x;
+        }
+        else
+        {
+            rayDirection = Vector2.right;
+            origin.x += bounds.extents.x;
+        }
+        //Vector2 topV = new Vector2(origin.x, (origin.y + (size.y / 2)));
+        //Vector2 botV = new Vector2(origin.x, (origin.y - (size.y / 2)));
+        //Debug.DrawRay((Vector3)(topV), (Vector3)(rayDirection * 50f), Color.green);
+        //Debug.DrawRay((Vector3)(botV), (Vector3)(rayDirection * 50f), Color.green);
+
+        Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
+        return (colliderHit != null);
+    }
+    public static bool CheckSlideFar(MovementController movementController)
+    {
+        Bounds bounds = movementController.boxCollider.bounds;
+        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - (bounds.extents.y * 0.66f));
+        Vector2 size = new Vector2(GameConstants.FRONT_CHECK_FAR_DISTANCE_CAST, (bounds.extents.y * 0.66f));
+        Vector2 rayDirection;
+        if (movementController.IsFacingRight())
+        {
+            rayDirection = Vector2.right;
+            origin.x += bounds.extents.x;
+        }
+        else
+        {
+            rayDirection = Vector2.left;
+            origin.x -= bounds.extents.x;
+        }
+        //Vector2 topV = new Vector2(origin.x, (origin.y + (size.y / 2)));
+        //Vector2 botV = new Vector2(origin.x, (origin.y - (size.y / 2)));
+        //Debug.DrawRay((Vector3)(topV), (Vector3)(rayDirection * 50f), Color.green);
+        //Debug.DrawRay((Vector3)(botV), (Vector3)(rayDirection * 50f), Color.green);
+
+        Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
+        return (colliderHit != null);
+    }
+
+    public static bool CheckDown(MovementController movementController)
+    {
+        Bounds bounds = movementController.boxCollider.bounds;
+        Vector2 origin = new Vector2(bounds.center.x, (bounds.center.y - bounds.extents.y));
+        Vector2 size = new Vector2(bounds.size.x + GameConstants.COLLISION_CHECK_SHRINK_OFFSET,
+                                   bounds.size.y);
 
         Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
         return (colliderHit != null);
