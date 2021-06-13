@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class MovementController : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class MovementController : MonoBehaviour
 
     // Cached References:
     [SerializeField] public LayerMask groundLayer;
-    [SerializeField] public PhysicsMaterial2D standardMaterial;
-    [SerializeField] public PhysicsMaterial2D slopeMaterial;
+    [SerializeField] private PhysicsMaterial2D standardMaterial;
+    [SerializeField] private PhysicsMaterial2D slopeMaterial;
     
     [HideInInspector] public Rigidbody2D body;
-    [HideInInspector] public BoxCollider2D boxCollider;
+    private BoxCollider2D boxCollider;
+    private CapsuleCollider2D capsuleCollider;
     private SpriteRenderer spriteRenderer;
 
     // Public Variables:
@@ -25,7 +27,8 @@ public class MovementController : MonoBehaviour
     [HideInInspector] public Vector2 jumpApexColliderOffset;
 
     [HideInInspector] public Vector2 slopeTangent;
-    [HideInInspector] public Vector2 slopeNormal;
+    //[HideInInspector] public Vector2 slopeNormal;
+    //[HideInInspector] public float slopeAngle = 0;
 
     // State Parameters and Objects:
     private const float COLL_OFFSET_X = 0f;
@@ -40,6 +43,17 @@ public class MovementController : MonoBehaviour
     private bool isFacingRight = true;
     private bool isAirborne = false;
     private bool isOnSlope = false;
+    private float prevSlopeAngle = 0;
+
+    private bool doSetLateVelocityX = false;
+    private bool doSetLateVelocityY = false;
+    private float setLateVelocityX = 0;
+    private float setLateVelocityY = 0;
+    
+    private bool doAddLateVelocityX = false;
+    private bool doAddLateVelocityY = false;
+    private float addLateVelocityX = 0;
+    private float addLateVelocityY = 0;
 
 
     // Unity Events:
@@ -47,6 +61,7 @@ public class MovementController : MonoBehaviour
     {
         body = this.GetComponent<Rigidbody2D>();
         boxCollider = this.GetComponent<BoxCollider2D>();
+        capsuleCollider = this.GetComponent<CapsuleCollider2D>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         
         standColliderOffset = new Vector2(COLL_OFFSET_X, STAND_COLL_OFFSET_Y);
@@ -58,15 +73,70 @@ public class MovementController : MonoBehaviour
 
         boxCollider.offset = standColliderOffset;
         boxCollider.size = standColliderSize;
+        capsuleCollider.offset = standColliderOffset;
+        capsuleCollider.size = standColliderSize;
 
         boxCollider.enabled = true;
+        capsuleCollider.enabled = false;
+    }
+
+    private void LateUpdate()
+    {
+        if (doSetLateVelocityX)
+        {
+            doSetLateVelocityX = false;
+            SetHorizontal(setLateVelocityX);
+        }
+        if (doSetLateVelocityY)
+        {
+            doSetLateVelocityY = false;
+            SetVertical(setLateVelocityY);
+        }
+
+        if (doAddLateVelocityX)
+        {
+            doAddLateVelocityX = false;
+            AddHorizontal(addLateVelocityX);
+        }
+        if (doAddLateVelocityY)
+        {
+            doAddLateVelocityY = false;
+            AddVertical(addLateVelocityY);
+        }
     }
 
     // Class Functions:
+    public void SetPhysicsMaterialSlope(bool isSlope)
+    {
+        if (isSlope)
+        {
+            boxCollider.sharedMaterial = slopeMaterial;
+            capsuleCollider.sharedMaterial = slopeMaterial;
+        }
+        else
+        {
+            boxCollider.sharedMaterial = standardMaterial;
+            capsuleCollider.sharedMaterial = standardMaterial;
+        }
+    }
+    public Bounds GetColliderBounds()
+    {
+        if (boxCollider.enabled)
+        {
+            return boxCollider.bounds;
+        }
+        return capsuleCollider.bounds;
+    }
+    public (BoxCollider2D, CapsuleCollider2D) GetColliders()
+    {
+        return (boxCollider, capsuleCollider);
+    }
     public void SetCollider(Vector2 size, Vector2 offset)
     {
         boxCollider.size = size;
         boxCollider.offset = offset;
+        capsuleCollider.size = size;
+        capsuleCollider.offset = offset;
     }
     public bool IsFacingRight()
     {
@@ -86,18 +156,16 @@ public class MovementController : MonoBehaviour
     }
     public bool UpdateIsOnSlope()
     {
-        Bounds bounds = boxCollider.bounds;
-        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - bounds.extents.y);
-        float rayLength = bounds.size.x + GameConstants.SLOPE_CHECK_RAY_LENGTH_OFFSET;
+        Bounds bounds = GetColliderBounds();
+        Vector2 origin = new Vector2(bounds.center.x, bounds.center.y);
+        float rayLength = bounds.extents.y + bounds.size.x + GameConstants.SLOPE_CHECK_RAY_LENGTH_OFFSET;
         Vector2 frontPos = origin;
         Vector2 backPos = origin;
 
-        float slopeAngleFromVerticalFront = 0;
-        float slopeAngleFromVerticalBack = 0;
-        Vector2 slopeTangentFront = new Vector2();
-        Vector2 slopeTangentBack = new Vector2();
         bool onSlopeFront = false;
         bool onSlopeBack = false;
+        Vector2 tangentFront = Vector2.zero;
+        Vector2 tangentBack = Vector2.zero;
         float xOffset = bounds.extents.x;
 
         if (IsFacingRight())
@@ -111,54 +179,93 @@ public class MovementController : MonoBehaviour
             backPos.x += xOffset;
         }
 
-        RaycastHit2D hitFront = SlopeCheck(frontPos, rayLength, ref slopeAngleFromVerticalFront,
-                                           ref slopeTangentFront, ref onSlopeFront, true);
-        RaycastHit2D hitBack = SlopeCheck(backPos, rayLength, ref slopeAngleFromVerticalBack,
-                                          ref slopeTangentBack, ref onSlopeBack, true);
+        RaycastHit2D hitFront = SlopeCheck(frontPos, rayLength,ref tangentFront, out onSlopeFront);
+        RaycastHit2D hitBack = SlopeCheck(backPos, rayLength, ref tangentBack, out onSlopeBack);
 
-        Debug.DrawRay(frontPos, (Vector2.down * rayLength), Color.cyan);
-        Debug.DrawRay(backPos, (Vector2.down * rayLength), Color.red);
+        //Debug.DrawRay(frontPos, (Vector2.down * rayLength), Color.cyan);
+        //Debug.DrawRay(backPos, (Vector2.down * rayLength), Color.red);
 
+        // Collider change check:
+        if (onSlopeFront || onSlopeBack)
+        {
+            ChangeColliderTypeToCapsule(true);
+        }
+        else
+        {
+            ChangeColliderTypeToCapsule(false);
+        }
+
+        // Entering slope from bottom or Entering slope from top
         if (onSlopeFront && !onSlopeBack)
         {
-            slopeTangent = slopeTangentFront;
-            isOnSlope = true;
-        }
-        else if (!onSlopeFront && onSlopeBack)
-        {
-            // hitBack MUST be true:
-            if (hitFront)
+            // Slope was entered from ground state (not a dropoff past the slope)
+            if (hitBack)
             {
-                if (hitBack.point.y < hitFront.point.y)
+                // Entering slope from the top
+                if (hitFront.point.y < hitBack.point.y)
                 {
-                    slopeTangent = Vector2.left;
+                    isOnSlope = PerformPreciseSlopeCheck();
                 }
+                // Entering slope from the bottom
                 else
                 {
-                    slopeTangent = slopeTangentBack;
+                    isOnSlope = PerformPreciseSlopeCheck();
                 }
             }
+            // Slope was entered from airborne state
             else
             {
-                slopeTangent = slopeTangentBack;
+                slopeTangent = tangentFront;
+                isOnSlope = true;
             }
-            isOnSlope = true;
+        }
+        // Leaving slope from bottom or leaving slope from top
+        else if (!onSlopeFront && onSlopeBack)
+        {
+            // Slope exits into ground (not a dropoff past the slope)
+            if (hitFront)
+            {
+                // Exit slope from the top
+                if (hitFront.point.y > hitBack.point.y)
+                {
+                    slopeTangent = tangentFront;
+                    isOnSlope = true;
+                }
+                // Exist slope from the bottom
+                else
+                {
+                    slopeTangent = tangentBack;
+                    isOnSlope = true;
+                }
+            }
+            // Slope ends in a dropoff
+            else
+            {
+                slopeTangent = tangentBack;
+                isOnSlope = true;
+            }
         }
         else if (onSlopeFront && onSlopeBack)
         {
-            slopeTangent = (slopeTangentFront + slopeTangentBack) / 2;
+            // Middle of slope or between two slopes
+
+            // Set the tangent as the average of the 2
+            slopeTangent = (tangentFront + tangentBack) / 2;
             isOnSlope = true;
         }
         else
         {
+            // Not on a slope
             isOnSlope = false;
         }
-        return isOnSlope;
+        return IsOnSlope();
     }
     public bool UpdateAirborne()
     {
-        Vector2 overlapCenter = new Vector2(boxCollider.bounds.center.x, (boxCollider.bounds.center.y - boxCollider.bounds.extents.y));
-        Vector2 overlapSize = new Vector2((boxCollider.bounds.size.x) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET,
+        Bounds bounds = GetColliderBounds();
+
+        Vector2 overlapCenter = new Vector2(bounds.center.x, (bounds.center.y - bounds.extents.y));
+        Vector2 overlapSize = new Vector2((bounds.size.x) + GameConstants.COLLISION_CHECK_SHRINK_OFFSET,
                                           GameConstants.COLLISION_CHECK_DISTANCE_OFFSET - GameConstants.COLLISION_CHECK_SHRINK_OFFSET);
         Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, groundLayer);
 
@@ -224,19 +331,124 @@ public class MovementController : MonoBehaviour
         spriteRenderer.flipX = !spriteRenderer.flipX;
         isFacingRight = !isFacingRight;
     }
-    private RaycastHit2D SlopeCheck(Vector2 checkPosition, float checkLength, 
-                                        ref float slopeAngle, ref Vector2 slopeTangent, 
-                                        ref bool onSlope, bool test = false)
+
+    // Return true if no late velocity was set prior, false otherwise.
+    public bool AddLateVelocityX(float velocity)
+    {
+        bool flag = !doAddLateVelocityX;
+        doAddLateVelocityX = true;
+        addLateVelocityX = velocity;
+        return flag;
+    }
+    // Return true if no late velocity was set prior, false otherwise.
+    public bool AddLateVelocityY(float velocity)
+    {
+        bool flag = !doAddLateVelocityY;
+        doAddLateVelocityY = true;
+        addLateVelocityY = velocity;
+        return flag;
+    }
+    // Return true if no late velocity was set prior, false otherwise.
+    public bool SetLateVelocityX(float velocity)
+    {
+        bool flag = !doSetLateVelocityX;
+        doSetLateVelocityX = true;
+        setLateVelocityX = velocity;
+        return flag;
+    }
+    // Return true if no late velocity was set prior, false otherwise.
+    public bool SetLateVelocityY(float velocity)
+    {
+        bool flag = !doSetLateVelocityY;
+        doSetLateVelocityY = true;
+        setLateVelocityY = velocity;
+        return flag;
+    }
+
+
+    private bool PerformPreciseSlopeCheck()
+    {
+        Bounds bounds = GetColliderBounds();
+        Vector2 checkPos = new Vector2(bounds.center.x, bounds.center.y - bounds.extents.y);
+        float rayLength = bounds.extents.x + GameConstants.SLOPE_CHECK_RAY_LENGTH_OFFSET;
+
+        bool onSlope = false;
+        Vector2 horizontalTan = Vector2.zero;
+        Vector2 verticalTan = Vector2.zero;
+
+        SlopeCheckHorizontal(checkPos, rayLength, ref horizontalTan, ref onSlope);
+        SlopeCheckVertical(checkPos, rayLength, ref verticalTan, ref onSlope);
+
+        //Debug.DrawRay(checkPos, (Vector2.down * rayVerticalLength), Color.cyan);
+
+        slopeTangent = verticalTan;
+
+        return onSlope;
+    }
+    private void SlopeCheckVertical(Vector2 checkPosition, float checkLength,
+                                    ref Vector2 tangent, ref bool onSlope,
+                                    bool test=false)
     {
         RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.down, checkLength, groundLayer);
 
         if (hit)
         {
-            slopeNormal = hit.normal;
-            slopeTangent = Vector2.Perpendicular(slopeNormal.normalized);
-            slopeAngle = Vector2.Angle(slopeNormal, Vector2.up);
+            Vector2 normal = hit.normal;
+            tangent = Vector2.Perpendicular(normal.normalized);
+            float angle = Vector2.Angle(normal, Vector2.up);
 
-            if (slopeAngle == 0)
+            if (angle != prevSlopeAngle)
+            {
+                onSlope = true;
+            }
+
+            if (test)
+            {
+                Debug.DrawRay(hit.point, tangent, Color.green);
+                Debug.DrawRay(hit.point, normal, Color.green);
+            }
+        }
+    }
+    private void SlopeCheckHorizontal(Vector2 checkPosition, float checkLength,
+                                      ref Vector2 tangent, ref bool onSlope)
+    {
+        RaycastHit2D hitRight = Physics2D.Raycast(checkPosition, transform.right,
+                                                  checkLength, groundLayer);
+        RaycastHit2D hitLeft = Physics2D.Raycast(checkPosition, -transform.right,
+                                                 checkLength, groundLayer);
+
+        //Debug.DrawRay(checkPosition, transform.right * checkLength, Color.yellow);
+        //Debug.DrawRay(checkPosition, -transform.right * checkLength, Color.yellow);
+
+        if (hitRight)
+        {
+            tangent = Vector2.Perpendicular(hitRight.normal.normalized);
+            onSlope = true;
+        }
+        else if (hitLeft)
+        {
+            tangent = Vector2.Perpendicular(hitLeft.normal.normalized);
+            onSlope = true;
+        }
+        else
+        {
+            onSlope = false;
+        }
+    }
+
+    private RaycastHit2D SlopeCheck(Vector2 checkPosition, float checkLength, 
+                                           ref Vector2 tangent, out bool onSlope,
+                                           bool test = false)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(checkPosition, Vector2.down, checkLength, groundLayer);
+
+        if (hit)
+        {
+            Vector2 normal = hit.normal;
+            tangent = Vector2.Perpendicular(normal.normalized);
+            float angle = Vector2.Angle(normal, Vector2.up);
+
+            if (angle == 0)
             {
                 onSlope = false;
             }
@@ -247,8 +459,8 @@ public class MovementController : MonoBehaviour
 
             if (test)
             {
-                Debug.DrawRay(hit.point, slopeTangent, Color.green);
-                Debug.DrawRay(hit.point, slopeNormal, Color.green);
+                Debug.DrawRay(hit.point, tangent, Color.green);
+                Debug.DrawRay(hit.point, normal, Color.green);
             }
         }
         else
@@ -256,5 +468,18 @@ public class MovementController : MonoBehaviour
             onSlope = false;
         }
         return hit;
+    }
+    private void ChangeColliderTypeToCapsule(bool changeToCapsule)
+    {
+        if (changeToCapsule)
+        {
+            boxCollider.enabled = false;
+            capsuleCollider.enabled = true;
+        }
+        else
+        {
+            boxCollider.enabled = true;
+            capsuleCollider.enabled = false;
+        }
     }
 }

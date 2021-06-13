@@ -81,16 +81,11 @@ public class PlayerMovingState : IState
             HandleMoveInput(PlayerTimings.PLAYER_FLASH_SPEED);
         }
 
-        if (AdvancedMovement.CheckFront(movementController))
+        if (!movementController.IsOnSlope() && AdvancedMovement.CheckFront(movementController))
         {
             playerController.isFlashCharging = false;
             stateMachine.ChangeState(playerController.standingState);
             return;
-        }
-
-        if (movementController.IsOnSlope())
-        {
-            timeInSeconds = 0d;
         }
         //getting hit, and dying
     }

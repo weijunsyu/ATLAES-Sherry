@@ -24,10 +24,7 @@ public class PlayerCombatIdleState : IState
     public void Enter()
     {
         RunAnimation();
-        if (movementController.IsOnSlope())
-        {
-            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
-        }
+        movementController.SetPhysicsMaterialSlope(movementController.IsOnSlope());
         BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
@@ -58,11 +55,7 @@ public class PlayerCombatIdleState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
-        if (PlayerInputController.pressedInputs[1] || PlayerInputController.pressedInputs[2]) // right or left
-        {
-            stateMachine.ChangeState(playerController.movingState);
-            return;
-        }
+        TurnAndMove();
         //getting hit, and dying
     }
     public void Exit()
@@ -74,7 +67,7 @@ public class PlayerCombatIdleState : IState
         {
             animationController.StopAnimation(ref animate);
         }
-        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
+        movementController.SetPhysicsMaterialSlope(false);
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
@@ -110,6 +103,28 @@ public class PlayerCombatIdleState : IState
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
                 stateMachine.ChangeState(playerController.dashingState);
                 break;
+        }
+    }
+    private void TurnAndMove()
+    {
+        bool onSlope = movementController.UpdateIsOnSlope();
+        if (PlayerInputController.pressedInputs[1]) // right
+        {
+            movementController.FaceRight();
+            if (onSlope || !AdvancedMovement.CheckFront(movementController))
+            {
+                stateMachine.ChangeState(playerController.movingState);
+                return;
+            }
+        }
+        else if (PlayerInputController.pressedInputs[2]) // left
+        {
+            movementController.FaceLeft();
+            if (onSlope || !AdvancedMovement.CheckFront(movementController))
+            {
+                stateMachine.ChangeState(playerController.movingState);
+                return;
+            }
         }
     }
     private void RunAnimation()

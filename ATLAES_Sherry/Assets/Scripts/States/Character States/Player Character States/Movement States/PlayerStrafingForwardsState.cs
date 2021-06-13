@@ -55,8 +55,11 @@ public class PlayerStrafingForwardsState : IState
         }
         if (AdvancedMovement.CheckFront(movementController))
         {
-            stateMachine.ChangeState(playerController.standingGuardState);
-            return;
+            if (!movementController.IsOnSlope())
+            {
+                stateMachine.ChangeState(playerController.standingGuardState);
+                return;
+            }
         }
         if (PlayerInputController.pressedInputs[5] == false) // guard release
         {

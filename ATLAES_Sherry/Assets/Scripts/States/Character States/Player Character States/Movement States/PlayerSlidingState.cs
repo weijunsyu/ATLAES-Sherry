@@ -46,6 +46,7 @@ public class PlayerSlidingState : IState
             movementController.UpdateAirborne();
             if (!movementController.IsAirborne())
             {
+                movementController.UpdateIsOnSlope();
                 stateMachine.ChangeState(playerController.standingState);
             }
         }
