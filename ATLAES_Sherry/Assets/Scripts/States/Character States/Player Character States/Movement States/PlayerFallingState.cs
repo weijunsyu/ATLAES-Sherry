@@ -43,6 +43,7 @@ public class PlayerFallingState : IState
         movementController.UpdateAirborne(); // Check if still airborne
         if (movementController.IsAirborne() == false) // if grounded
         {
+            movementController.UpdateIsOnSlope();
             stateMachine.ChangeState(playerController.standingState); // Go to standing state
             return;
         }

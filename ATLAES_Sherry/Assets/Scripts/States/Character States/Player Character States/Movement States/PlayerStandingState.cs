@@ -23,17 +23,20 @@ public class PlayerStandingState : IState
 
     public void Enter()
     {
+        movementController.UpdateIsOnSlope();
         if (playerController.isInCombat)
         {
             stateMachine.ChangeState(playerController.combatIdleState);
             return;
         }
+        
+        if (HandlePreInputs())
+        {
+            return;
+        }
 
         animationController.RunAnimation(animations.idle, PlayerTimings.IDLE_TIMES,  ref animate, true);
-        if (movementController.IsOnSlope())
-        {
-            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
-        }
+        movementController.SetPhysicsMaterialSlope(movementController.IsOnSlope());
         BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
@@ -74,7 +77,7 @@ public class PlayerStandingState : IState
         {
             animationController.StopAnimation(ref animate);
         }
-        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
+        movementController.SetPhysicsMaterialSlope(false);
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
@@ -115,10 +118,11 @@ public class PlayerStandingState : IState
 
     private void TurnAndMove()
     {
+        bool onSlope = movementController.IsOnSlope();
         if (PlayerInputController.pressedInputs[1]) // right
         {
             movementController.FaceRight();
-            if (!AdvancedMovement.CheckFront(movementController))
+            if (onSlope || !AdvancedMovement.CheckFront(movementController))
             {
                 stateMachine.ChangeState(playerController.movingState);
                 return;
@@ -127,11 +131,26 @@ public class PlayerStandingState : IState
         else if (PlayerInputController.pressedInputs[2]) // left
         {
             movementController.FaceLeft();
-            if (!AdvancedMovement.CheckFront(movementController))
+            if (onSlope || !AdvancedMovement.CheckFront(movementController))
             {
                 stateMachine.ChangeState(playerController.movingState);
                 return;
             }
         }
+    }
+    private bool HandlePreInputs()
+    {
+        if (PlayerInputController.pressedInputs[(int)PlayerInputController.RawInput.CROUCH_PRESS]) // crouch (3)
+        {
+            stateMachine.ChangeState(playerController.crouchingState);
+            return true;
+        }
+        if (PlayerInputController.pressedInputs[5])
+        {
+            stateMachine.ChangeState(playerController.standingGuardState);
+            return true;
+        }
+
+        return false;
     }
 }

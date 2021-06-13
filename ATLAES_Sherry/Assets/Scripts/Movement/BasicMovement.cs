@@ -8,9 +8,16 @@ public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y
     }
     public static void Strafe(MovementController movementController, float linearVelocity, bool sliding = true)
     {
-        if (sliding && movementController.IsOnSlope())
+        if (sliding && !movementController.IsAirborne())
         {
-            MoveOnSlope(movementController, linearVelocity);
+            if (movementController.UpdateIsOnSlope())
+            {
+                MoveOnSlope(movementController, linearVelocity);
+            }
+            else
+            {
+                movementController.SetHorizontal(linearVelocity);
+            }
         }
         else
         {
@@ -32,10 +39,6 @@ public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y
             {
                 movementController.Turn(); //turn to face left
             }
-        }
-        if (sliding)
-        {
-            movementController.UpdateIsOnSlope();
         }
         Strafe(movementController, linearVelocity, sliding);
     }

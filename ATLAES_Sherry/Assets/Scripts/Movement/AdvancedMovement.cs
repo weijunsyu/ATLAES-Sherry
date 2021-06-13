@@ -9,12 +9,15 @@ public static class AdvancedMovement
 {
     /* Check if player character can stand back up (assume character is already crouching or dashing)
      * Implemented by simply checking if current collider has ground collider above itself */
-public static bool CanStand(MovementController movementController)
+    public static bool CanStand(MovementController movementController)
     {
-        Vector2 overlapCenter = new Vector2(movementController.boxCollider.bounds.center.x,
-                                            (movementController.transform.position.y + movementController.standColliderOffset.y)); // Center when standing
-        Vector2 overlapSize = new Vector2((movementController.boxCollider.size.x + GameConstants.COLLISION_CHECK_SHRINK_OFFSET),
-                                          movementController.standColliderSize.y + GameConstants.COLLISION_CHECK_SHRINK_OFFSET);
+        Bounds bounds = movementController.GetColliderBounds();
+        float yCenterOffset = 0.275f;
+        Vector2 overlapCenter = new Vector2(bounds.center.x,
+                                            movementController.transform.position.y + yCenterOffset);
+        Vector2 overlapSize = new Vector2((bounds.size.x + GameConstants.COLLISION_CHECK_SHRINK_OFFSET),
+                                          (movementController.standColliderSize.y - movementController.crouchColliderSize.y)
+                                          + GameConstants.COLLISION_CHECK_SHRINK_OFFSET);
         Collider2D colliderHit = Physics2D.OverlapBox(overlapCenter, overlapSize, 0f, movementController.groundLayer);
         return (colliderHit == null);
     }
@@ -38,7 +41,7 @@ public static bool CanStand(MovementController movementController)
     //return true if object in front of lower leg
     public static bool CheckSlide(MovementController movementController)
     {
-        Bounds bounds = movementController.boxCollider.bounds;
+        Bounds bounds = movementController.GetColliderBounds();
         Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - (bounds.extents.y * 0.66f));
         Vector2 size = new Vector2(GameConstants.FRONT_CHECK_DISTANCE_CAST, (bounds.extents.y * 0.66f));
         Vector2 rayDirection;
@@ -61,12 +64,13 @@ public static bool CanStand(MovementController movementController)
         return (colliderHit != null);
     }
 
-    //return true if object in front of lower leg
+    //return true if object in front
     public static bool CheckFront(MovementController movementController)
     {
-        Bounds bounds = movementController.boxCollider.bounds;
+        Bounds bounds = movementController.GetColliderBounds();
         Vector2 origin = new Vector2(bounds.center.x, bounds.center.y);
-        Vector2 size = new Vector2(GameConstants.FRONT_CHECK_DISTANCE_CAST, (bounds.size.y + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
+        Vector2 size = new Vector2(GameConstants.FRONT_CHECK_DISTANCE_CAST,
+                                   (bounds.size.y + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
         Vector2 rayDirection;
         if (movementController.IsFacingRight())
         {
@@ -86,10 +90,10 @@ public static bool CanStand(MovementController movementController)
         Collider2D colliderHit = Physics2D.OverlapBox(origin, size, 0, movementController.groundLayer);
         return (colliderHit != null);
     }
-    //return true if object behind of lower leg
+    //return true if object behind
     public static bool CheckBack(MovementController movementController)
     {
-        Bounds bounds = movementController.boxCollider.bounds;
+        Bounds bounds = movementController.GetColliderBounds();
         Vector2 origin = new Vector2(bounds.center.x, bounds.center.y);
         Vector2 size = new Vector2(GameConstants.BACK_CHECK_DISTANCE_CAST, (bounds.extents.y + GameConstants.COLLISION_CHECK_SHRINK_OFFSET));
         Vector2 rayDirection;
@@ -113,7 +117,7 @@ public static bool CanStand(MovementController movementController)
     }
     public static bool CheckSlideFar(MovementController movementController)
     {
-        Bounds bounds = movementController.boxCollider.bounds;
+        Bounds bounds = movementController.GetColliderBounds();
         Vector2 origin = new Vector2(bounds.center.x, bounds.center.y - (bounds.extents.y * 0.66f));
         Vector2 size = new Vector2(GameConstants.FRONT_CHECK_FAR_DISTANCE_CAST, (bounds.extents.y * 0.66f));
         Vector2 rayDirection;
@@ -138,7 +142,7 @@ public static bool CanStand(MovementController movementController)
 
     public static bool CheckDown(MovementController movementController)
     {
-        Bounds bounds = movementController.boxCollider.bounds;
+        Bounds bounds = movementController.GetColliderBounds();
         Vector2 origin = new Vector2(bounds.center.x, (bounds.center.y - bounds.extents.y));
         Vector2 size = new Vector2(bounds.size.x + GameConstants.COLLISION_CHECK_SHRINK_OFFSET,
                                    bounds.size.y);

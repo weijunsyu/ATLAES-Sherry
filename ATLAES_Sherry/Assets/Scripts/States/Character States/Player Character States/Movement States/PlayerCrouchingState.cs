@@ -27,10 +27,7 @@ public class PlayerCrouchingState : IState
     public void Enter()
     {
         animationController.SetSprite(animations.crouch[0]);
-        if (movementController.IsOnSlope())
-        {
-            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
-        }
+        movementController.SetPhysicsMaterialSlope(movementController.IsOnSlope());
         BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Crouch(movementController);
         timeInSeconds = 0d;
@@ -90,7 +87,7 @@ public class PlayerCrouchingState : IState
         {
             animationController.StopAnimation(ref animate);
         }
-        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
+        movementController.SetPhysicsMaterialSlope(false);
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {

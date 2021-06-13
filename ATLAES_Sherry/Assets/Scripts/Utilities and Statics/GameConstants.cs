@@ -98,7 +98,6 @@ public static class GameConstants
     public const float BACK_CHECK_DISTANCE_CAST = 0.02f;
     public const float FRONT_CHECK_FAR_DISTANCE_CAST = 0.05f;
     public const float SLOPE_CHECK_RAY_LENGTH_OFFSET = 0.06f;
-    public const float SLOPE_FRONT_RAY_LENGTH_SCALE = 3f;
     public const float FLOATING_BODY_GRAVITY_MODIFIER = 6f; // Factor to modify gravity by while floating
     public const float FLOATING_MAX_DROP_SPEED = -8f; // The max velocity a rigidbody can move at in the y plane while floating
     public const float WALL_SLIDE_MAX_DROP_SPEED = -4f;

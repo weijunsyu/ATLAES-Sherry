@@ -31,6 +31,15 @@ public class PlayerDashingState : IState
 
     public void Enter()
     {
+        if (movementController.IsOnSlope())
+        {
+            if (AdvancedMovement.CheckFront(movementController))
+            {
+                stateMachine.ChangeState(stateMachine.prevState);
+                return;
+            }
+        }
+
         wasFlashing = false;
         playerController.canAirDash = false;
         if (PlayerInputController.pressedInputs[1] == true) // Turn right

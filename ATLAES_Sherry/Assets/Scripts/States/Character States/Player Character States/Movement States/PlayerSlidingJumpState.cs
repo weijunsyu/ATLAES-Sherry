@@ -41,12 +41,14 @@ public class PlayerSlidingJumpState : IState
         // If falling or finished jump
         if (movementController.GetVelocity().y <= 0 || timeInSeconds >PlayerTimings.PLAYER_SLIDE_JUMP_DURATION)
         {
+            HandleTurnOnExit();
             stateMachine.ChangeState(playerController.fallingState);
             return;
         }
         movementController.UpdateAirborne();
         if (!movementController.IsAirborne())
         {
+            movementController.UpdateIsOnSlope();
             stateMachine.ChangeState(playerController.standingState);
         }
     }
@@ -54,7 +56,17 @@ public class PlayerSlidingJumpState : IState
     {
 
     }
-
+    private void HandleTurnOnExit()
+    {
+        if (PlayerInputController.pressedInputs[1] == true) // right
+        {
+            movementController.FaceRight();
+        }
+        else if (PlayerInputController.pressedInputs[2] == true) // left
+        {
+            movementController.FaceLeft();
+        }
+    }
     private void HandleHorizontalVelocity(float speed)
     {
         if (isFacingRight)

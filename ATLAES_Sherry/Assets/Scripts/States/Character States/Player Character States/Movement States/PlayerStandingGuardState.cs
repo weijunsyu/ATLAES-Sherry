@@ -26,10 +26,7 @@ public class PlayerStandingGuardState : IState
     public void Enter()
     {
         RunAnimation();
-        if (movementController.IsOnSlope())
-        {
-            movementController.boxCollider.sharedMaterial = movementController.slopeMaterial;
-        }
+        movementController.SetPhysicsMaterialSlope(movementController.IsOnSlope());
         BasicMovement.StopHorizontal(movementController, true);
         AdvancedMovement.Stand(movementController);
         movementController.SetAirborne(false);
@@ -56,11 +53,12 @@ public class PlayerStandingGuardState : IState
             stateMachine.ChangeState(playerController.fallingState); // Go to falling state
             return;
         }
+        bool onSlope = movementController.UpdateIsOnSlope();
         if (PlayerInputController.pressedInputs[1]) // right
         {
             if (movementController.IsFacingRight())
             {
-                if (!AdvancedMovement.CheckFront(movementController))
+                if (onSlope || !AdvancedMovement.CheckFront(movementController))
                 {
                     stateMachine.ChangeState(playerController.strafingForwardsState);
                     return;
@@ -68,7 +66,7 @@ public class PlayerStandingGuardState : IState
             }
             else
             {
-                if (!AdvancedMovement.CheckBack(movementController))
+                if (onSlope || !AdvancedMovement.CheckBack(movementController))
                 {
                     stateMachine.ChangeState(playerController.strafingBackwardsState);
                     return;
@@ -80,7 +78,7 @@ public class PlayerStandingGuardState : IState
         {
             if (movementController.IsFacingRight())
             {
-                if (!AdvancedMovement.CheckBack(movementController))
+                if (onSlope || !AdvancedMovement.CheckBack(movementController))
                 {
                     stateMachine.ChangeState(playerController.strafingBackwardsState);
                     return;
@@ -88,7 +86,7 @@ public class PlayerStandingGuardState : IState
             }
             else
             {
-                if (!AdvancedMovement.CheckFront(movementController))
+                if (onSlope || !AdvancedMovement.CheckFront(movementController))
                 {
                     stateMachine.ChangeState(playerController.strafingForwardsState);
                     return;
@@ -111,7 +109,7 @@ public class PlayerStandingGuardState : IState
         {
             animationController.StopAnimation(ref animate);
         }
-        movementController.boxCollider.sharedMaterial = movementController.standardMaterial;
+        movementController.SetPhysicsMaterialSlope(false);
     }
     private void HandleInput(object sender, InputEventArgs inputEvent)
     {
