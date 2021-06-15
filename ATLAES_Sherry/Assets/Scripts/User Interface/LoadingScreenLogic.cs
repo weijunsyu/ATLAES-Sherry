@@ -25,6 +25,9 @@ public class LoadingScreenLogic : MonoBehaviour
         progressBar.minValue = MIN_SLIDER_VALUE;
         progressBar.maxValue = MAX_SLIDER_VALUE;
         progressBar.value = STARTING_SLIDER_VALUE;
+
+        canvas.sortingLayerName = "UI";
+        canvas.sortingOrder = 100;
     }
 
     private void OnEnable()

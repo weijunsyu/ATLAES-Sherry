@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Water-Calm Animated Tile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -6696716393357917498, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -5879724083342643, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 5364189127239994754, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 1353839416047408154, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -6055595968815732003, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 5901461988248116707, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 7586319310397257, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 2513110531422357733, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  m_MinSpeed: 6
+  m_MaxSpeed: 6
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

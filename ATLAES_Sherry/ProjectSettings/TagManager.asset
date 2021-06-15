@@ -14,7 +14,7 @@ TagManager:
   - 
   - Player
   - Tilemap Collidable
-  - 
+  - Environment
   - 
   - 
   - 
@@ -40,4 +40,34 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Invisible
+    uniqueID: 669977889
+    locked: 0
+  - name: Environment Background
+    uniqueID: 500289879
+    locked: 0
+  - name: Effects Background
+    uniqueID: 55968043
+    locked: 0
+  - name: Environment Neutral
+    uniqueID: 4000515361
+    locked: 0
+  - name: Characters
+    uniqueID: 3783905147
+    locked: 0
+  - name: Player
+    uniqueID: 1065045781
+    locked: 0
+  - name: Effects Neutral
+    uniqueID: 2752733553
+    locked: 0
+  - name: Environment Foreground
+    uniqueID: 2133978613
+    locked: 0
+  - name: Effects Foreground
+    uniqueID: 3188455547
+    locked: 0
+  - name: UI
+    uniqueID: 3766395751
     locked: 0

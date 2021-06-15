@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Water-High_Waves Animated Tile
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -3286696292136229201, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -6710580593627073625, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -4743384889876802839, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 503890285808012191, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -154770067175046712, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -1174586974994062288, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: 8317440886847459432, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  - {fileID: -5435457122361639431, guid: 6baf3dbc519b70144abf942a9cd73791, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 8
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
