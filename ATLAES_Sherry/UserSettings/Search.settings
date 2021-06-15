@@ -7,9 +7,10 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.785D90A9" = "skybox"
+	"last_search.785D90A9" = "tag"
 	"InspectorPreview.785D90A9" = "0"
 	"currentGroup.785D90A9" = "all"
+	"OpenInspectorPreview.785D90A9" = "0"
 }
 providers = {
 	expression = {
@@ -47,12 +48,20 @@ providers = {
 		priority = 100
 		defaultAction = null
 	}
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
 }
 recentSearches = [
+	"tag"
 	"skybox"
 ]
 searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
 showSavedSearchPanel = false
+expandedQueries = [
+]
 debounceMs = 250

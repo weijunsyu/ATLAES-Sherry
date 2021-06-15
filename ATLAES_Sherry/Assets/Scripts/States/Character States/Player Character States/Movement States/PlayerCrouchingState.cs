@@ -115,7 +115,10 @@ public class PlayerCrouchingState : IState
                 stateMachine.ChangeState(playerController.crouchingGuardState);
                 break;
             case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                stateMachine.ChangeState(playerController.dashingState);
+                if (!movementController.UpdateAirborne())
+                {
+                    stateMachine.ChangeState(playerController.dashingState);
+                }
                 break;
             case PlayerInputController.RawInput.JUMP_PRESS: // Jump
                 if (playerController.isFlashing) // Only allow jumping in flashing state
