@@ -18,33 +18,33 @@ MonoBehaviour:
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
   m_HDREmulationScale: 1
   m_LightBlendStyles:
-  - name: Blend Style 0
+  - name: Multiply
     maskTextureChannel: 0
-    renderTextureScale: 0.5
+    renderTextureScale: 1
     blendMode: 1
     customBlendFactors:
       multiplicative: 0
       additive: 0
-  - name: Blend Style 1
+  - name: Add
     maskTextureChannel: 0
     renderTextureScale: 0.5
-    blendMode: 1
+    blendMode: 0
     customBlendFactors:
       multiplicative: 0
       additive: 0
-  - name: Blend Style 2
+  - name: Subtract
     maskTextureChannel: 0
     renderTextureScale: 0.5
-    blendMode: 1
+    blendMode: 2
     customBlendFactors:
       multiplicative: 0
       additive: 0
-  - name: Blend Style 3
+  - name: NOT USED
     maskTextureChannel: 0
     renderTextureScale: 0.5
     blendMode: 1
     customBlendFactors:
-      multiplicative: 0
+      multiplicative: 1
       additive: 0
   m_UseDepthStencilBuffer: 1
   m_ShapeLightShader: {fileID: 4800000, guid: d79e1c784eaf80c4585c0be7391f757a, type: 3}
