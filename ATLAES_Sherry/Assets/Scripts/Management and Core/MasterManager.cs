@@ -55,6 +55,9 @@ public class MasterManager : MonoBehaviour
         ResetGame();
         playerData.SetPrimaryWeapon(WeaponType.NONE, true, true);
         playerData.SetSecondaryWeapon(WeaponType.NONE, true, true);
+        ToggleUtilityOverlay(true);
+        userData.SetVSync(false);
+        userData.RunVSync();
         /* END DEBUGGING */
     }
 
