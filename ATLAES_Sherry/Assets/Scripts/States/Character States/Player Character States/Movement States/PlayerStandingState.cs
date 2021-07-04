@@ -48,9 +48,6 @@ public class PlayerStandingState : IState
             stateMachine.ChangeState(playerController.jumpingState);
             return;
         }
-
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
@@ -66,60 +63,69 @@ public class PlayerStandingState : IState
         }
 
         TurnAndMove();
+        HandleInputOnce(playerController.playerInputData);
         //getting hit, and dying
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         if (animate != null)
         {
             animationController.StopAnimation(ref animate);
         }
         movementController.SetPhysicsMaterialSlope(false);
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInputOnce(PlayerInputData inputData)
     {
-        switch (inputEvent.input)
+        if (inputData.inputTokens[8]) // Light
         {
-            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.GUARD_PRESS: // Guard
-                stateMachine.ChangeState(playerController.standingGuardState);
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                stateMachine.ChangeState(playerController.jumpingState);
-                break;
-            case PlayerInputController.RawInput.CROUCH_PRESS: // Crouch
-                stateMachine.ChangeState(playerController.crouchingState);
-                break;
-            case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                stateMachine.ChangeState(playerController.dashingState);
-                break;
+            inputData.EatInputToken(8);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[9]) // Medium
+        {
+            inputData.EatInputToken(9);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[10]) // Heavy
+        {
+            inputData.EatInputToken(10);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[5]) // Guard
+        {
+            inputData.EatInputToken(5);
+            stateMachine.ChangeState(playerController.standingGuardState);
+        }
+        else if (inputData.inputTokens[6]) // Jump
+        {
+            inputData.EatInputToken(6);
+            stateMachine.ChangeState(playerController.jumpingState);
+        }
+        else if (inputData.inputTokens[3]) // Crouch
+        {
+            inputData.EatInputToken(3);
+            stateMachine.ChangeState(playerController.crouchingState);
+        }
+        else if (inputData.inputTokens[7]) // Dash
+        {
+            inputData.EatInputToken(7);
+            stateMachine.ChangeState(playerController.dashingState);
         }
     }
 
     private void TurnAndMove()
     {
         bool onSlope = movementController.IsOnSlope();
-        if (PlayerInputController.pressedInputs[1]) // right
+        if (playerController.playerInputData.pressedInputs[1]) // right
         {
             movementController.FaceRight();
             if (onSlope || !AdvancedMovement.CheckFront(movementController))
@@ -128,7 +134,7 @@ public class PlayerStandingState : IState
                 return;
             }
         }
-        else if (PlayerInputController.pressedInputs[2]) // left
+        else if (playerController.playerInputData.pressedInputs[2]) // left
         {
             movementController.FaceLeft();
             if (onSlope || !AdvancedMovement.CheckFront(movementController))
@@ -140,12 +146,12 @@ public class PlayerStandingState : IState
     }
     private bool HandlePreInputs()
     {
-        if (PlayerInputController.pressedInputs[(int)PlayerInputController.RawInput.CROUCH_PRESS]) // crouch (3)
+        if (playerController.playerInputData.pressedInputs[3]) // crouch
         {
             stateMachine.ChangeState(playerController.crouchingState);
             return true;
         }
-        if (PlayerInputController.pressedInputs[5])
+        if (playerController.playerInputData.pressedInputs[5])
         {
             stateMachine.ChangeState(playerController.standingGuardState);
             return true;

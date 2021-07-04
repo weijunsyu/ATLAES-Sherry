@@ -33,6 +33,14 @@ public static class SaveSystem
             return null;
         }
     }
+    public static void DeletePlayerData(int saveNumber)
+    {
+        string path = Application.persistentDataPath + "/" + saveNumber + GameConstants.SAVEFILE;
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
     public static void SavePlayerData(int saveNumber)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -59,8 +67,16 @@ public static class SaveSystem
         }
         else //save does not exist!
         {
-            Debug.LogError("Save file not found in " + path);
+            //Debug.LogError("Save file not found in " + path);
             return null;
         }
+    }
+    public static bool CheckSaveNumber(int saveNumber)
+    {
+        if (saveNumber < 0)
+        {
+            return false;
+        }
+        return true;
     }
 }

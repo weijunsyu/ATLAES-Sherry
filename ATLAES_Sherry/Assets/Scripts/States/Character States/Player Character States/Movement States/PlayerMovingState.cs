@@ -13,7 +13,6 @@ public class PlayerMovingState : IState
     private AnimationController.Animation runStarup;
     private AnimationController.Animation runLoop;
 
-    private double timeInSeconds = 0d;
 
     public PlayerMovingState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -42,24 +41,10 @@ public class PlayerMovingState : IState
         movementController.SetAirborne(false);
         playerController.canAirDash = true;
 
-        if (!playerController.isFlashCharging)
-        {
-            // If was not flash charging prior, reset timer
-            timeInSeconds = 0d;
-        }
-        WeaponType weapon = MasterManager.playerData.GetPrimaryWeapon();
-        if (weapon == WeaponType.NONE)
-        {
-            playerController.isFlashCharging = true; // Set flash charging to true
-        }
-        
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
-        timeInSeconds += Time.deltaTime;
-        playerController.flashChargeGraceTimer = 0d;
+
     }
     public void ExecutePhysics()
     {
@@ -70,79 +55,78 @@ public class PlayerMovingState : IState
             return;
         }
 
-        if (timeInSeconds < GameConstants.FLASH_RUN_DELAY)
-        {
-            HandleMoveInput(PlayerTimings.PLAYER_RUN_SPEED);
-        }
-        else
-        {
-            playerController.isFlashing = true;
-            playerController.flashCooldownTimer = 0d;
-            HandleMoveInput(PlayerTimings.PLAYER_FLASH_SPEED);
-        }
+        HandleMoveInput(PlayerTimings.PLAYER_RUN_SPEED);
 
         if (!movementController.IsOnSlope() && AdvancedMovement.CheckFront(movementController))
         {
-            playerController.isFlashCharging = false;
             stateMachine.ChangeState(playerController.standingState);
             return;
         }
+        HandleInputOnce(playerController.playerInputData);
         //getting hit, and dying
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         if (animate != null)
         {
             animationController.StopAnimation(ref animate);
         }
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInputOnce(PlayerInputData inputData)
     {
-        switch (inputEvent.input)
+        if (inputData.inputTokens[8]) // Light
         {
-            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.GUARD_PRESS: // Guard
-                stateMachine.ChangeState(playerController.standingGuardState);
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                stateMachine.ChangeState(playerController.jumpingState);
-                break;
-            case PlayerInputController.RawInput.CROUCH_PRESS: // Crouch
-                stateMachine.ChangeState(playerController.crouchingState);
-                break;
-            case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                stateMachine.ChangeState(playerController.dashingState);
-                break;
+            inputData.EatInputToken(8);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[9]) // Medium
+        {
+            inputData.EatInputToken(9);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[10]) // Heavy
+        {
+            inputData.EatInputToken(10);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[5]) // Guard
+        {
+            inputData.EatInputToken(5);
+            stateMachine.ChangeState(playerController.standingGuardState);
+        }
+        else if (inputData.inputTokens[6]) // Jump
+        {
+            inputData.EatInputToken(6);
+            stateMachine.ChangeState(playerController.jumpingState);
+        }
+        else if (inputData.inputTokens[3]) // Crouch
+        {
+            inputData.EatInputToken(3);
+            stateMachine.ChangeState(playerController.crouchingState);
+        }
+        else if (inputData.inputTokens[7]) // Dash
+        {
+            inputData.EatInputToken(7);
+            stateMachine.ChangeState(playerController.dashingState);
         }
     }
     private void HandleMoveInput(float speed)
     {
         // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
-        if (PlayerInputController.pressedInputs[1] == true) // right
+        if (playerController.playerInputData.pressedInputs[1] == true) // right
         {
             BasicMovement.MoveWithTurn(movementController, speed);
         }
-        else if (PlayerInputController.pressedInputs[2] == true) // left
+        else if (playerController.playerInputData.pressedInputs[2] == true) // left
         {
             BasicMovement.MoveWithTurn(movementController, -speed);
         }

@@ -29,9 +29,6 @@ public class PlayerSlidingState : IState
 
         BasicMovement.StopHorizontal(movementController);
         playerController.canAirDash = true;
-
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
@@ -55,12 +52,10 @@ public class PlayerSlidingState : IState
             stateMachine.ChangeState(playerController.fallingState);
             return;
         }
+        HandleInputOnce(playerController.playerInputData);
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         if (animate != null)
         {
             animationController.StopAnimation(ref animate);
@@ -68,13 +63,12 @@ public class PlayerSlidingState : IState
 
         playerController.weapons.isSliding = false;
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInputOnce(PlayerInputData inputData)
     {
-        switch (inputEvent.input)
+        if (inputData.inputTokens[6]) // Jump
         {
-            case PlayerInputController.RawInput.JUMP_PRESS: // Sliding jump
-                stateMachine.ChangeState(playerController.slidingJumpState);
-                break;
+            inputData.EatInputToken(6);
+            stateMachine.ChangeState(playerController.slidingJumpState);
         }
     }
 }

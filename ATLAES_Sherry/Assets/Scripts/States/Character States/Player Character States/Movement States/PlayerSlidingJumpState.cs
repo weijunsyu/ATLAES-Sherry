@@ -58,11 +58,11 @@ public class PlayerSlidingJumpState : IState
     }
     private void HandleTurnOnExit()
     {
-        if (PlayerInputController.pressedInputs[1] == true) // right
+        if (playerController.playerInputData.pressedInputs[1] == true) // right
         {
             movementController.FaceRight();
         }
-        else if (PlayerInputController.pressedInputs[2] == true) // left
+        else if (playerController.playerInputData.pressedInputs[2] == true) // left
         {
             movementController.FaceLeft();
         }

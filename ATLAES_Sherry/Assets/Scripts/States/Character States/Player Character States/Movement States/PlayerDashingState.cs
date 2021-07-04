@@ -10,10 +10,8 @@ public class PlayerDashingState : IState
     private PlayerAnimations animations = null;
     private Coroutine animate = null;
 
-    private Sprite[] flashingDash;
-
     private double timeInSeconds = 0d;
-    private bool wasFlashing = false;
+    private bool canSprint = true;
 
     public PlayerDashingState(PlayerStateController playerController, StateMachine stateMachine)
     {
@@ -25,51 +23,22 @@ public class PlayerDashingState : IState
         animations = (PlayerAnimations)animationController.animationsList;
         animate = animationController.animate;
 
-        flashingDash = new Sprite[] { animations.dash[0], animations.dash[1],
-                                              animations.dash[2], animations.dash[3] };
     }
 
     public void Enter()
     {
-        if (movementController.IsOnSlope())
-        {
-            if (AdvancedMovement.CheckFront(movementController))
-            {
-                stateMachine.ChangeState(stateMachine.prevState);
-                return;
-            }
-        }
-
-        wasFlashing = false;
+        canSprint = true;
         playerController.canAirDash = false;
-        if (PlayerInputController.pressedInputs[1] == true) // Turn right
-        {
-            movementController.FaceRight();
-        }
-        if (PlayerInputController.pressedInputs[2] == true) // Turn left
-        {
-            movementController.FaceLeft();
-        }
 
         timeInSeconds = 0;
         AdvancedMovement.Crouch(movementController);
-        if (playerController.isFlashing && stateMachine.prevState == playerController.crouchingState)
-        {
-            animationController.RunAnimation(flashingDash, PlayerTimings.DASH_TIMES, ref animate, false);
-            wasFlashing = true;
-            SpecialMovement.DashMove(movementController, PlayerTimings.PLAYER_FLASHING_DASH_SPEED);
-        }
-        else
-        {
-            animationController.RunAnimation(animations.dash, PlayerTimings.DASH_TIMES, ref animate, false);
-            SpecialMovement.DashMove(movementController, PlayerTimings.PLAYER_DASH_SPEED);
-        }
         
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
+        animationController.RunAnimation(animations.dash, PlayerTimings.DASH_TIMES, ref animate, false);
+        SpecialMovement.DashMove(movementController, PlayerTimings.PLAYER_DASH_SPEED);
     }
     public void ExecuteLogic()
     {
+        UpdateSprintState();
         timeInSeconds += Time.deltaTime;
     }
     public void ExecutePhysics()
@@ -78,26 +47,17 @@ public class PlayerDashingState : IState
         BasicMovement.StopVertical(movementController);
         movementController.UpdateAirborne(); // update airborne
 
-        if (wasFlashing)
-        {
-            if(movementController.GetVelocity().x == 0.0f)
-            {
-                // If stopped moving due to any factor
-                HandleDashStop();
-            }
-            return;
-        }
-
-        else if (timeInSeconds >= PlayerTimings.PLAYER_DASH_EXECUTE) // If dash is over
+        if (timeInSeconds >= PlayerTimings.PLAYER_DASH_EXECUTE) // If dash is over
         {
             HandleDashStop();
+        }
+        else
+        {
+            HandleInputOnce(playerController.playerInputData);
         }
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Stand(movementController);
 
@@ -106,50 +66,58 @@ public class PlayerDashingState : IState
             animationController.StopAnimation(ref animate);
         }
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInputOnce(PlayerInputData inputData)
     {
-        switch (inputEvent.input)
+        if (inputData.inputTokens[8]) // Light
         {
-            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                break;
-            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                break;
-            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerData.GetPrimaryWeapon() == WeaponType.UNARMED)
+            inputData.EatInputToken(8);
+        }
+        else if (inputData.inputTokens[9]) // Medium
+        {
+            inputData.EatInputToken(9);
+        }
+        else if (inputData.inputTokens[10]) // Heavy
+        {
+            inputData.EatInputToken(10);
+            if (MasterManager.playerData.GetPrimaryWeapon() == WeaponType.UNARMED)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[6]) // Jump
+        {
+            inputData.EatInputToken(6);
+            if (AdvancedMovement.CanStand(movementController)) // If can stand
+            {
+                IState prevState = stateMachine.prevState;
+                if (prevState == playerController.crouchingState)
                 {
-                    stateMachine.ChangeState(playerController.inActionState);
+                    // If prev state was crouching, skip airborne check
+                    stateMachine.ChangeState(playerController.jumpingState);
                 }
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Jump
-                if (AdvancedMovement.CanStand(movementController)) // If can stand
+                else if (!movementController.IsAirborne())
                 {
-                    IState prevState = stateMachine.prevState;
-                    if (prevState == playerController.crouchingState)
-                    {
-                        // If prev state was crouching, skip airborne check
-                        stateMachine.ChangeState(playerController.jumpingState);
-                    }
-                    else if (!movementController.IsAirborne())
-                    {
-                        stateMachine.ChangeState(playerController.jumpingState);
-                    }
+                    stateMachine.ChangeState(playerController.jumpingState);
                 }
-                break;
-            case PlayerInputController.RawInput.CROUCH_PRESS: // Crouch
-                if (!movementController.IsAirborne())
-                {
-                    stateMachine.ChangeState(playerController.crouchingState);
-                }
-                else
-                {
-                    stateMachine.ChangeState(playerController.fallingState);
-                }
-                break;
+            }
+        }
+        else if (inputData.inputTokens[3]) // Crouch
+        {
+            inputData.EatInputToken(3);
+            if (!movementController.IsAirborne())
+            {
+                stateMachine.ChangeState(playerController.crouchingState);
+            }
+            else
+            {
+                stateMachine.ChangeState(playerController.fallingState);
+            }
         }
     }
 
-    private void HandleDashStop(bool isFlashing = false)
+    private void HandleDashStop()
     {
+        playerController.playerInputData.EatInputToken(7); // remove dash input token if present
         if (movementController.IsAirborne()) // if in the air
         {
             if (AdvancedMovement.CanStand(movementController))
@@ -164,18 +132,13 @@ public class PlayerDashingState : IState
         else if (AdvancedMovement.CanStand(movementController))// else if on the ground and can stand
         {
             BasicMovement.StopHorizontal(movementController);
-            if (timeInSeconds >= PlayerTimings.PLAYER_DASH_TOTAL || wasFlashing) // if recovery is over or was flashing
+            if (canSprint) // If player can sprint
             {
-                if (PlayerInputController.pressedInputs[1]) // if holding right, face right
-                {
-                    movementController.FaceRight();
-                }
-                if (PlayerInputController.pressedInputs[2]) // if holding left, face left
-                {
-                    movementController.FaceLeft();
-                }
-
-                if (PlayerInputController.pressedInputs[3]) // if holding down (crouch)
+                stateMachine.ChangeState(playerController.sprintingState); // sprint
+            }
+            else if (timeInSeconds >= PlayerTimings.PLAYER_DASH_TOTAL) // if recovery is over
+            {
+                if (playerController.playerInputData.pressedInputs[3]) // if holding down (crouch)
                 {
                     stateMachine.ChangeState(playerController.crouchingState); // crouch
                 }
@@ -190,5 +153,13 @@ public class PlayerDashingState : IState
             stateMachine.ChangeState(playerController.crouchingState); // crouch
         }
         return;
+    }
+
+    private void UpdateSprintState()
+    {
+        if (!playerController.playerInputData.pressedInputs[7])
+        {
+            canSprint = false;
+        }
     }
 }

@@ -1,7 +1,22 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class UserData
 {
+    [System.Serializable]
+    public struct BindingSerializable
+    {
+        public string id;
+        public string path;
+
+        public BindingSerializable(string bindingId, string bindingPath)
+        {
+            id = bindingId;
+            path = bindingPath;
+        }
+    }
+
     // User Data
     private bool isFullscreen = GameConstants.DEFAULT_WINDOW_IS_FULLSCREEN;
     private int windowWidth = GameConstants.MIN_WINDOW_WIDTH;
@@ -18,10 +33,14 @@ public class UserData
     private bool gameTimer = false;
     private bool skipCutscenes = false;
     private bool equalLoadTimes = false;
+    private bool customBindingsGamepad = false;
+    private List<BindingSerializable> keyboardBindingList = null;
+    private List<BindingSerializable> gamepadBindingList = null;
+    private List<BindingSerializable> playerTwoBindingList = null;
 
     // Class Functions:
 
-    public void ResetAllUserData()
+    public void ResetAllUserData(InputActionAsset inputAsset)
     {
         SetIsFullscreen(GameConstants.DEFAULT_WINDOW_IS_FULLSCREEN);
         SetWindowWidth(GameConstants.MIN_WINDOW_WIDTH);
@@ -38,6 +57,7 @@ public class UserData
         SetGameTimer(false);
         SetSkipCutscenes(false);
         SetEqualLoadTimes(false);
+        ResetAllKeybinds(inputAsset);
 
         Screen.SetResolution(windowWidth, windowHeight, GetIsFullscreen());
         QualitySettings.vSyncCount = vSync;
@@ -49,6 +69,129 @@ public class UserData
         RunTargetFPS();
         RunIsFullscreen();
     }
+    public void ResetAllKeybinds(InputActionAsset inputAsset)
+    {
+        InputActionMap keyboardMap = inputAsset.FindActionMap("Keyboard");
+        InputActionMap gamepadMap = inputAsset.FindActionMap("Gamepad");
+        InputActionMap playerTwoMap = inputAsset.FindActionMap("PlayerTwo");
+
+        ResetKeyboardBinds(keyboardMap);
+        ResetGamepadBinds(gamepadMap);
+        ResetPlayerTwoBinds(playerTwoMap);
+    }
+    public void ResetKeyboardBinds(InputActionMap inputMap)
+    {
+        inputMap.RemoveAllBindingOverrides();
+        keyboardBindingList = null;
+    }
+    public void ResetGamepadBinds(InputActionMap inputMap)
+    {
+        inputMap.RemoveAllBindingOverrides();
+        customBindingsGamepad = false;
+        gamepadBindingList = null;
+    }
+    public void ResetPlayerTwoBinds(InputActionMap inputMap)
+    {
+        inputMap.RemoveAllBindingOverrides();
+        playerTwoBindingList = null;
+    }
+    // Return true if custom keybinds have been made, false otherwise
+    public bool GetKeyboardBindingList(out List<BindingSerializable> bindingList)
+    {
+        if (keyboardBindingList == null)
+        {
+            bindingList = null;
+            return false;
+        }
+        else
+        {
+            bindingList = new List<BindingSerializable>();
+            bindingList.AddRange(keyboardBindingList);
+            return true;
+        }
+    }
+    public void SetKeyboardBindingList(InputActionMap inputMap)
+    {
+        if (keyboardBindingList == null)
+        {
+            keyboardBindingList = new List<BindingSerializable>();
+        }
+        keyboardBindingList.Clear();
+
+        foreach (var binding in inputMap.bindings)
+        {
+            if (!string.IsNullOrEmpty(binding.overridePath))
+            {
+                keyboardBindingList.Add(new BindingSerializable(binding.id.ToString(), binding.overridePath));
+            }
+        }
+    }
+    public bool GetGamepadBindingList(out List<BindingSerializable> bindingList)
+    {
+        if (gamepadBindingList == null)
+        {
+            bindingList = null;
+            return false;
+        }
+        else
+        {
+            bindingList = new List<BindingSerializable>();
+            bindingList.AddRange(gamepadBindingList);
+            return true;
+        }
+    }
+    public void SetGamepadBindingList(InputActionMap inputMap)
+    {
+        if (gamepadBindingList == null)
+        {
+            gamepadBindingList = new List<BindingSerializable>();
+        }
+        gamepadBindingList.Clear();
+
+        foreach (var binding in inputMap.bindings)
+        {
+            if (!string.IsNullOrEmpty(binding.overridePath))
+            {
+                customBindingsGamepad = true;
+                gamepadBindingList.Add(new BindingSerializable(binding.id.ToString(), binding.overridePath));
+            }
+        }
+    }
+    public bool GetPlayerTwoBindingList(out List<BindingSerializable> bindingList)
+    {
+        if (playerTwoBindingList == null)
+        {
+            bindingList = null;
+            return false;
+        }
+        else
+        {
+            bindingList = new List<BindingSerializable>();
+            bindingList.AddRange(playerTwoBindingList);
+            return true;
+        }
+    }
+    public void SetPlayerTwoBindingList(InputActionMap inputMap)
+    {
+        if (playerTwoBindingList == null)
+        {
+            playerTwoBindingList = new List<BindingSerializable>();
+        }
+        playerTwoBindingList.Clear();
+
+        foreach (var binding in inputMap.bindings)
+        {
+            if (!string.IsNullOrEmpty(binding.overridePath))
+            {
+                playerTwoBindingList.Add(new BindingSerializable(binding.id.ToString(), binding.overridePath));
+            }
+        }
+    }
+    public bool GetCustomBindingsGamepad()
+    {
+        return customBindingsGamepad;
+    }
+
     public bool GetGameTimer()
     {
         return gameTimer;

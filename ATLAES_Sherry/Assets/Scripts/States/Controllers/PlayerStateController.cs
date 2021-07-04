@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerWeapons))]
+[RequireComponent(typeof(PlayerInputData))]
 [RequireComponent(typeof(PlayerActionController))]
 public class PlayerStateController : AbstractStateController
 {
@@ -9,6 +10,7 @@ public class PlayerStateController : AbstractStateController
     // Cached References:
     [HideInInspector] public PlayerWeapons weapons;
     [HideInInspector] public PlayerActionController actionController;
+    [HideInInspector] public PlayerInputData playerInputData;
 
     // State Parameters and Objects:
 
@@ -21,11 +23,12 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public PlayerFallingState fallingState;
     [HideInInspector] public PlayerCrouchingState crouchingState;
     [HideInInspector] public PlayerDashingState dashingState;
+    [HideInInspector] public PlayerSprintingState sprintingState;
+    [HideInInspector] public PlayerSprintRecoveryState sprintRecoveryState;
     [HideInInspector] public PlayerSlidingState slidingState;
     [HideInInspector] public PlayerSlidingJumpState slidingJumpState;
     [HideInInspector] public PlayerStandingGuardState standingGuardState;
-    [HideInInspector] public PlayerStrafingForwardsState strafingForwardsState;
-    [HideInInspector] public PlayerStrafingBackwardsState strafingBackwardsState;
+    [HideInInspector] public PlayerWalkingState walkingState;
     [HideInInspector] public PlayerCrouchingGuardState crouchingGuardState;
     // Action
     [HideInInspector] public PlayerInActionState inActionState;
@@ -46,10 +49,9 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public bool jumpInputBuffer = false; // jump input buffer was initiated
     [HideInInspector] public bool isInCombat = false;
     [HideInInspector] public double combatTimer = 0d;
-    [HideInInspector] public bool isFlashCharging = false;
-    [HideInInspector] public double flashChargeGraceTimer = 0d;
-    [HideInInspector] public bool isFlashing = false;
-    [HideInInspector] public double flashCooldownTimer = 0d;
+
+    [HideInInspector] public bool canSwitchWeapon = true;
+    [HideInInspector] public double switchWeaponTimer = 0d;
 
     [HideInInspector] public bool isChargedCrouching = false; // used to determine if the player has held a crouching charge
     [HideInInspector] public double crouchingChargeTimer = 0d;
@@ -57,23 +59,19 @@ public class PlayerStateController : AbstractStateController
     [HideInInspector] public bool isChargedStanding = false;
     [HideInInspector] public double standingChargeTimer = 0d;
 
-    [HideInInspector] public bool isChargedStrafingBack = false;
-    [HideInInspector] public double strafingBackChargeTimer = 0d;
-
-    [HideInInspector] public bool isChargedStrafingFront = false;
-    [HideInInspector] public double strafingFrontChargeTimer = 0d;
-
 
     // Unity Events:
     protected override void Awake()
     {
         // Anything needed to be passed into the States need to be done BEFORE base.Awake()
         actionController = GetComponent<PlayerActionController>(); 
+        playerInputData = GetComponent<PlayerInputData>();
+        weapons = GetComponent<PlayerWeapons>();
         
         base.Awake();
         
         // Anything that is NOT used by States can be done after
-        weapons = GetComponent<PlayerWeapons>();
+        
     }
     protected override void Start()
     {
@@ -82,29 +80,22 @@ public class PlayerStateController : AbstractStateController
         jumpInputBuffer = false;
         combatTimer = 0d;
         isInCombat = false;
-        isFlashCharging = false;
-        flashChargeGraceTimer = 0d;
-        isFlashing = false;
-        flashCooldownTimer = 0d;
         
         isChargedCrouching = false;
         crouchingChargeTimer = 0d;
         isChargedStanding = false;
         standingChargeTimer = 0d;
-        isChargedStrafingBack = false;
-        strafingBackChargeTimer = 0d;
-        isChargedStrafingFront = false;
-        strafingFrontChargeTimer = 0d;
-        
+
+        canSwitchWeapon = true;
+        switchWeaponTimer = 0d;
+
         weapons.SetPrimaryWeaponSprite(MasterManager.playerData.GetPrimaryWeapon());
         weapons.SetSecondaryWeaponSprite(MasterManager.playerData.GetSecondaryWeapon());
-        actionController.ResetInputBuffer();
+        playerInputData.ResetInputBuffer();
     }
     private void OnEnable()
     {
-        actionController.ResetInputBuffer();
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
+        playerInputData.ResetInputBuffer();
     }
     protected override void Update()
     {
@@ -120,17 +111,6 @@ public class PlayerStateController : AbstractStateController
         {
             isInCombat = false;
         }
-        
-        flashChargeGraceTimer += Time.deltaTime;
-        if(flashChargeGraceTimer > GameConstants.FLASH_RUN_GRACE)
-        {
-            isFlashCharging = false;
-        }
-        flashCooldownTimer += Time.deltaTime;
-        if (flashCooldownTimer > GameConstants.FLASH_CHARGE_HOLD_TIME)
-        {
-            isFlashing = false;
-        }
 
         crouchingChargeTimer += Time.deltaTime;
         if (crouchingChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
@@ -144,28 +124,23 @@ public class PlayerStateController : AbstractStateController
             isChargedStanding = false;
         }
 
-        strafingBackChargeTimer += Time.deltaTime;
-        if (strafingBackChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
+        switchWeaponTimer += Time.deltaTime;
+        if (switchWeaponTimer > GameConstants.WEAPON_SWITCH_COOLDOWN_TIME)
         {
-            isChargedStrafingBack = false;
+            canSwitchWeapon = true;
         }
 
-        strafingFrontChargeTimer += Time.deltaTime;
-        if (strafingFrontChargeTimer > GameConstants.PURE_CHARGE_DOWN_TIME)
-        {
-            isChargedStrafingFront = false;
-        }
     }
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        PollSwitchWeapon();
     }
 
     private void OnDisable()
     {
-        actionController.ResetInputBuffer();
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
+        playerInputData.ResetInputBuffer();
     }
 
     // Class Functions:
@@ -180,11 +155,12 @@ public class PlayerStateController : AbstractStateController
         fallingState = new PlayerFallingState(this, stateMachine);
         crouchingState = new PlayerCrouchingState(this, stateMachine);
         dashingState = new PlayerDashingState(this, stateMachine);
+        sprintingState = new PlayerSprintingState(this, stateMachine);
+        sprintRecoveryState = new PlayerSprintRecoveryState(this, stateMachine);
         slidingState = new PlayerSlidingState(this, stateMachine);
         slidingJumpState = new PlayerSlidingJumpState(this, stateMachine);
         standingGuardState = new PlayerStandingGuardState(this, stateMachine);
-        strafingForwardsState = new PlayerStrafingForwardsState(this, stateMachine);
-        strafingBackwardsState = new PlayerStrafingBackwardsState(this, stateMachine);
+        walkingState = new PlayerWalkingState(this, stateMachine);
         crouchingGuardState = new PlayerCrouchingGuardState(this, stateMachine);
         // Action States
         inActionState = new PlayerInActionState(this, stateMachine);
@@ -203,11 +179,11 @@ public class PlayerStateController : AbstractStateController
     public void HandleAirborneMoveInput(float speed)
     {
         // Since we clean SOCD in input controller only 1 input (right/left) can be pressed at once
-        if (PlayerInputController.pressedInputs[1] == true) // right
+        if (playerInputData.pressedInputs[1] == true) // right
         {
             BasicMovement.MoveWithTurn(movementController, speed, 0, false);
         }
-        else if (PlayerInputController.pressedInputs[2] == true) // left
+        else if (playerInputData.pressedInputs[2] == true) // left
         {
             BasicMovement.MoveWithTurn(movementController, -speed, 0, false);
         }
@@ -249,26 +225,26 @@ public class PlayerStateController : AbstractStateController
     private bool SlideCheckRoutine()
     {
         // If facing right and NOT pressing right button
-        if (movementController.IsFacingRight() && !PlayerInputController.pressedInputs[1])
+        if (movementController.IsFacingRight() && !playerInputData.pressedInputs[1])
         {
             return false;
         }
         // Else if facing left and NOT pressing left button
-        else if (!movementController.IsFacingRight() && !PlayerInputController.pressedInputs[2])
+        else if (!movementController.IsFacingRight() && !playerInputData.pressedInputs[2])
         {
             return false;
         }
         return true;
     }
 
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void PollSwitchWeapon()
     {
-        switch (inputEvent.input)
+        if (playerInputData.pressedInputs[11] && canSwitchWeapon)
         {
-            case PlayerInputController.RawInput.SWITCH_WEAPON:
-                MasterManager.playerData.SwapWeapons();
-                weapons.UpdateWeaponSprite();
-                break;
+            MasterManager.playerData.SwapWeapons();
+            weapons.UpdateWeaponSprite();
+            canSwitchWeapon = false;
+            switchWeaponTimer = 0d;
         }
     }
 }

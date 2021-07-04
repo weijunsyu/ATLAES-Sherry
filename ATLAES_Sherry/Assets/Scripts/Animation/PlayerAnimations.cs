@@ -12,6 +12,7 @@ public class PlayerAnimations : AbstractAnimations
     public Sprite[] jump;
     public Sprite[] fall;
     public Sprite[] dash;
+    public Sprite[] sprint;
     public Sprite[] slide;
     public Sprite[] slideJump;
 

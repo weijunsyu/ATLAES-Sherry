@@ -57,10 +57,7 @@ public static class GameConstants
     public const int TARGET_ASPECT_RATIO_Y = 9;
 
     // Scene Parameters
-    public const int NUMBER_OF_SCENES = 1;
-    public const int NUMBER_OF_LEVELS = 0;
-    public const int NUMBER_OF_MENUS = 1;
-    public const int TUTORIAL_LEVEL_INDEX = 6; // First level of game
+    public const int TUTORIAL_LEVEL_INDEX = 8; // First level of game
 
     // Audio Constants
     public const float MUTE_IN_DB = -80.0f;
@@ -105,6 +102,8 @@ public static class GameConstants
     public const double PURE_CHARGE_DOWN_TIME = 2d; // Number of seconds before a charge is lost
     public const double INPUT_CHARGE_UP_TIME = 1d; // Number of seconds for an input to start holding a charge
     public const double INPUT_CHARGE_DOWN_TIME = 0.25d; // Number of seconds before an input charge is lost
+    public const double WEAPON_SWITCH_COOLDOWN_TIME = 1.0d; // Number of seconds after switching weapons that you must wait before switching again
+    public const int NUM_INPUTS = 13; // Number of inputs in total
 
     // Input Settings
     public const float JOYSTICK_BOOL_DEADZONE = 0.7f; // Calibrate sensitivity of joysticks between 0-1 where 0 is most sensitive for boolean use

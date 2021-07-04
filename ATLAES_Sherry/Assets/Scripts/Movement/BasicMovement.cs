@@ -42,6 +42,17 @@ public static class BasicMovement // Jump, Strafe, Move(turning), Stop(x only, y
         }
         Strafe(movementController, linearVelocity, sliding);
     }
+    public static void MoveInDirection(MovementController movementController, float speed)
+    {
+        if (movementController.IsFacingRight())
+        {
+            Strafe(movementController, speed);
+        }
+        else
+        {
+            Strafe(movementController, -speed);
+        }
+    }
     public static void StopHorizontal(MovementController movementController, bool sliding = false)
     {
         if(sliding && movementController.UpdateIsOnSlope())

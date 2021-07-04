@@ -34,8 +34,6 @@ public class PlayerWeapons : MonoBehaviour
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         primarySprite = primaryWeapon.GetComponent<SpriteRenderer>();
         secondarySprite = secondaryWeapon.GetComponent<SpriteRenderer>();
-        primarySprite.color = GameConstants.WHITE;
-        secondarySprite.color = GameConstants.RED;
     }
     private void Start()
     {

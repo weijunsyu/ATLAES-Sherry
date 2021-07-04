@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: AI Eye
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 4405088063623922089, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: -1485098550069580659, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: 1061475721989177603, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: -3194604760404664321, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: 6920365751585203130, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: 2953345510018427158, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: 7229019495324842147, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  - {fileID: 6007460471661565742, guid: 4fee0684118feae4cb98c110a144c624, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 8
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 2
