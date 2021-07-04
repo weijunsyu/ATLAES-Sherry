@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 
 public enum GameMode
 {
@@ -17,6 +18,8 @@ public class MasterManager : MonoBehaviour
     [SerializeField] public AudioMixer mixer = null;
     
     [SerializeField] private Canvas utilityOverlay = null;
+    [SerializeField] private PlayerInputs playerInputs = null;
+    [SerializeField] private InputActionAsset inputAsset = null;
 
     // State Parameters and Objects:
     // Persistent Data
@@ -50,6 +53,7 @@ public class MasterManager : MonoBehaviour
     private void Start()
     {
         LoadSettings();
+        playerInputs.LoadKeyBinds(inputAsset);
         
         /* START DEBUGGING */
         ResetGame();
@@ -59,12 +63,6 @@ public class MasterManager : MonoBehaviour
         userData.SetVSync(false);
         userData.RunVSync();
         /* END DEBUGGING */
-    }
-
-    private void OnEnable()
-    {
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
     }
 
     public void Update()
@@ -89,12 +87,6 @@ public class MasterManager : MonoBehaviour
         /* START DEBUGGING */
         
         /* END DEBUGGING */
-    }
-
-    private void OnDisable()
-    {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
     }
 
     private void OnApplicationQuit()
@@ -159,7 +151,7 @@ public class MasterManager : MonoBehaviour
     }
 
     // Saving and Loading Wrapper Fuctionality
-    public static void SaveGame(int saveNumber)
+    public void SaveGame(int saveNumber)
     {
         SaveSystem.SavePlayerData(saveNumber);
     }
@@ -171,8 +163,11 @@ public class MasterManager : MonoBehaviour
         if (data != null) //savefile exists
         {
             // World Data
+            worldData.SetWorldType(data.worldType);
+            worldData.SetFinishedGame(data.finishedGame);
             worldData.SetWarpLocations(data.warpLocations);
             worldData.SetBossesDefeated(data.bossesDefeated);
+            worldData.SetFinishGameTime(data.finishGameTime);
             worldData.SetPlayTime(data.playTime);
             // Player Data
             playerData.SetCurrentHP(data.currentHP);
@@ -209,7 +204,7 @@ public class MasterManager : MonoBehaviour
     }
     public void ResetUser()
     {
-        userData.ResetAllUserData();
+        userData.ResetAllUserData(inputAsset);
         utilityOverlay.enabled = userData.GetUtilityOverlayOn();
     }
     public void ResetAll()
@@ -229,20 +224,6 @@ public class MasterManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
-        }
-    }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
-    {
-        switch (inputEvent.input)
-        {
-            case PlayerInputController.RawInput.PAUSE:
-                Debug.Log("pause pressed, detected in Master Manager");
-
-                //DEBUGGING:
-                userData.SetIsFullscreen(!userData.GetIsFullscreen());
-                userData.RunIsFullscreen();
-                
-                break;
         }
     }
 }

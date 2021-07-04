@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Characters
   - Player
   - Tilemap Collidable
   - Environment
@@ -50,8 +50,11 @@ TagManager:
   - name: Characters
     uniqueID: 3783905147
     locked: 0
+  - name: Player
+    uniqueID: 3655718131
+    locked: 0
   - name: Environment Foreground
-    uniqueID: 2133978613
+    uniqueID: 2607452921
     locked: 0
   - name: UI
     uniqueID: 3766395751

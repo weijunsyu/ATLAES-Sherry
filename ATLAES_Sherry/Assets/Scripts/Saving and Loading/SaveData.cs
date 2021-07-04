@@ -2,8 +2,11 @@
 [System.Serializable] public class SaveData
 {
     // World Data:
+    public int worldType;
+    public int finishedGame;
     public bool[] warpLocations;
     public bool[] bossesDefeated;
+    public double finishGameTime;
     public double playTime;
     // Player Character Persistent Data:
     public int currentHP;
@@ -24,8 +27,11 @@
     public SaveData()
     {
         // World Data
+        this.worldType = MasterManager.worldData.GetWorldType();
+        this.finishedGame = MasterManager.worldData.GetFinishedGame();
         this.warpLocations = MasterManager.worldData.GetWarpLocations();
         this.bossesDefeated = MasterManager.worldData.GetBossesDefeated();
+        this.finishGameTime = MasterManager.worldData.GetFinishGameTime();
         this.playTime = MasterManager.worldData.GetPlayTime();
         // Player Character Persistent Data
         this.currentHP = MasterManager.playerData.GetCurrentHP();

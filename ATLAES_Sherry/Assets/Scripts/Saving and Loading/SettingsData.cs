@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 
 [System.Serializable]
 public class SettingsData
@@ -18,6 +19,10 @@ public class SettingsData
     public bool gameTimer;
     public bool skipCutscenes;
     public bool equalLoadTimes;
+    public bool customBindingsGamepad;
+    public List<UserData.BindingSerializable> keyboardBindingList;
+    public List<UserData.BindingSerializable> gamepadBindingList;
+    public List<UserData.BindingSerializable> playerTwoBindingList;
 
 
     //constructor
@@ -38,5 +43,9 @@ public class SettingsData
         this.gameTimer = MasterManager.userData.GetGameTimer();
         this.skipCutscenes = MasterManager.userData.GetSkipCutscenes();
         this.equalLoadTimes = MasterManager.userData.GetEqualLoadTimes();
+        this.customBindingsGamepad = MasterManager.userData.GetCustomBindingsGamepad();
+        MasterManager.userData.GetKeyboardBindingList(out this.keyboardBindingList);
+        MasterManager.userData.GetGamepadBindingList(out this.gamepadBindingList);
+        MasterManager.userData.GetPlayerTwoBindingList(out this.playerTwoBindingList);
     }
 }

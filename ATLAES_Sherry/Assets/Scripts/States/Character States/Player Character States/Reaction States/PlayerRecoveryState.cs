@@ -28,9 +28,6 @@ public class PlayerRecoveryState : IState
         BasicMovement.StopHorizontal(movementController);
         AdvancedMovement.Crouch(movementController);
         playerController.canAirDash = true;
-
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
@@ -38,54 +35,18 @@ public class PlayerRecoveryState : IState
     }
     public void ExecutePhysics()
     {
-        movementController.UpdateAirborne(); // Check if still grounded
-        if (movementController.IsAirborne() == true) // if airborne
-        {
-            stateMachine.ChangeState(playerController.fallingState); // Go to falling state
-            return;
-        }
-        if (PlayerInputController.pressedInputs[5] == false) // guard release
-        {
-            stateMachine.ChangeState(playerController.crouchingState);
-            return;
-        }
-        if (PlayerInputController.pressedInputs[3] == false) // crouch release
-        {
-            if (AdvancedMovement.CanStand(movementController))
-            {
-                stateMachine.ChangeState(playerController.standingGuardState);
-                return;
-            }
-        }
-        //getting hit, and dying
+       
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         if (animate != null)
         {
             animationController.StopAnimation(ref animate);
         }
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInput(PlayerInputData inputData)
     {
-        if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-        {
-            switch (inputEvent.input)
-            {
-                case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                    stateMachine.ChangeState(playerController.inActionState);
-                    break;
-                case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                    stateMachine.ChangeState(playerController.inActionState);
-                    break;
-                case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                    stateMachine.ChangeState(playerController.inActionState);
-                    break;
-            }
-        }
+
     }
     private void RunAnimation()
     {

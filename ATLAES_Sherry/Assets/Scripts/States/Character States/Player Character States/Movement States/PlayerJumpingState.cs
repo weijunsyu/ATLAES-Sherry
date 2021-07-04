@@ -23,22 +23,10 @@ public class PlayerJumpingState : IState
     public void Enter()
     {
         animationController.SetSprite(animations.jump[0]);
-        
-        if (playerController.isFlashing && stateMachine.prevState == playerController.crouchingState)
-        {
-            // If was crouching and flashing, then do flash vertical jump
-            BasicMovement.Jump(movementController, PlayerTimings.PLAYER_FLASH_VERTICAL_JUMP_VELOCITY);
-        }
-        else
-        {
-            BasicMovement.Jump(movementController, PlayerTimings.PLAYER_JUMP_VELOCITY);
-            //Debug.Log("jumping");
-        }
-        
-        movementController.SetAirborne(true);
 
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
+        BasicMovement.Jump(movementController, PlayerTimings.PLAYER_JUMP_VELOCITY);
+
+        movementController.SetAirborne(true);
     }
     public void ExecuteLogic()
     {
@@ -64,50 +52,55 @@ public class PlayerJumpingState : IState
             stateMachine.ChangeState(playerController.slidingState);
             return;
         }
+        HandleInputOnce(playerController.playerInputData);
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         movementController.SetCollider(movementController.standColliderSize, movementController.standColliderOffset);
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInputOnce(PlayerInputData inputData)
     {
-        switch (inputEvent.input)
+        if (inputData.inputTokens[8]) // Light
         {
-            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                if (playerController.canAirDash)
-                {
-                    playerController.canAirDash = false;
-                    stateMachine.ChangeState(playerController.dashingState);
-                }
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
-                if (AdvancedMovement.CheckFront(movementController))
-                {
-                    // If near wall perform a wall jump (slide jump)
-                    stateMachine.ChangeState(playerController.slidingJumpState);
-                }
-                break;
+            inputData.EatInputToken(8);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[9]) // Medium
+        {
+            inputData.EatInputToken(9);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[10]) // Heavy
+        {
+            inputData.EatInputToken(10);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[7]) // Dash
+        {
+            inputData.EatInputToken(7);
+            if (playerController.canAirDash)
+            {
+                playerController.canAirDash = false;
+                stateMachine.ChangeState(playerController.dashingState);
+            }
+        }
+        else if (inputData.inputTokens[6]) // Jump
+        {
+            inputData.EatInputToken(6);
+            if (AdvancedMovement.CheckFront(movementController))
+            {
+                // If near wall perform a wall jump (slide jump)
+                stateMachine.ChangeState(playerController.slidingJumpState);
+            }
         }
     }
 }

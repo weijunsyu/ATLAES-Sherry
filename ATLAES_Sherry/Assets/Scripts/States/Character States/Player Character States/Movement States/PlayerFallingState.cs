@@ -29,9 +29,6 @@ public class PlayerFallingState : IState
 
         timeInSeconds = 0d;
         movementController.SetAirborne(true);
-
-        // Enable player controller
-        PlayerInputController.OnInputEvent += HandleInput;
     }
     public void ExecuteLogic()
     {
@@ -55,82 +52,87 @@ public class PlayerFallingState : IState
             stateMachine.ChangeState(playerController.slidingState);
             return;
         }
+        HandleInputOnce(playerController.playerInputData);
     }
     public void Exit()
     {
-        // Disable player controller
-        PlayerInputController.OnInputEvent -= HandleInput;
-
         if (animate != null)
         {
             animationController.StopAnimation(ref animate);
         }
     }
-    private void HandleInput(object sender, InputEventArgs inputEvent)
+    private void HandleInputOnce(PlayerInputData inputData)
     {
-        switch (inputEvent.input)
+        if (inputData.inputTokens[8]) // Light
         {
-            case PlayerInputController.RawInput.LIGHT_PRESS: // Light
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            inputData.EatInputToken(8);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[9]) // Medium
+        {
+            inputData.EatInputToken(9);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[10]) // Heavy
+        {
+            inputData.EatInputToken(10);
+            if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
+            {
+                stateMachine.ChangeState(playerController.inActionState);
+            }
+        }
+        else if (inputData.inputTokens[7]) // Dash
+        {
+            inputData.EatInputToken(7);
+            if (playerController.canAirDash)
+            {
+                playerController.canAirDash = false;
+                stateMachine.ChangeState(playerController.dashingState);
+            }
+        }
+        else if (inputData.inputTokens[6]) // Jump
+        {
+            inputData.EatInputToken(6);
+            if (AdvancedMovement.CheckFront(movementController))
+            {
+                // If near wall perform a wall jump (slide jump)
+                stateMachine.ChangeState(playerController.slidingJumpState);
+            }
+            else if (stateMachine.prevState == playerController.slidingState)
+            {
+                // coyote jump but with sliding
+                if (timeInSeconds < GameConstants.SLIDE_JUMP_BUFFER)
                 {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.MEDIUM_PRESS: // Medium
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.HEAVY_PRESS: // Heavy
-                if (MasterManager.playerData.GetPrimaryWeapon() != WeaponType.NONE)
-                {
-                    stateMachine.ChangeState(playerController.inActionState);
-                }
-                break;
-            case PlayerInputController.RawInput.DASH_PRESS: // Dash
-                if (playerController.canAirDash)
-                {
-                    playerController.canAirDash = false;
-                    stateMachine.ChangeState(playerController.dashingState);
-                }
-                break;
-            case PlayerInputController.RawInput.JUMP_PRESS: // Air jump
-                if (AdvancedMovement.CheckFront(movementController))
-                {
-                    // If near wall perform a wall jump (slide jump)
-                    stateMachine.ChangeState(playerController.slidingJumpState);
-                }
-                else if (stateMachine.prevState == playerController.slidingState)
-                {
-                    // coyote jump but with sliding
-                    if (timeInSeconds < GameConstants.SLIDE_JUMP_BUFFER)
+                    if (AdvancedMovement.CheckSlideFar(movementController))
                     {
-                        if (AdvancedMovement.CheckSlideFar(movementController))
-                        {
-                            stateMachine.ChangeState(playerController.slidingJumpState);
-                        }
-                        else
-                        {
-                            movementController.Turn();
-                            stateMachine.ChangeState(playerController.slidingJumpState);
-                        }
-                        
+                        stateMachine.ChangeState(playerController.slidingJumpState);
                     }
-                }
-                else if (stateMachine.prevState == playerController.movingState)
-                {
-                    if (timeInSeconds < GameConstants.COYOTE_JUMP_DELAY)
+                    else
                     {
-                        stateMachine.ChangeState(playerController.jumpingState);
+                        movementController.Turn();
+                        stateMachine.ChangeState(playerController.slidingJumpState);
                     }
+
                 }
-                else // Previous state was NOT moving state or sliding state
+            }
+            else if (stateMachine.prevState == playerController.movingState)
+            {
+                if (timeInSeconds < GameConstants.COYOTE_JUMP_DELAY)
                 {
-                    playerController.jumpBufferTimer = 0d; // Reset the timer
-                    playerController.jumpInputBuffer = true; // Buffer the jump command
+                    stateMachine.ChangeState(playerController.jumpingState);
                 }
-                break;
+            }
+            else // Previous state was NOT moving state or sliding state
+            {
+                playerController.jumpBufferTimer = 0d; // Reset the timer
+                playerController.jumpInputBuffer = true; // Buffer the jump command
+            }
         }
     }
 }

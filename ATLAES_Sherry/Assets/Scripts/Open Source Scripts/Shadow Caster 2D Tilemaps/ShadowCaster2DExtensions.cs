@@ -72,7 +72,10 @@ public class ShadowCaster2DGenerator
 
         for (int i = 0; i < colliders.Length; ++i)
         {
-            GenerateTilemapShadowCastersInEditor(colliders[i], false);
+            if (!colliders[i].GetComponent<DoNotAttachShadowCaster2D>())
+            {
+                GenerateTilemapShadowCastersInEditor(colliders[i], false);
+            }
         }
     }
 
@@ -83,7 +86,10 @@ public class ShadowCaster2DGenerator
 
         for (int i = 0; i < colliders.Length; ++i)
         {
-            GenerateTilemapShadowCastersInEditor(colliders[i], true);
+            if (!colliders[i].GetComponent<DoNotAttachShadowCaster2D>())
+            {
+                GenerateTilemapShadowCastersInEditor(colliders[i], true);
+            }
         }
     }
 

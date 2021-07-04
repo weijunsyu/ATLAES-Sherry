@@ -30,7 +30,7 @@ public class PlayerInActionState : IState
 
     public void Enter()
     {
-        actionController.LockBuffer();
+        playerController.playerInputData.LockBuffer();
         movementController.UpdateAirborne();
         duration = 0d;
         
@@ -61,15 +61,15 @@ public class PlayerInActionState : IState
 
         playerController.isInCombat = true;
         playerController.combatTimer = 0;
-        actionController.ResetInputBuffer();
-        actionController.UnlockBuffer();
+        playerController.playerInputData.ResetInputBuffer();
+        playerController.playerInputData.UnlockBuffer();
     }
     private void SetStateParams()
     {
         WeaponType weapon = MasterManager.playerData.GetPrimaryWeapon();
         IState prevState = stateMachine.prevState; // used for evaluating charged attacks and crouched attacks
 
-        PlayerInputController.RawInput inputType = actionController.inputBuffer.Pop().input;
+        PlayerInputs.RawInputAction inputType = playerController.playerInputData.inputBuffer.Pop().input;
 
         switch (weapon) // determine what sets of actions to use
         {
@@ -81,17 +81,17 @@ public class PlayerInActionState : IState
                 {
                     switch (inputType)
                     {
-                        case PlayerInputController.RawInput.LIGHT_PRESS:
+                        case PlayerInputs.RawInputAction.LIGHT_PRESS:
                             duration = PlayerTimings.U_JUMP_LIGHT_DURATION;
                             animationController.RunAnimation(animations.uJumpLight, PlayerTimings.U_JUMP_LIGHT_TIMES, ref animate);
                             
                             break;
-                        case PlayerInputController.RawInput.MEDIUM_PRESS:
+                        case PlayerInputs.RawInputAction.MEDIUM_PRESS:
                             duration = PlayerTimings.U_JUMP_MEDIUM_DURATION;
                             animationController.RunAnimation(animations.uJumpMedium, PlayerTimings.U_JUMP_MEDIUM_TIMES, ref animate);
                             
                             break;
-                        case PlayerInputController.RawInput.HEAVY_PRESS:
+                        case PlayerInputs.RawInputAction.HEAVY_PRESS:
                             duration = PlayerTimings.U_JUMP_HEAVY_DURATION;
                             animationController.RunAnimation(animations.uJumpHeavy, PlayerTimings.U_JUMP_HEAVY_TIMES, ref animate);
                             
@@ -106,17 +106,17 @@ public class PlayerInActionState : IState
                 {
                     switch (inputType)
                     {
-                        case PlayerInputController.RawInput.LIGHT_PRESS:
+                        case PlayerInputs.RawInputAction.LIGHT_PRESS:
                             duration = PlayerTimings.U_CROUCH_LIGHT_DURATION;
                             animationController.RunAnimation(animations.uCrouchLight, PlayerTimings.U_CROUCH_LIGHT_TIMES, ref animate);
                             BasicMovement.StopAll(movementController);
                             break;
-                        case PlayerInputController.RawInput.MEDIUM_PRESS:
+                        case PlayerInputs.RawInputAction.MEDIUM_PRESS:
                             duration = PlayerTimings.U_CROUCH_MEDIUM_DURATION;
                             animationController.RunAnimation(animations.uCrouchMedium, PlayerTimings.U_CROUCH_MEDIUM_TIMES, ref animate);
                             BasicMovement.StopAll(movementController);
                             break;
-                        case PlayerInputController.RawInput.HEAVY_PRESS:
+                        case PlayerInputs.RawInputAction.HEAVY_PRESS:
                             duration = PlayerTimings.U_CROUCH_HEAVY_DURATION;
                             animationController.RunAnimation(animations.uCrouchHeavy, PlayerTimings.U_CROUCH_HEAVY_TIMES, ref animate);
                             BasicMovement.StopAll(movementController);
@@ -130,17 +130,17 @@ public class PlayerInActionState : IState
                 {
                     switch (inputType)
                     {
-                        case PlayerInputController.RawInput.LIGHT_PRESS:
+                        case PlayerInputs.RawInputAction.LIGHT_PRESS:
                             duration = PlayerTimings.U_STAND_LIGHT_DURATION;
                             animationController.RunAnimation(animations.uStandLight, PlayerTimings.U_STAND_LIGHT_TIMES, ref animate);
                             BasicMovement.StopAll(movementController);
                             break;
-                        case PlayerInputController.RawInput.MEDIUM_PRESS:
+                        case PlayerInputs.RawInputAction.MEDIUM_PRESS:
                             duration = PlayerTimings.U_STAND_MEDIUM_DURATION;
                             animationController.RunAnimation(animations.uStandMedium, PlayerTimings.U_STAND_MEDIUM_TIMES, ref animate);
                             BasicMovement.StopAll(movementController);
                             break;
-                        case PlayerInputController.RawInput.HEAVY_PRESS:
+                        case PlayerInputs.RawInputAction.HEAVY_PRESS:
                             duration = PlayerTimings.U_STAND_HEAVY_DURATION;
                             animationController.RunAnimation(animations.uStandHeavy, PlayerTimings.U_STAND_HEAVY_TIMES, ref animate);
                             BasicMovement.StopAll(movementController);
@@ -239,11 +239,7 @@ public class PlayerInActionState : IState
             {
                 return prevState;
             }
-            else if (prevState == playerController.strafingForwardsState)
-            {
-                return playerController.standingGuardState;
-            }
-            else if (prevState == playerController.strafingBackwardsState)
+            else if (prevState == playerController.walkingState)
             {
                 return playerController.standingGuardState;
             }
